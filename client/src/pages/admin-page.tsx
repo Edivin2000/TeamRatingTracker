@@ -493,6 +493,40 @@ export default function AdminPage() {
               </CardContent>
             </Card>
           </TabsContent>
+          
+          {/* Вкладка Настройки */}
+          <TabsContent value="settings">
+            <Card>
+              <CardHeader>
+                <CardTitle>Настройки</CardTitle>
+                <CardDescription>
+                  Управление настройками и функциями приложения
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-medium mb-2">Рейтинги команд</h3>
+                    <p className="text-sm text-gray-500 mb-3">
+                      Управление историей изменения позиций команд
+                    </p>
+                    <Button 
+                      variant="destructive" 
+                      onClick={() => {
+                        clearRankingsHistory();
+                        toast({
+                          title: "История рейтингов сброшена",
+                          description: "Индикаторы изменения позиций будут обновлены после следующего изменения очков",
+                        });
+                      }}
+                    >
+                      Сбросить историю рейтингов
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
         </Tabs>
       </div>
 

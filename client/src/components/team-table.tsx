@@ -49,8 +49,9 @@ export default function TeamTable({ teams, rankings = {} }: TeamTableProps) {
       );
     }
     
-    // Получаем текущий ранг
-    const currentRank = currentRanks.get(teamId) || 0;
+    // Здесь важное исправление: мы больше не используем currentRanks, а берем данные
+    // из объекта рейтингов, который содержит актуальную информацию, включая предыдущий ранг
+    const currentRank = teamRanking.currentRank;
     const previousRank = teamRanking.previousRank;
     
     // Вычисляем разницу между предыдущей и текущей позицией
