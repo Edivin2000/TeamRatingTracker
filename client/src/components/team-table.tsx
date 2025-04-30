@@ -15,6 +15,8 @@ interface TeamTableProps {
 }
 
 export default function TeamTable({ teams, rankings = {} }: TeamTableProps) {
+  // Исключаем команды с флагом excluded
+  const activeTeams = teams.filter(team => !team.excluded).sort((a, b) => b.score - a.score);
   // Функция для отображения изменения позиции
   const renderPositionChange = (teamId: number, currentIndex: number) => {
     const teamRanking = rankings[teamId];
@@ -100,8 +102,8 @@ export default function TeamTable({ teams, rankings = {} }: TeamTableProps) {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {teams.length > 0 ? (
-              teams.map((team, index) => (
+            {activeTeams.length > 0 ? (
+              activeTeams.map((team, index) => (
                 <tr key={team.id} className={`hover:bg-gray-50 ${index < 3 ? 'bg-gray-50' : ''}`}>
                   <td className="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-center">
                     <div className="flex justify-center">
