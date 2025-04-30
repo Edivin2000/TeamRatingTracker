@@ -17,9 +17,15 @@ interface TeamTableProps {
 export default function TeamTable({ teams, rankings = {} }: TeamTableProps) {
   // Исключаем команды с флагом excluded
   const activeTeams = teams.filter(team => !team.excluded).sort((a, b) => b.score - a.score);
+  
+  // Отладка данных о рейтингах
+  console.log("Рейтинги команд:", rankings);
+  
   // Функция для отображения изменения позиции
   const renderPositionChange = (teamId: number, currentIndex: number) => {
+    // Проверяем наличие рейтинга для команды
     const teamRanking = rankings[teamId];
+    console.log(`Команда ID ${teamId}, рейтинг:`, teamRanking);
     
     // Если нет данных о рейтинге, возвращаем статический элемент
     if (!teamRanking) {
@@ -32,8 +38,9 @@ export default function TeamTable({ teams, rankings = {} }: TeamTableProps) {
     }
     
     // Вычисляем разницу между предыдущей и текущей позицией
-    // Если previousRank больше (хуже), то команда поднялась вверх, и это положительное изменение
+    // Если previousRank больше (хуже), то команда поднялась вверх (улучшила позицию)
     const diff = teamRanking.previousRank - teamRanking.currentRank;
+    console.log(`Команда ID ${teamId}, предыдущий ранг: ${teamRanking.previousRank}, текущий ранг: ${teamRanking.currentRank}, разница: ${diff}`);
     
     if (diff > 0) {
       // Поднялись в рейтинге (улучшили позицию)
@@ -48,7 +55,7 @@ export default function TeamTable({ teams, rankings = {} }: TeamTableProps) {
       return (
         <div className="flex items-center text-red-600 text-xs font-medium">
           <ChevronDown className="h-4 w-4 mr-1" />
-          <span>{diff}</span> {/* уже отрицательное число */}
+          <span>{Math.abs(diff)}</span> {/* преобразуем отрицательное число в положительное для отображения */}
         </div>
       );
     } else {

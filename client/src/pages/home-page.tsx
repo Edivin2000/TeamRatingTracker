@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Team } from "@shared/schema";
 import Navbar from "@/components/layout/navbar";
@@ -31,19 +31,28 @@ export default function HomePage() {
   const activeTeams = teams?.filter(team => !team.excluded).sort((a, b) => b.score - a.score) || [];
   const topThreeTeams = activeTeams.slice(0, 3);
 
-  // Храним предыдущий список команд для отслеживания изменений
-  const [prevTeams, setPrevTeams] = useState<Team[]>([]);
+  // Храним идентификатор сеанса для сброса истории при перезагрузке
+  const [sessionId] = useState(() => Date.now());
 
+  // Хранение предыдущего состояния рейтинга для сравнения между обновлениями
+  const prevTeamsRef = useRef<Team[]>([]);
+  
   // Сохраняем предыдущие ранги при первой загрузке и обновляем при изменении данных
   useEffect(() => {
     // Если нет активных команд или данные загружаются, ничего не делаем
     if (activeTeams.length === 0 || isLoading) return;
-
+    
+    console.log("Активные команды:", activeTeams.map(t => `${t.id}-${t.name}-${t.score}`));
+    console.log("Предыдущие команды:", prevTeamsRef.current.map(t => `${t.id}-${t.name}-${t.score}`));
+    
     // Создаем новые рейтинги
-    let newRankings: TeamRankings = {};
-
-    // При первой загрузке просто инициализируем рейтинги
+    const newRankings: TeamRankings = {};
+    
+    // При первой загрузке (после очистки рейтингов)
     if (Object.keys(teamRankings).length === 0) {
+      console.log("Первая загрузка данных - инициализация рейтингов");
+      
+      // Устанавливаем начальные позиции (равные текущим)
       activeTeams.forEach((team, index) => {
         const currentRank = index + 1;
         newRankings[team.id] = {
@@ -52,55 +61,70 @@ export default function HomePage() {
         };
       });
       
-      // Устанавливаем начальное состояние
+      // Сохраняем начальное состояние
       setTeamRankings(newRankings);
-      setPrevTeams([...activeTeams]);
+      prevTeamsRef.current = [...activeTeams];
     } 
-    // При последующих обновлениях обновляем только при изменении данных
+    // При обновлении данных
     else {
-      // Проверяем, изменились ли команды или их рейтинги
-      const hasScoreChanged = activeTeams.some((team, index) => {
-        const prevTeam = prevTeams.find(t => t.id === team.id);
-        return !prevTeam || prevTeam.score !== team.score;
-      });
-
-      if (hasScoreChanged) {
-        console.log("Обнаружено изменение счета/рейтинга");
-        
-        // Создаем новые рейтинги на основе текущих позиций
-        activeTeams.forEach((team, index) => {
-          const currentRank = index + 1;
-          const prevRanking = teamRankings[team.id];
-          
-          if (prevRanking) {
-            // Если рейтинг изменился, обновляем previousRank
-            if (currentRank !== prevRanking.currentRank) {
-              newRankings[team.id] = {
-                previousRank: prevRanking.currentRank,
-                currentRank: currentRank
-              };
-              console.log(`Команда ${team.name}: изменение с ${prevRanking.currentRank} на ${currentRank}`);
-            } else {
-              // Если рейтинг не изменился, сохраняем предыдущие значения
-              newRankings[team.id] = { ...prevRanking };
-            }
-          } else {
-            // Новая команда, устанавливаем одинаковые значения
-            newRankings[team.id] = {
-              previousRank: currentRank,
-              currentRank: currentRank,
-            };
-          }
-        });
-        
-        // Обновляем состояние только если есть изменения
-        if (Object.keys(newRankings).length > 0) {
-          setTeamRankings(newRankings);
-          setPrevTeams([...activeTeams]);
+      // Проверяем, изменился ли счет команд
+      let hasTeamScoreChanged = false;
+      
+      // Сравниваем текущие команды с предыдущим известным состоянием
+      for (const team of activeTeams) {
+        const prevTeam = prevTeamsRef.current.find(t => t.id === team.id);
+        if (!prevTeam || prevTeam.score !== team.score) {
+          hasTeamScoreChanged = true;
+          console.log(`Команда ${team.name} (id:${team.id}): изменение счета с ${prevTeam?.score} на ${team.score}`);
+          break;
         }
       }
+      
+      if (hasTeamScoreChanged) {
+        console.log("Обнаружено изменение счета команд - обновляем рейтинги");
+        
+        // Текущие ранги всех команд (по индексу в отсортированном массиве)
+        const currentRanks = new Map<number, number>();
+        activeTeams.forEach((team, index) => {
+          currentRanks.set(team.id, index + 1);
+        });
+        
+        // Обновляем рейтинги каждой команды
+        for (const team of activeTeams) {
+          const currentRank = currentRanks.get(team.id) || 1;
+          
+          // Если команда уже была в рейтингах
+          if (teamRankings[team.id]) {
+            const oldRanking = teamRankings[team.id];
+            const oldRank = oldRanking.currentRank;
+            
+            // Если позиция изменилась
+            if (currentRank !== oldRank) {
+              console.log(`Команда ${team.name} (id:${team.id}): изменение ранга с ${oldRank} на ${currentRank}`);
+              newRankings[team.id] = {
+                previousRank: oldRank,
+                currentRank: currentRank
+              };
+            } else {
+              // Если позиция не изменилась, сохраняем старые данные
+              newRankings[team.id] = { ...oldRanking };
+            }
+          } 
+          // Новая команда - устанавливаем одинаковые значения для рангов
+          else {
+            newRankings[team.id] = {
+              previousRank: currentRank,
+              currentRank: currentRank
+            };
+          }
+        }
+        
+        // Обновляем состояние и сохраняем текущий список команд
+        console.log("Новые рейтинги:", newRankings);
+        setTeamRankings(newRankings);
+        prevTeamsRef.current = [...activeTeams];
+      }
     }
-  // Зависимость только от teams, чтобы эффект срабатывал только при изменении данных с сервера
   }, [teams, isLoading]);
 
   return (
