@@ -9,6 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import atomGameLogo from "../../assets/atom-game-logo.png";
 
 export default function Navbar() {
   const [location] = useLocation();
@@ -19,14 +20,17 @@ export default function Navbar() {
   };
   
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="bg-black shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/">
               <div className="flex-shrink-0 flex items-center cursor-pointer">
-                <Trophy className="text-primary h-6 w-6 mr-2" />
-                <h1 className="font-heading font-bold text-xl text-dark">Рейтинг Команд ATOM﮳GAME</h1>
+                <img 
+                  src={atomGameLogo} 
+                  alt="ATOM﮳GAME" 
+                  className="h-10 md:h-12"
+                />
               </div>
             </Link>
           </div>
@@ -34,7 +38,7 @@ export default function Navbar() {
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                  <Button variant="ghost" className="relative h-8 w-8 rounded-full text-white hover:bg-gray-800">
                     <User className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -58,7 +62,7 @@ export default function Navbar() {
             ) : (
               <span className="text-xs text-gray-400">
                 <Link href="/auth">
-                  <span className="hover:text-primary cursor-pointer transition">Администрация</span>
+                  <span className="hover:text-white cursor-pointer transition">Администрация</span>
                 </Link>
               </span>
             )}
