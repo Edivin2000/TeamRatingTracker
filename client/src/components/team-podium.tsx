@@ -63,11 +63,10 @@ export default function TeamPodium({ teams }: { teams: Team[] }) {
               <div 
                 className={`bg-white border-2 ${colors.border} rounded-xl shadow-lg ${colors.shadow} overflow-hidden transform hover:scale-105 transition duration-300 ${isFirst ? '-translate-y-4 md:-translate-y-8' : ''}`}
               >
-                <div className={`${colors.badge} p-4 text-center relative`}>
+                <div className={`${colors.badge} p-4 text-center`}>
                   <span className="inline-block bg-white text-dark text-lg font-bold rounded-full w-10 h-10 flex items-center justify-center shadow-md">
                     {colors.label}
                   </span>
-                  <Icon className={`absolute top-0 right-2 transform -translate-y-1/2 w-8 h-8 text-white drop-shadow-md`} />
                 </div>
                 <div className="p-6 text-center">
                   <div className={`mx-auto ${isFirst ? 'w-32 h-32' : 'w-28 h-28'} rounded-full bg-gray-50 mb-4 flex items-center justify-center overflow-hidden border-2 ${colors.border} shadow-md`}>
@@ -95,11 +94,10 @@ export default function TeamPodium({ teams }: { teams: Team[] }) {
               </div>
             ) : (
               <div className="bg-white border-2 border-gray-200 rounded-xl shadow-md overflow-hidden h-full opacity-50">
-                <div className="bg-gray-200 p-4 text-center relative">
+                <div className="bg-gray-200 p-4 text-center">
                   <span className="inline-block bg-white text-dark text-lg font-bold rounded-full w-10 h-10 flex items-center justify-center">
                     {colors.label}
                   </span>
-                  <Icon className="absolute top-0 right-2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
                 </div>
                 <div className="p-6 text-center">
                   <div className={`mx-auto ${isFirst ? 'w-28 h-28' : 'w-24 h-24'} rounded-full bg-gray-100 mb-4 flex items-center justify-center border-2 border-gray-200`}>

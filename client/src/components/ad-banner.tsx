@@ -58,7 +58,7 @@ export default function AdBanner() {
   // Если после фильтрации не осталось активных баннеров, показываем запасной баннер
   if (activeAds.length === 0) {
     return (
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl shadow-md overflow-hidden">
+      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl shadow-md overflow-hidden min-h-[220px]">
         <div className="px-6 py-8 sm:p-10 sm:flex sm:items-center">
           <div className="sm:flex-1">
             <h3 className="text-xl font-extrabold text-white sm:text-2xl">
@@ -87,7 +87,7 @@ export default function AdBanner() {
   
   return (
     <div 
-      className={`bg-gradient-to-r ${currentAd.bgColor || "from-blue-600 to-indigo-700"} rounded-xl shadow-md overflow-hidden relative text-white`}
+      className={`bg-gradient-to-r ${currentAd.bgColor || "from-blue-600 to-indigo-700"} rounded-xl shadow-md overflow-hidden relative text-white min-h-[220px]`}
       style={bgStyle}
     >
       {/* Индикаторы для нескольких баннеров */}
@@ -141,7 +141,7 @@ export default function AdBanner() {
 
 function BannerSkeleton() {
   return (
-    <div className="bg-gradient-to-r from-blue-600/40 to-indigo-700/40 rounded-xl shadow-md overflow-hidden animate-pulse">
+    <div className="bg-gradient-to-r from-blue-600/40 to-indigo-700/40 rounded-xl shadow-md overflow-hidden animate-pulse min-h-[220px]">
       <div className="px-6 py-8 sm:p-10 sm:flex sm:items-center">
         <div className="sm:flex-1">
           <Skeleton className="h-8 w-3/4 bg-white/20 mb-4" />
