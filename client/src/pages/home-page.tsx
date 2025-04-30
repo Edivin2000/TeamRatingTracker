@@ -191,7 +191,6 @@ export default function HomePage() {
 
         {/* Секция партнеров */}
         <div className="mb-8">
-          <h3 className="font-heading font-semibold text-xl text-dark mb-6">Наши Партнеры</h3>
           <PartnersSection />
         </div>
       </main>
