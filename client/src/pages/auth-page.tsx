@@ -23,19 +23,19 @@ export default function AuthPage() {
   const { user, loginMutation, registerMutation } = useAuth();
   const [tab, setTab] = useState<string>("login");
   
-  // Create separate schemas
+  // Создаем отдельные схемы
   const loginFormSchema = loginSchema;
   const registerFormSchema = loginSchema.extend({
-    confirmPassword: z.string().min(1, "Please confirm your password"),
+    confirmPassword: z.string().min(1, "Пожалуйста, подтвердите пароль"),
   }).refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
+    message: "Пароли не совпадают",
     path: ["confirmPassword"],
   });
 
   type LoginFormData = z.infer<typeof loginFormSchema>;
   type RegisterFormData = z.infer<typeof registerFormSchema>;
   
-  // Setup login form
+  // Настраиваем форму входа
   const loginForm = useForm<LoginFormData>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -44,7 +44,7 @@ export default function AuthPage() {
     },
   });
 
-  // Setup register form  
+  // Настраиваем форму регистрации  
   const registerForm = useForm<RegisterFormData>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
@@ -54,21 +54,21 @@ export default function AuthPage() {
     },
   });
 
-  // Handle login form submission
+  // Обработка отправки формы входа
   const onLoginSubmit = (data: LoginFormData) => {
     loginMutation.mutate(data);
   };
 
-  // Handle register form submission
+  // Обработка отправки формы регистрации
   const onRegisterSubmit = (data: RegisterFormData) => {
     const { confirmPassword, ...userData } = data;
     registerMutation.mutate({
       ...userData,
-      isAdmin: 1, // Set as admin
+      isAdmin: 1, // Устанавливаем как админа
     });
   };
 
-  // Redirect if already logged in
+  // Перенаправление, если уже авторизован
   useEffect(() => {
     if (user) {
       navigate(user.isAdmin ? "/admin" : "/");
@@ -77,36 +77,36 @@ export default function AuthPage() {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
-      {/* Left side: Auth form */}
+      {/* Левая сторона: Форма авторизации */}
       <div className="w-full md:w-1/2 p-8 flex items-center justify-center bg-white">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold mb-2">Team Rankings</h1>
-            <p className="text-gray-500">Admin authentication required</p>
+            <h1 className="text-3xl font-bold mb-2">Рейтинг Команд</h1>
+            <p className="text-gray-500">Требуется авторизация администратора</p>
           </div>
           
           <Tabs value={tab} onValueChange={setTab} defaultValue="login" className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-8">
-              <TabsTrigger value="login">Login</TabsTrigger>
-              <TabsTrigger value="register">Register</TabsTrigger>
+              <TabsTrigger value="login">Вход</TabsTrigger>
+              <TabsTrigger value="register">Регистрация</TabsTrigger>
             </TabsList>
             
             <TabsContent value="login">
               <Card>
                 <CardHeader>
-                  <CardTitle>Login</CardTitle>
+                  <CardTitle>Вход</CardTitle>
                   <CardDescription>
-                    Enter your credentials to access the admin dashboard.
+                    Введите учетные данные для доступа к панели администратора.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="loginUsername">Username</Label>
+                      <Label htmlFor="loginUsername">Имя пользователя</Label>
                       <Input 
                         id="loginUsername" 
                         {...loginForm.register("username")} 
-                        placeholder="Enter your username"
+                        placeholder="Введите имя пользователя"
                       />
                       {loginForm.formState.errors.username && (
                         <p className="text-sm text-red-500">{loginForm.formState.errors.username.message}</p>
@@ -114,12 +114,12 @@ export default function AuthPage() {
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="loginPassword">Password</Label>
+                      <Label htmlFor="loginPassword">Пароль</Label>
                       <Input 
                         id="loginPassword" 
                         type="password" 
                         {...loginForm.register("password")} 
-                        placeholder="Enter your password"
+                        placeholder="Введите пароль"
                       />
                       {loginForm.formState.errors.password && (
                         <p className="text-sm text-red-500">{loginForm.formState.errors.password.message}</p>
@@ -130,7 +130,7 @@ export default function AuthPage() {
                       {loginMutation.isPending ? (
                         <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                       ) : null}
-                      Login
+                      Войти
                     </Button>
                   </form>
                 </CardContent>
@@ -140,19 +140,19 @@ export default function AuthPage() {
             <TabsContent value="register">
               <Card>
                 <CardHeader>
-                  <CardTitle>Create an Account</CardTitle>
+                  <CardTitle>Создать аккаунт</CardTitle>
                   <CardDescription>
-                    Register a new admin account to manage teams.
+                    Зарегистрируйте новый аккаунт администратора для управления командами.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={registerForm.handleSubmit(onRegisterSubmit)} className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="registerUsername">Username</Label>
+                      <Label htmlFor="registerUsername">Имя пользователя</Label>
                       <Input 
                         id="registerUsername" 
                         {...registerForm.register("username")} 
-                        placeholder="Choose a username"
+                        placeholder="Выберите имя пользователя"
                       />
                       {registerForm.formState.errors.username && (
                         <p className="text-sm text-red-500">{registerForm.formState.errors.username.message}</p>
@@ -160,12 +160,12 @@ export default function AuthPage() {
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="registerPassword">Password</Label>
+                      <Label htmlFor="registerPassword">Пароль</Label>
                       <Input 
                         id="registerPassword" 
                         type="password" 
                         {...registerForm.register("password")} 
-                        placeholder="Choose a password"
+                        placeholder="Выберите пароль"
                       />
                       {registerForm.formState.errors.password && (
                         <p className="text-sm text-red-500">{registerForm.formState.errors.password.message}</p>
@@ -173,12 +173,12 @@ export default function AuthPage() {
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="confirmPassword">Confirm Password</Label>
+                      <Label htmlFor="confirmPassword">Подтверждение пароля</Label>
                       <Input 
                         id="confirmPassword" 
                         type="password" 
                         {...registerForm.register("confirmPassword")} 
-                        placeholder="Confirm your password"
+                        placeholder="Подтвердите пароль"
                       />
                       {registerForm.formState.errors.confirmPassword && (
                         <p className="text-sm text-red-500">{registerForm.formState.errors.confirmPassword.message}</p>
@@ -189,7 +189,7 @@ export default function AuthPage() {
                       {registerMutation.isPending ? (
                         <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                       ) : null}
-                      Register
+                      Зарегистрироваться
                     </Button>
                   </form>
                 </CardContent>
@@ -199,35 +199,35 @@ export default function AuthPage() {
         </div>
       </div>
       
-      {/* Right side: Hero banner */}
+      {/* Правая сторона: Информационный баннер */}
       <div className="w-full md:w-1/2 bg-gradient-to-br from-primary to-blue-700 p-8 text-white flex items-center">
         <div className="max-w-lg mx-auto space-y-8">
           <div className="text-center">
             <Trophy className="h-16 w-16 mx-auto mb-4" />
-            <h2 className="text-4xl font-bold mb-4">Team Rankings System</h2>
+            <h2 className="text-4xl font-bold mb-4">Система Рейтинга Команд</h2>
             <p className="text-xl opacity-90">
-              Manage team scores and keep track of rankings with this powerful admin dashboard.
+              Управляйте очками команд и следите за рейтингами с помощью мощной панели администратора.
             </p>
           </div>
           
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 space-y-4">
-            <h3 className="text-xl font-semibold">Key Features:</h3>
+            <h3 className="text-xl font-semibold">Ключевые возможности:</h3>
             <ul className="space-y-2">
               <li className="flex items-center space-x-2">
                 <span className="h-5 w-5 bg-white/20 rounded-full flex items-center justify-center text-sm">✓</span>
-                <span>Add and manage teams</span>
+                <span>Добавление и управление командами</span>
               </li>
               <li className="flex items-center space-x-2">
                 <span className="h-5 w-5 bg-white/20 rounded-full flex items-center justify-center text-sm">✓</span>
-                <span>Update team scores</span>
+                <span>Обновление очков команд</span>
               </li>
               <li className="flex items-center space-x-2">
                 <span className="h-5 w-5 bg-white/20 rounded-full flex items-center justify-center text-sm">✓</span>
-                <span>Upload team logos</span>
+                <span>Загрузка логотипов команд</span>
               </li>
               <li className="flex items-center space-x-2">
                 <span className="h-5 w-5 bg-white/20 rounded-full flex items-center justify-center text-sm">✓</span>
-                <span>View beautiful leaderboard with top teams highlighted</span>
+                <span>Просмотр красивой таблицы лидеров с выделенными лучшими командами</span>
               </li>
             </ul>
           </div>
