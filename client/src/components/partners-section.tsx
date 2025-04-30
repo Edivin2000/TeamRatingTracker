@@ -51,12 +51,17 @@ export default function PartnersSection() {
               >
                 <Card className="border border-gray-100 overflow-hidden transition-all duration-300 
                               group-hover:shadow-lg group-hover:border-gray-200">
-                  <CardContent className="flex items-center justify-center p-4 h-28 bg-white">
-                    <img 
-                      src={partner.logoUrl || "https://placehold.co/160x80/gray/white?text=Partner"}
-                      alt={`${partner.name} logo`}
-                      className="max-h-20 max-w-full transition-transform duration-300 group-hover:scale-105"
-                    />
+                  <CardContent className="p-4 h-28 bg-white">
+                    <div className="w-full h-full flex items-center justify-center">
+                      <div className="flex items-center justify-center w-full h-full overflow-hidden">
+                        <img 
+                          src={partner.logoUrl || "https://placehold.co/160x80/gray/white?text=Partner"}
+                          alt={`${partner.name} logo`}
+                          className="object-contain w-auto h-auto max-h-16 max-w-[90%] transition-transform duration-300 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
                 <div className="mt-3 text-center">
@@ -103,8 +108,8 @@ function PartnersSkeleton() {
         {[1, 2, 3, 4].map((id) => (
           <div key={id} className="block">
             <Card className="border border-gray-100 overflow-hidden">
-              <CardContent className="p-0">
-                <Skeleton className="h-28 w-full bg-gray-50" />
+              <CardContent className="p-4 h-28 flex items-center justify-center bg-white">
+                <Skeleton className="h-16 w-4/5 bg-gray-50" />
               </CardContent>
             </Card>
             <div className="mt-3 flex justify-center">
