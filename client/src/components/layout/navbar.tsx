@@ -19,11 +19,63 @@ export default function Navbar() {
     logoutMutation.mutate();
   };
   
+  // Секретный счетчик кликов для доступа к админпанели
+  const [secretKeyCounter, setSecretKeyCounter] = useState(0);
+  const [showSecretAuth, setShowSecretAuth] = useState(false);
+  
+  // Сбрасываем счетчик через 3 секунды после последнего нажатия
+  const resetSecretTimer = () => {
+    setTimeout(() => {
+      setSecretKeyCounter(0);
+    }, 3000);
+  };
+  
+  // Проверяем количество кликов для разблокировки секретной авторизации
+  const checkSecretAuth = (newCount: number) => {
+    if (newCount >= 5) {
+      setShowSecretAuth(true);
+      setTimeout(() => {
+        setShowSecretAuth(false);
+        setSecretKeyCounter(0);
+      }, 5000); // Скрываем ссылку через 5 секунд
+    }
+  };
+  
   return (
     <nav className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-20">
-          <div className="flex items-center">
+        <div className="flex h-20 relative">
+          {/* Создаем невидимую зону для клика в правом углу для администраторов */}
+          {!user && (
+            <>
+              <span 
+                className="absolute top-0 right-0 h-10 w-10 cursor-default z-10" 
+                title=""
+                onClick={() => {
+                  setSecretKeyCounter(prev => {
+                    const newCount = prev + 1;
+                    resetSecretTimer();
+                    checkSecretAuth(newCount);
+                    return newCount;
+                  });
+                }}
+              />
+              
+              {/* Показываем секретную ссылку только после определенного количества кликов */}
+              {showSecretAuth && (
+                <div className="absolute top-2 right-2 animate-pulse z-20">
+                  <Link href="/auth">
+                    <span className="text-xs text-blue-500 opacity-70 hover:opacity-100 transition-opacity cursor-pointer">
+                      Войти
+                    </span>
+                  </Link>
+                </div>
+              )}
+            </>
+          )}
+          
+          {/* Центрированный логотип */}
+          <div className="flex items-center justify-center w-full">
             <Link href="/">
               <div className="flex-shrink-0 flex items-center cursor-pointer">
                 <img 
@@ -34,8 +86,10 @@ export default function Navbar() {
               </div>
             </Link>
           </div>
-          <div className="flex items-center">
-            {user ? (
+          
+          {/* Панель администратора в правом углу (видна только при авторизации) */}
+          {user && (
+            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 flex items-center">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full text-gray-700 hover:bg-gray-100">
@@ -59,14 +113,8 @@ export default function Navbar() {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-            ) : (
-              <span className="text-xs text-gray-500">
-                <Link href="/auth">
-                  <span className="hover:text-primary cursor-pointer transition">Администрация</span>
-                </Link>
-              </span>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </nav>
