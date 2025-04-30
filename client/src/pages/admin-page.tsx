@@ -27,13 +27,13 @@ export default function AdminPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/teams"] });
       toast({
-        title: "Team deleted",
-        description: "The team has been deleted successfully.",
+        title: "Команда удалена",
+        description: "Команда была успешно удалена.",
       });
     },
     onError: (error) => {
       toast({
-        title: "Failed to delete team",
+        title: "Не удалось удалить команду",
         description: error.message,
         variant: "destructive",
       });
@@ -46,7 +46,7 @@ export default function AdminPage() {
   };
 
   const handleDeleteTeam = (teamId: number) => {
-    if (window.confirm("Are you sure you want to delete this team?")) {
+    if (window.confirm("Вы уверены, что хотите удалить эту команду?")) {
       deleteTeamMutation.mutate(teamId);
     }
   };
@@ -57,16 +57,16 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Admin Header */}
+      {/* Заголовок админа */}
       <div className="bg-primary text-white p-4 shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <div className="flex items-center">
             <Trophy className="h-6 w-6 mr-2" />
-            <h1 className="font-heading font-bold text-xl">Admin Dashboard</h1>
+            <h1 className="font-heading font-bold text-xl">Панель Администратора</h1>
           </div>
           <div className="flex items-center space-x-4">
             <span className="text-sm hidden md:inline-block">
-              Welcome, {user?.username}
+              Добро пожаловать, {user?.username}
             </span>
             <Button
               variant="outline"
@@ -74,18 +74,18 @@ export default function AdminPage() {
               onClick={handleLogout}
               disabled={logoutMutation.isPending}
             >
-              Logout
+              Выйти
             </Button>
           </div>
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* Основное содержимое */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="p-6">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="font-heading font-bold text-xl text-dark">Team Management</h2>
+              <h2 className="font-heading font-bold text-xl text-dark">Управление Командами</h2>
               <Button
                 onClick={() => {
                   setEditingTeam(null);
@@ -93,7 +93,7 @@ export default function AdminPage() {
                 }}
                 className="bg-green-500 hover:bg-green-600"
               >
-                <PlusCircle className="mr-2 h-4 w-4" /> Add New Team
+                <PlusCircle className="mr-2 h-4 w-4" /> Добавить Новую Команду
               </Button>
             </div>
 
@@ -110,7 +110,7 @@ export default function AdminPage() {
         </div>
       </div>
 
-      {/* Team Form Modal */}
+      {/* Форма для команды */}
       {isFormOpen && (
         <TeamForm
           team={editingTeam}

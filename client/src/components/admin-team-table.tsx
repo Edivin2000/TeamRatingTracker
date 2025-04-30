@@ -17,13 +17,13 @@ export default function AdminTeamTable({ teams, onEdit, onDelete }: AdminTeamTab
         <thead className="bg-gray-100">
           <tr>
             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Team
+              Команда
             </th>
             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Score
+              Очки
             </th>
             <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Actions
+              Действия
             </th>
           </tr>
         </thead>
@@ -65,7 +65,7 @@ export default function AdminTeamTable({ teams, onEdit, onDelete }: AdminTeamTab
                     className="text-indigo-600 hover:text-indigo-900 mr-2"
                     onClick={() => onEdit(team)}
                   >
-                    <Edit className="w-4 h-4 mr-1" /> Edit
+                    <Edit className="w-4 h-4 mr-1" /> Изменить
                   </Button>
                   <Button 
                     variant="ghost" 
@@ -73,7 +73,7 @@ export default function AdminTeamTable({ teams, onEdit, onDelete }: AdminTeamTab
                     className="text-red-600 hover:text-red-900"
                     onClick={() => onDelete(team.id)}
                   >
-                    <Trash2 className="w-4 h-4 mr-1" /> Delete
+                    <Trash2 className="w-4 h-4 mr-1" /> Удалить
                   </Button>
                 </td>
               </tr>
@@ -81,7 +81,7 @@ export default function AdminTeamTable({ teams, onEdit, onDelete }: AdminTeamTab
           ) : (
             <tr>
               <td colSpan={3} className="px-6 py-10 text-center text-gray-500">
-                No teams available. Add a team to get started.
+                Нет доступных команд. Добавьте команду, чтобы начать.
               </td>
             </tr>
           )}

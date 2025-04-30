@@ -1,6 +1,55 @@
 import { Team } from "@shared/schema";
+import { ChevronDown, ChevronUp, Minus } from "lucide-react";
 
-export default function TeamTable({ teams }: { teams: Team[] }) {
+// Тип для хранения рейтинга команд
+type TeamRankings = {
+  [id: number]: {
+    previousRank: number;
+    currentRank: number;
+  };
+};
+
+interface TeamTableProps {
+  teams: Team[];
+  rankings?: TeamRankings;
+}
+
+export default function TeamTable({ teams, rankings = {} }: TeamTableProps) {
+  // Функция для отображения изменения позиции
+  const renderPositionChange = (teamId: number, currentIndex: number) => {
+    const teamRanking = rankings[teamId];
+    
+    if (!teamRanking) return null;
+    
+    const diff = teamRanking.previousRank - teamRanking.currentRank;
+    
+    if (diff > 0) {
+      // Поднялись в рейтинге
+      return (
+        <div className="flex items-center text-green-600 text-xs font-medium">
+          <ChevronUp className="h-4 w-4 mr-1" />
+          <span>+{diff}</span>
+        </div>
+      );
+    } else if (diff < 0) {
+      // Опустились в рейтинге
+      return (
+        <div className="flex items-center text-red-600 text-xs font-medium">
+          <ChevronDown className="h-4 w-4 mr-1" />
+          <span>{diff}</span>
+        </div>
+      );
+    } else {
+      // Позиция не изменилась
+      return (
+        <div className="flex items-center text-gray-400 text-xs font-medium">
+          <Minus className="h-3 w-3 mr-1" />
+          <span>0</span>
+        </div>
+      );
+    }
+  };
+
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden">
       <div className="overflow-x-auto">
@@ -8,13 +57,16 @@ export default function TeamTable({ teams }: { teams: Team[] }) {
           <thead className="bg-gray-100">
             <tr>
               <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-16">
-                Rank
+                Место
+              </th>
+              <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">
+                Изменение
               </th>
               <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Team
+                Команда
               </th>
               <th scope="col" className="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Score
+                Очки
               </th>
             </tr>
           </thead>
@@ -35,6 +87,9 @@ export default function TeamTable({ teams }: { teams: Team[] }) {
                         {index + 1}
                       </div>
                     </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {renderPositionChange(team.id, index)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
@@ -67,8 +122,8 @@ export default function TeamTable({ teams }: { teams: Team[] }) {
               ))
             ) : (
               <tr>
-                <td colSpan={3} className="px-6 py-10 text-center text-gray-500">
-                  No teams available. Add teams to see them here.
+                <td colSpan={4} className="px-6 py-10 text-center text-gray-500">
+                  Нет доступных команд. Добавьте команды, чтобы увидеть их здесь.
                 </td>
               </tr>
             )}

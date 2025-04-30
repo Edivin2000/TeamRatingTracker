@@ -14,28 +14,24 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/">
-              <a className="flex-shrink-0 flex items-center">
+              <div className="flex-shrink-0 flex items-center cursor-pointer">
                 <Trophy className="text-primary h-6 w-6 mr-2" />
-                <h1 className="font-heading font-bold text-xl text-dark">Team Rankings</h1>
-              </a>
+                <h1 className="font-heading font-bold text-xl text-dark">Рейтинг Команд</h1>
+              </div>
             </Link>
           </div>
           <div className="flex items-center">
             {user ? (
               <Link href="/admin">
-                <a>
-                  <Button variant="default" className="bg-primary hover:bg-blue-600 text-white">
-                    Admin Dashboard
-                  </Button>
-                </a>
+                <Button variant="default" className="bg-primary hover:bg-blue-600 text-white">
+                  Панель Администратора
+                </Button>
               </Link>
             ) : (
               <Link href="/auth">
-                <a>
-                  <Button variant="default" className="bg-primary hover:bg-blue-600 text-white">
-                    Admin Login
-                  </Button>
-                </a>
+                <Button variant="default" className="bg-primary hover:bg-blue-600 text-white">
+                  Вход для Администратора
+                </Button>
               </Link>
             )}
           </div>

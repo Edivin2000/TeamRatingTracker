@@ -47,14 +47,14 @@ export default function TeamForm({ team, onClose }: TeamFormProps) {
 
   const createTeamMutation = useMutation({
     mutationFn: async (data: FormData) => {
-      // Handle logo file upload if present
+      // Обрабатываем загрузку логотипа, если он присутствует
       let logoUrl = team?.logoUrl || "";
       
       if (data.logoFile) {
-        // Convert to base64 for in-memory storage
+        // Конвертируем в base64 для хранения в памяти
         const reader = new FileReader();
         
-        // Create a promise to wait for FileReader
+        // Создаем промис для ожидания FileReader
         const base64Promise = new Promise<string>((resolve) => {
           reader.onloadend = () => {
             resolve(reader.result as string);
@@ -72,11 +72,11 @@ export default function TeamForm({ team, onClose }: TeamFormProps) {
       };
       
       if (team) {
-        // Update existing team
+        // Обновляем существующую команду
         const res = await apiRequest("PUT", `/api/teams/${team.id}`, teamData);
         return res.json();
       } else {
-        // Create new team
+        // Создаем новую команду
         const res = await apiRequest("POST", "/api/teams", teamData);
         return res.json();
       }
@@ -84,16 +84,16 @@ export default function TeamForm({ team, onClose }: TeamFormProps) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/teams"] });
       toast({
-        title: team ? "Team updated" : "Team created",
+        title: team ? "Команда обновлена" : "Команда создана",
         description: team
-          ? "The team has been updated successfully."
-          : "The team has been created successfully.",
+          ? "Команда была успешно обновлена."
+          : "Команда была успешно создана.",
       });
       onClose();
     },
     onError: (error) => {
       toast({
-        title: team ? "Failed to update team" : "Failed to create team",
+        title: team ? "Не удалось обновить команду" : "Не удалось создать команду",
         description: error.message,
         variant: "destructive",
       });
@@ -119,19 +119,19 @@ export default function TeamForm({ team, onClose }: TeamFormProps) {
     <Dialog open={true} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>{team ? "Edit Team" : "Add New Team"}</DialogTitle>
+          <DialogTitle>{team ? "Редактировать Команду" : "Добавить Новую Команду"}</DialogTitle>
         </DialogHeader>
         
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <input type="hidden" {...register("logoUrl")} />
           
           <div className="space-y-2">
-            <Label htmlFor="name">Team Name</Label>
+            <Label htmlFor="name">Название Команды</Label>
             <Input 
               id="name" 
               type="text" 
               {...register("name")} 
-              placeholder="Enter team name" 
+              placeholder="Введите название команды" 
             />
             {errors.name && (
               <p className="text-sm text-red-500">{errors.name.message}</p>
@@ -139,12 +139,12 @@ export default function TeamForm({ team, onClose }: TeamFormProps) {
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="score">Team Score</Label>
+            <Label htmlFor="score">Очки Команды</Label>
             <Input 
               id="score" 
               type="number" 
               {...register("score", { valueAsNumber: true })} 
-              placeholder="Enter team score" 
+              placeholder="Введите очки команды" 
             />
             {errors.score && (
               <p className="text-sm text-red-500">{errors.score.message}</p>
@@ -152,13 +152,13 @@ export default function TeamForm({ team, onClose }: TeamFormProps) {
           </div>
           
           <div className="space-y-2">
-            <Label>Team Logo</Label>
+            <Label>Логотип Команды</Label>
             <div className="flex items-center space-x-4">
               <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center overflow-hidden">
                 {logoPreview ? (
                   <img 
                     src={logoPreview} 
-                    alt="Logo preview" 
+                    alt="Предпросмотр логотипа" 
                     className="w-full h-full object-cover" 
                   />
                 ) : (
@@ -173,7 +173,7 @@ export default function TeamForm({ team, onClose }: TeamFormProps) {
                   className="cursor-pointer inline-flex items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md text-sm font-medium transition"
                 >
                   <Upload className="w-4 h-4 mr-2" />
-                  Upload Logo
+                  Загрузить Логотип
                 </Label>
                 <input
                   type="file"
@@ -193,7 +193,7 @@ export default function TeamForm({ team, onClose }: TeamFormProps) {
               variant="outline"
               onClick={onClose}
             >
-              Cancel
+              Отмена
             </Button>
             <Button 
               type="submit"
@@ -202,7 +202,7 @@ export default function TeamForm({ team, onClose }: TeamFormProps) {
               {createTeamMutation.isPending && (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               )}
-              {team ? "Update" : "Create"} Team
+              {team ? "Обновить" : "Создать"} Команду
             </Button>
           </div>
         </form>

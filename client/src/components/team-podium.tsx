@@ -2,15 +2,15 @@ import { Trophy } from "lucide-react";
 import { Team } from "@shared/schema";
 
 export default function TeamPodium({ teams }: { teams: Team[] }) {
-  // Create an array of 3 positions filled with teams or nulls
+  // Создаем массив из 3 позиций, заполненных командами или null
   const podiumPositions = Array(3)
     .fill(null)
     .map((_, index) => teams[index] || null);
 
-  // Position ordering for the grid
+  // Порядок позиций для сетки
   const positionOrders = ["order-2 md:order-1", "order-1 md:order-2", "order-3"];
   
-  // Team color classes by position
+  // Цветовые классы команд по позициям
   const teamColors = [
     {
       position: 2,
@@ -77,7 +77,7 @@ export default function TeamPodium({ teams }: { teams: Team[] }) {
                   <div className={`${isFirst ? 'text-4xl' : 'text-3xl'} font-bold ${colors.text}`}>
                     {team.score}
                   </div>
-                  <div className="text-gray-500">points</div>
+                  <div className="text-gray-500">очков</div>
                 </div>
               </div>
             ) : (
@@ -92,10 +92,10 @@ export default function TeamPodium({ teams }: { teams: Team[] }) {
                     <span className="text-gray-300 text-4xl">?</span>
                   </div>
                   <h3 className="font-heading font-bold text-xl mb-2 text-gray-300">
-                    No Team
+                    Нет команды
                   </h3>
                   <div className="text-3xl font-bold text-gray-300">0</div>
-                  <div className="text-gray-300">points</div>
+                  <div className="text-gray-300">очков</div>
                 </div>
               </div>
             )}
