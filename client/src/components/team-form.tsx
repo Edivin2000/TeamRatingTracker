@@ -35,6 +35,7 @@ export default function TeamForm({ team, onClose }: TeamFormProps) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -47,9 +48,10 @@ export default function TeamForm({ team, onClose }: TeamFormProps) {
 
   const createTeamMutation = useMutation({
     mutationFn: async (data: FormData) => {
-      // Обрабатываем загрузку логотипа, если он присутствует
-      let logoUrl = team?.logoUrl || "";
+      // Обрабатываем загрузку логотипа, если он присутствует или есть URL
+      let logoUrl = data.logoUrl || "";
       
+      // Проверяем, если есть файл, он имеет приоритет над URL
       if (data.logoFile) {
         // Проверяем размер файла (не более 2MB)
         if (data.logoFile.size > 2 * 1024 * 1024) {
@@ -61,21 +63,38 @@ export default function TeamForm({ team, onClose }: TeamFormProps) {
           throw new Error("Файл должен быть изображением");
         }
         
-        // Конвертируем в base64 для хранения в памяти
-        const reader = new FileReader();
-        
-        // Создаем промис для ожидания FileReader
-        const base64Promise = new Promise<string>((resolve) => {
-          reader.onloadend = () => {
-            resolve(reader.result as string);
-          };
-        });
-        
-        reader.readAsDataURL(data.logoFile);
-        logoUrl = await base64Promise;
-        
-        // Логируем для отладки
-        console.log("Изображение успешно преобразовано в base64");
+        try {
+          // Конвертируем в base64 для хранения в памяти
+          const reader = new FileReader();
+          
+          // Создаем промис для ожидания FileReader
+          const base64Promise = new Promise<string>((resolve, reject) => {
+            reader.onloadend = () => {
+              if (reader.result) {
+                resolve(reader.result as string);
+              } else {
+                reject(new Error("Ошибка чтения файла"));
+              }
+            };
+            reader.onerror = () => {
+              reject(new Error("Ошибка загрузки файла"));
+            };
+          });
+          
+          reader.readAsDataURL(data.logoFile);
+          logoUrl = await base64Promise;
+          
+          // Логируем для отладки
+          console.log("Изображение успешно преобразовано в base64");
+        } catch (error) {
+          console.error("Ошибка при обработке изображения:", error);
+          throw new Error("Не удалось обработать загруженное изображение");
+        }
+      } 
+      
+      // Если файл не выбран, но у нас есть предпросмотр из состояния, используем его
+      else if (logoPreview && logoPreview !== team?.logoUrl) {
+        logoUrl = logoPreview;
       }
       
       const teamData = {
@@ -120,11 +139,35 @@ export default function TeamForm({ team, onClose }: TeamFormProps) {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setLogoPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      try {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          // Устанавливаем предпросмотр логотипа и обновляем logoUrl в форме
+          if (reader.result) {
+            const base64String = reader.result as string;
+            setLogoPreview(base64String);
+            setValue("logoUrl", base64String); // Устанавливаем значение в форме
+            // Добавим лог для отладки
+            console.log("Изображение успешно загружено и сохранено в форме, длина:", base64String.length);
+          }
+        };
+        reader.onerror = () => {
+          console.error("Ошибка при чтении файла");
+          toast({
+            title: "Ошибка",
+            description: "Не удалось загрузить изображение",
+            variant: "destructive",
+          });
+        };
+        reader.readAsDataURL(file);
+      } catch (error) {
+        console.error("Ошибка при обработке файла:", error);
+        toast({
+          title: "Ошибка",
+          description: "Не удалось обработать файл",
+          variant: "destructive",
+        });
+      }
     }
   };
 
