@@ -79,36 +79,39 @@ export default function HomePage() {
       }
     }
     
-    // Если первая загрузка или изменение в очках, обновляем рейтинги
-    if (prevTeams.length === 0 || scoresChanged) {
-      // Строим новый объект рейтингов
-      const newRankings: TeamRankings = {};
-      
+    // Создаем объект для новых или измененных позиций
+    let newRankings: TeamRankings = {};
+    
+    // Проверяем, нужно ли обновлять рейтинги
+    if (scoresChanged) {
       // Для каждой активной команды определяем предыдущий и текущий ранг
       activeTeams.forEach(team => {
         const currentRank = currentRanks.get(team.id) || 1;
         
-        // Если это совсем новая команда или первая загрузка
-        if (!rankings[team.id] || prevTeams.length === 0) {
+        // Для новой команды
+        if (!rankings[team.id]) {
           newRankings[team.id] = {
             previousRank: currentRank, // Начальное значение равно текущему
             currentRank: currentRank
           };
-        } 
-        else {
-          // Это существующая команда, возможно с изменением позиции
+        } else {
+          // Для существующей команды
           const oldRank = rankings[team.id].currentRank;
+          const previousRank = rankings[team.id].previousRank;
           
-          // Обновляем только если позиция изменилась
           if (oldRank !== currentRank) {
+            // Позиция изменилась
             newRankings[team.id] = {
               previousRank: oldRank,
               currentRank: currentRank
             };
             console.log(`Изменение позиции: команда ${team.name} (${oldRank} -> ${currentRank})`);
           } else {
-            // Позиция не изменилась, сохраняем предыдущие данные
-            newRankings[team.id] = {...rankings[team.id]};
+            // Позиция не изменилась, сохраняем такой же рейтинг (включая предыдущие изменения)
+            newRankings[team.id] = {
+              previousRank: previousRank,
+              currentRank: currentRank
+            };
           }
         }
       });
@@ -118,6 +121,28 @@ export default function HomePage() {
       
       // Сохраняем в localStorage для будущих сессий
       localStorage.setItem(RANKINGS_STORAGE_KEY, JSON.stringify(newRankings));
+    } else if (prevTeams.length === 0) {
+      // Если это первая загрузка и нет сохраненных рейтингов, 
+      // инициализируем с текущими позициями
+      activeTeams.forEach(team => {
+        const currentRank = currentRanks.get(team.id) || 1;
+        if (!rankings[team.id]) {
+          newRankings[team.id] = {
+            previousRank: currentRank,
+            currentRank: currentRank
+          };
+        } else {
+          // Используем сохраненные данные, если они есть
+          newRankings[team.id] = {...rankings[team.id]};
+        }
+      });
+      
+      // Только если были добавлены новые команды, обновляем состояние
+      if (Object.keys(newRankings).length > 0) {
+        const updatedRankings = {...rankings, ...newRankings};
+        setRankings(updatedRankings);
+        localStorage.setItem(RANKINGS_STORAGE_KEY, JSON.stringify(updatedRankings));
+      }
     }
     
     // Сохраняем текущее состояние команд для следующего сравнения
