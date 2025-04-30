@@ -136,30 +136,107 @@ export default function TeamForm({ team, onClose }: TeamFormProps) {
     createTeamMutation.mutate(data);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Функция для оптимизации изображения перед загрузкой
+  const optimizeImage = async (file: File, maxWidth = 300, maxHeight = 300): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      try {
+        // Создаем URL для файла
+        const imageUrl = URL.createObjectURL(file);
+        
+        // Создаем изображение для получения его размеров
+        const img = new Image();
+        img.onload = () => {
+          // Освобождаем объект URL
+          URL.revokeObjectURL(imageUrl);
+          
+          // Определяем размеры
+          let width = img.width;
+          let height = img.height;
+          
+          // Уменьшаем размер изображения, если оно больше максимальных размеров
+          if (width > maxWidth || height > maxHeight) {
+            const ratio = Math.min(maxWidth / width, maxHeight / height);
+            width = Math.floor(width * ratio);
+            height = Math.floor(height * ratio);
+          }
+          
+          // Создаем канвас для ресайза изображения
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          
+          // Рисуем изображение на канвасе
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            reject(new Error('Не удалось создать 2D контекст'));
+            return;
+          }
+          
+          ctx.drawImage(img, 0, 0, width, height);
+          
+          // Преобразуем канвас в Data URL
+          // Уменьшаем качество JPEG до 0.7
+          const optimizedImageData = canvas.toDataURL('image/jpeg', 0.7);
+          
+          // Логируем размер оптимизированного изображения
+          console.log("Размер оптимизированного изображения (символов):", optimizedImageData.length);
+          
+          resolve(optimizedImageData);
+        };
+        
+        img.onerror = () => {
+          URL.revokeObjectURL(imageUrl);
+          reject(new Error('Не удалось загрузить изображение'));
+        };
+        
+        img.src = imageUrl;
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       try {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          // Устанавливаем предпросмотр логотипа и обновляем logoUrl в форме
-          if (reader.result) {
-            const base64String = reader.result as string;
-            setLogoPreview(base64String);
-            setValue("logoUrl", base64String); // Устанавливаем значение в форме
-            // Добавим лог для отладки
-            console.log("Изображение успешно загружено и сохранено в форме, длина:", base64String.length);
-          }
-        };
-        reader.onerror = () => {
-          console.error("Ошибка при чтении файла");
+        // Проверяем размер файла (не более 5MB)
+        if (file.size > 5 * 1024 * 1024) {
           toast({
-            title: "Ошибка",
-            description: "Не удалось загрузить изображение",
+            title: "Файл слишком большой",
+            description: "Максимальный размер файла 5MB",
             variant: "destructive",
           });
-        };
-        reader.readAsDataURL(file);
+          return;
+        }
+        
+        // Проверяем тип файла (только изображения)
+        if (!file.type.startsWith('image/')) {
+          toast({
+            title: "Неверный формат файла",
+            description: "Пожалуйста, загрузите изображение",
+            variant: "destructive",
+          });
+          return;
+        }
+        
+        // Показываем индикатор загрузки
+        toast({
+          title: "Обработка изображения",
+          description: "Пожалуйста, подождите...",
+        });
+        
+        // Оптимизируем изображение
+        const optimizedImageData = await optimizeImage(file);
+        
+        // Устанавливаем предпросмотр и обновляем значение в форме
+        setLogoPreview(optimizedImageData);
+        setValue("logoUrl", optimizedImageData);
+        
+        toast({
+          title: "Изображение загружено",
+          description: "Изображение успешно обработано",
+        });
       } catch (error) {
         console.error("Ошибка при обработке файла:", error);
         toast({
