@@ -29,7 +29,7 @@ export default function PartnersSection() {
         </div>
         <div className="relative flex justify-center">
           <h2 className="px-4 text-2xl font-bold text-center bg-gradient-to-br from-slate-50 to-white">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Наши Партнеры</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Партнеры</span>
           </h2>
         </div>
       </div>
@@ -94,7 +94,7 @@ function PartnersSkeleton() {
         </div>
         <div className="relative flex justify-center">
           <h2 className="px-4 text-2xl font-bold text-center bg-gradient-to-br from-slate-50 to-white">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Наши Партнеры</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Партнеры</span>
           </h2>
         </div>
       </div>
