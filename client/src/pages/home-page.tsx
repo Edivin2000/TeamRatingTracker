@@ -8,7 +8,6 @@ import TeamTable from "@/components/team-table";
 import AdBanner from "@/components/ad-banner";
 import PartnersSection from "@/components/partners-section";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ExternalLink } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 // Тип для хранения предыдущих позиций команд
@@ -19,158 +18,113 @@ type TeamRankings = {
   };
 };
 
+// Ключ для хранения состояния рейтингов в localStorage
+const RANKINGS_STORAGE_KEY = 'teamRankingsData';
+
 export default function HomePage() {
+  // Получаем данные команд с сервера
   const { data: teams, isLoading } = useQuery<Team[]>({
     queryKey: ["/api/teams"],
     refetchInterval: 30000, // Обновляем данные каждые 30 секунд
   });
 
-  const [teamRankings, setTeamRankings] = useState<TeamRankings>({});
+  // Состояние для хранения рейтингов
+  const [rankings, setRankings] = useState<TeamRankings>({});
   
-  // Сортируем команды по очкам и исключаем команды с флагом excluded
-  const activeTeams = teams?.filter(team => !team.excluded).sort((a, b) => b.score - a.score) || [];
-  const topThreeTeams = activeTeams.slice(0, 3);
-
-  // Храним идентификатор сеанса для сброса истории при перезагрузке
-  const [sessionId] = useState(() => Date.now());
-
-  // Хранение предыдущего состояния рейтинга для сравнения между обновлениями
+  // Сохраняем последние команды для отслеживания изменений
   const prevTeamsRef = useRef<Team[]>([]);
   
-  // Хранение полной истории рейтингов в локальном хранилище
+  // Обрабатываем активные команды (без исключенных, отсортированные по очкам)
+  const activeTeams = teams?.filter(team => !team.excluded).sort((a, b) => b.score - a.score) || [];
+  const topThreeTeams = activeTeams.slice(0, 3);
+  
+  // Восстановление рейтингов из localStorage при первом рендере
   useEffect(() => {
-    // Восстанавливаем предыдущие рейтинги из localStorage при первой загрузке
-    const storedRankings = localStorage.getItem('teamRankings');
-    const storedTimestamp = localStorage.getItem('rankingsTimestamp');
-    
-    // Используем сохраненные рейтинги, если они не старше 24 часов
-    if (storedRankings && storedTimestamp) {
-      const timestamp = parseInt(storedTimestamp);
-      const now = Date.now();
-      const isExpired = now - timestamp > 24 * 60 * 60 * 1000; // 24 часа
-      
-      if (!isExpired && Object.keys(teamRankings).length === 0) {
-        try {
-          const parsedRankings = JSON.parse(storedRankings);
-          console.log("Восстановлены рейтинги из хранилища:", parsedRankings);
-          setTeamRankings(parsedRankings);
-        } catch (e) {
-          console.error("Ошибка при разборе сохраненных рейтингов:", e);
-        }
+    try {
+      const savedData = localStorage.getItem(RANKINGS_STORAGE_KEY);
+      if (savedData) {
+        const parsed = JSON.parse(savedData);
+        setRankings(parsed);
+        console.log("Восстановлены сохраненные рейтинги:", parsed);
       }
+    } catch (error) {
+      console.error("Ошибка при восстановлении рейтингов:", error);
     }
   }, []);
   
-  // Сохраняем рейтинги в localStorage для их сохранения между сессиями
+  // Отслеживаем изменения команд и обновляем рейтинги
   useEffect(() => {
-    if (Object.keys(teamRankings).length > 0) {
-      localStorage.setItem('teamRankings', JSON.stringify(teamRankings));
-      localStorage.setItem('rankingsTimestamp', Date.now().toString());
-    }
-  }, [teamRankings]);
-  
-  // Отслеживаем изменения в данных команд и обновляем рейтинги
-  useEffect(() => {
-    // Если нет активных команд или данные загружаются, ничего не делаем
-    if (activeTeams.length === 0 || isLoading) return;
+    // Пропускаем обработку, если нет данных или идет загрузка
+    if (!teams || isLoading || activeTeams.length === 0) return;
     
-    console.log("Активные команды:", activeTeams.map(t => `${t.id}-${t.name}-${t.score}`));
-    console.log("Предыдущие команды:", prevTeamsRef.current.map(t => `${t.id}-${t.name}-${t.score}`));
-    
-    // Записываем последние загруженные команды
-    const lastLoadedTeams = [...prevTeamsRef.current];
-    
-    // Если предыдущих команд нет или это первая загрузка
-    const isFirstLoad = lastLoadedTeams.length === 0;
-    
-    // Проверяем изменения позиций
-    let hasPositionChanges = false;
-    
-    // Проверяем изменение счета
-    if (!isFirstLoad) {
-      // Сравниваем текущие команды с предыдущими
-      for (const team of activeTeams) {
-        const prevTeam = lastLoadedTeams.find(t => t.id === team.id);
-        if (!prevTeam || prevTeam.score !== team.score) {
-          hasPositionChanges = true;
-          console.log(`Обнаружено изменение счета: ${team.name} с ${prevTeam?.score} на ${team.score}`);
-          break;
-        }
-      }
-    }
-    
-    // Формируем текущие ранги команд
+    // Получаем текущие ранги команд
     const currentRanks = new Map<number, number>();
     activeTeams.forEach((team, index) => {
       currentRanks.set(team.id, index + 1);
     });
     
-    // Создаем или обновляем рейтинги
-    const newRankings: TeamRankings = {};
+    // Проверяем, есть ли какие-то изменения в очках команд
+    let scoresChanged = false;
+    const prevTeams = prevTeamsRef.current;
     
-    if (isFirstLoad || Object.keys(teamRankings).length === 0) {
-      // Первая загрузка - устанавливаем начальные значения
-      console.log("Инициализация рейтингов - первая загрузка или сброс");
-      
-      // Устанавливаем одинаковые начальные значения
-      activeTeams.forEach((team) => {
-        const currentRank = currentRanks.get(team.id) || 1;
-        newRankings[team.id] = {
-          previousRank: currentRank, 
-          currentRank: currentRank,
-        };
-      });
-      
-      // Обновляем состояние
-      setTeamRankings(newRankings);
-    } 
-    else if (hasPositionChanges) {
-      // Обнаружены изменения - обновляем рейтинги
-      console.log("Обнаружены изменения позиций команд");
-      
-      // Для каждой активной команды
+    // Если есть предыдущее состояние, проверяем изменения
+    if (prevTeams.length > 0) {
       for (const team of activeTeams) {
-        const currentRank = currentRanks.get(team.id) || 1;
-        
-        // Если команда уже была в рейтингах
-        if (teamRankings[team.id]) {
-          const oldRanking = teamRankings[team.id];
-          const oldRank = oldRanking.currentRank;
-          
-          // Если рейтинг изменился
-          if (currentRank !== oldRank) {
-            newRankings[team.id] = {
-              previousRank: oldRank, // Предыдущий ранг
-              currentRank: currentRank, // Новый ранг
-            };
-            console.log(`Изменение позиции: ${team.name} с ${oldRank} на ${currentRank}`);
-          } else {
-            // Позиция не изменилась
-            newRankings[team.id] = { ...oldRanking };
-          }
-        } else {
-          // Новая команда
-          newRankings[team.id] = {
-            previousRank: currentRank,
-            currentRank: currentRank,
-          };
+        const prevTeam = prevTeams.find(t => t.id === team.id);
+        if (!prevTeam || prevTeam.score !== team.score) {
+          scoresChanged = true;
+          console.log(`Изменение очков: команда ${team.name} (${prevTeam?.score || 'новая'} -> ${team.score})`);
+          break;
         }
-      }
-      
-      // Обновляем состояние рейтингов только при наличии изменений
-      if (Object.keys(newRankings).length > 0) {
-        console.log("Обновление рейтингов:", newRankings);
-        setTeamRankings(prev => {
-          // Объединяем предыдущие рейтинги с новыми изменениями
-          return { ...prev, ...newRankings };
-        });
       }
     }
     
-    // Сохраняем текущее состояние для следующего сравнения
+    // Если первая загрузка или изменение в очках, обновляем рейтинги
+    if (prevTeams.length === 0 || scoresChanged) {
+      // Строим новый объект рейтингов
+      const newRankings: TeamRankings = {};
+      
+      // Для каждой активной команды определяем предыдущий и текущий ранг
+      activeTeams.forEach(team => {
+        const currentRank = currentRanks.get(team.id) || 1;
+        
+        // Если это совсем новая команда или первая загрузка
+        if (!rankings[team.id] || prevTeams.length === 0) {
+          newRankings[team.id] = {
+            previousRank: currentRank, // Начальное значение равно текущему
+            currentRank: currentRank
+          };
+        } 
+        else {
+          // Это существующая команда, возможно с изменением позиции
+          const oldRank = rankings[team.id].currentRank;
+          
+          // Обновляем только если позиция изменилась
+          if (oldRank !== currentRank) {
+            newRankings[team.id] = {
+              previousRank: oldRank,
+              currentRank: currentRank
+            };
+            console.log(`Изменение позиции: команда ${team.name} (${oldRank} -> ${currentRank})`);
+          } else {
+            // Позиция не изменилась, сохраняем предыдущие данные
+            newRankings[team.id] = {...rankings[team.id]};
+          }
+        }
+      });
+      
+      // Обновляем состояние рейтингов
+      setRankings(newRankings);
+      
+      // Сохраняем в localStorage для будущих сессий
+      localStorage.setItem(RANKINGS_STORAGE_KEY, JSON.stringify(newRankings));
+    }
+    
+    // Сохраняем текущее состояние команд для следующего сравнения
     prevTeamsRef.current = [...activeTeams];
-  }, [activeTeams, isLoading]);
-
+    
+  }, [teams, isLoading, activeTeams]);
+  
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
@@ -211,7 +165,7 @@ export default function HomePage() {
           {isLoading ? (
             <Skeleton className="h-64 w-full rounded-xl" />
           ) : (
-            <TeamTable teams={activeTeams} rankings={teamRankings} />
+            <TeamTable teams={activeTeams} rankings={rankings} />
           )}
         </div>
 

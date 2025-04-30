@@ -63,15 +63,15 @@ export default function TeamTable({ teams, rankings = {} }: TeamTableProps) {
       return (
         <div className={`flex items-center text-green-600 text-sm font-semibold ${getChangeClass(diff)}`}>
           <ChevronUp className="h-5 w-5 mr-1" />
-          <span>+{diff}</span>
+          <span className="font-bold">+{diff}</span>
         </div>
       );
     } else if (diff < 0) {
       // Опустились в рейтинге (ухудшили позицию)
       return (
-        <div className={`flex items-center text-red-600 text-xs font-medium ${getChangeClass(diff)}`}>
-          <ChevronDown className="h-4 w-4 mr-1" />
-          <span>{Math.abs(diff)}</span>
+        <div className={`flex items-center text-red-600 text-sm font-semibold ${getChangeClass(diff)}`}>
+          <ChevronDown className="h-5 w-5 mr-1" />
+          <span className="font-bold">-{Math.abs(diff)}</span>
         </div>
       );
     } else {
