@@ -151,14 +151,17 @@ export default function HomePage() {
       <Navbar />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
-        {/* Логотип ATOM﮳GAME */}
+        {/* Заголовок страницы с логотипом */}
         <div className="text-center mb-10">
-          <div className="flex justify-center mb-2">
-            <img 
-              src={atomGameLogo} 
-              alt="ATOM﮳GAME" 
-              className="h-24 md:h-32"
-            />
+          <div className="flex flex-col items-center justify-center mb-2">
+            <div className="flex items-center gap-2 mb-3">
+              <h2 className="font-heading font-bold text-3xl sm:text-4xl text-dark">Рейтинг Команд</h2>
+              <img 
+                src={atomGameLogo} 
+                alt="ATOM﮳GAME" 
+                className="h-10 md:h-12"
+              />
+            </div>
           </div>
           <p className="text-gray-600 max-w-2xl mx-auto">Текущий рейтинг всех команд на основе набранных очков</p>
         </div>
