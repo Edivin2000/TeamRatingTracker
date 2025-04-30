@@ -10,6 +10,7 @@ import PartnersSection from "@/components/partners-section";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import { logRankingChange } from "@/lib/utils";
+import atomGameLogo from "../assets/atom-game-logo.png";
 
 // Тип для хранения предыдущих позиций команд
 type TeamRankings = {
@@ -150,9 +151,15 @@ export default function HomePage() {
       <Navbar />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
-        {/* Заголовок страницы */}
+        {/* Логотип ATOM﮳GAME */}
         <div className="text-center mb-10">
-          <h2 className="font-heading font-bold text-3xl sm:text-4xl text-dark mb-2">Рейтинг Команд</h2>
+          <div className="flex justify-center mb-2">
+            <img 
+              src={atomGameLogo} 
+              alt="ATOM﮳GAME" 
+              className="h-24 md:h-32"
+            />
+          </div>
           <p className="text-gray-600 max-w-2xl mx-auto">Текущий рейтинг всех команд на основе набранных очков</p>
         </div>
 
