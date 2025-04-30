@@ -21,12 +21,22 @@ export default function TeamTable({ teams, rankings = {} }: TeamTableProps) {
   const renderPositionChange = (teamId: number, currentIndex: number) => {
     const teamRanking = rankings[teamId];
     
-    if (!teamRanking) return null;
+    // Если нет данных о рейтинге, возвращаем статический элемент
+    if (!teamRanking) {
+      return (
+        <div className="flex items-center text-gray-400 text-xs font-medium">
+          <Minus className="h-3 w-3 mr-1" />
+          <span>0</span>
+        </div>
+      );
+    }
     
+    // Вычисляем разницу между предыдущей и текущей позицией
+    // Если previousRank больше (хуже), то команда поднялась вверх, и это положительное изменение
     const diff = teamRanking.previousRank - teamRanking.currentRank;
     
     if (diff > 0) {
-      // Поднялись в рейтинге
+      // Поднялись в рейтинге (улучшили позицию)
       return (
         <div className="flex items-center text-green-600 text-xs font-medium">
           <ChevronUp className="h-4 w-4 mr-1" />
@@ -34,11 +44,11 @@ export default function TeamTable({ teams, rankings = {} }: TeamTableProps) {
         </div>
       );
     } else if (diff < 0) {
-      // Опустились в рейтинге
+      // Опустились в рейтинге (ухудшили позицию)
       return (
         <div className="flex items-center text-red-600 text-xs font-medium">
           <ChevronDown className="h-4 w-4 mr-1" />
-          <span>{diff}</span>
+          <span>{diff}</span> {/* уже отрицательное число */}
         </div>
       );
     } else {

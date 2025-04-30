@@ -31,26 +31,51 @@ export default function HomePage() {
   const activeTeams = teams?.filter(team => !team.excluded).sort((a, b) => b.score - a.score) || [];
   const topThreeTeams = activeTeams.slice(0, 3);
 
-  // Обновляем позиции команд при изменении данных
+  // Сохраняем предыдущие ранги при первой загрузке и обновляем при изменении данных
   useEffect(() => {
     if (activeTeams.length > 0) {
       const newRankings: TeamRankings = {};
       
-      // Определяем текущие позиции
-      activeTeams.forEach((team, index) => {
-        const currentRank = index + 1;
-        const previousRank = teamRankings[team.id]?.currentRank || currentRank;
-        
-        newRankings[team.id] = {
-          previousRank: previousRank,
-          currentRank: currentRank,
-        };
-      });
+      // При первой загрузке сохраняем начальные позиции
+      if (Object.keys(teamRankings).length === 0) {
+        // Если рейтингов нет, просто устанавливаем текущие позиции
+        activeTeams.forEach((team, index) => {
+          const currentRank = index + 1;
+          newRankings[team.id] = {
+            previousRank: currentRank, 
+            currentRank: currentRank,
+          };
+        });
+      } else {
+        // Определяем текущие позиции для каждой команды
+        activeTeams.forEach((team, index) => {
+          const currentRank = index + 1;
+          
+          // Если команда была в предыдущих рейтингах, используем эти данные
+          if (teamRankings[team.id]) {
+            newRankings[team.id] = {
+              // Сохраняем предыдущий ранг из текущего состояния
+              previousRank: teamRankings[team.id].previousRank, 
+              currentRank: currentRank,
+            };
+            
+            // Если счёт изменился, обновляем предыдущий ранг
+            // Сравниваем текущую позицию с сохраненной позицией
+            if (currentRank !== teamRankings[team.id].currentRank) {
+              newRankings[team.id].previousRank = teamRankings[team.id].currentRank;
+            }
+          } else {
+            // Новая команда, устанавливаем одинаковые значения
+            newRankings[team.id] = {
+              previousRank: currentRank,
+              currentRank: currentRank,
+            };
+          }
+        });
+      }
       
-      // Обновляем на следующем рендеринге для отображения изменений
-      setTimeout(() => {
-        setTeamRankings(newRankings);
-      }, 100);
+      // Обновляем состояние
+      setTeamRankings(newRankings);
     }
   }, [activeTeams]);
 
