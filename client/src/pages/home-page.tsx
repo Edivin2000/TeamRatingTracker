@@ -31,38 +31,58 @@ export default function HomePage() {
   const activeTeams = teams?.filter(team => !team.excluded).sort((a, b) => b.score - a.score) || [];
   const topThreeTeams = activeTeams.slice(0, 3);
 
+  // Храним предыдущий список команд для отслеживания изменений
+  const [prevTeams, setPrevTeams] = useState<Team[]>([]);
+
   // Сохраняем предыдущие ранги при первой загрузке и обновляем при изменении данных
   useEffect(() => {
-    if (activeTeams.length > 0) {
-      const newRankings: TeamRankings = {};
+    // Если нет активных команд или данные загружаются, ничего не делаем
+    if (activeTeams.length === 0 || isLoading) return;
+
+    // Создаем новые рейтинги
+    let newRankings: TeamRankings = {};
+
+    // При первой загрузке просто инициализируем рейтинги
+    if (Object.keys(teamRankings).length === 0) {
+      activeTeams.forEach((team, index) => {
+        const currentRank = index + 1;
+        newRankings[team.id] = {
+          previousRank: currentRank, 
+          currentRank: currentRank,
+        };
+      });
       
-      // При первой загрузке сохраняем начальные позиции
-      if (Object.keys(teamRankings).length === 0) {
-        // Если рейтингов нет, просто устанавливаем текущие позиции
+      // Устанавливаем начальное состояние
+      setTeamRankings(newRankings);
+      setPrevTeams([...activeTeams]);
+    } 
+    // При последующих обновлениях обновляем только при изменении данных
+    else {
+      // Проверяем, изменились ли команды или их рейтинги
+      const hasScoreChanged = activeTeams.some((team, index) => {
+        const prevTeam = prevTeams.find(t => t.id === team.id);
+        return !prevTeam || prevTeam.score !== team.score;
+      });
+
+      if (hasScoreChanged) {
+        console.log("Обнаружено изменение счета/рейтинга");
+        
+        // Создаем новые рейтинги на основе текущих позиций
         activeTeams.forEach((team, index) => {
           const currentRank = index + 1;
-          newRankings[team.id] = {
-            previousRank: currentRank, 
-            currentRank: currentRank,
-          };
-        });
-      } else {
-        // Определяем текущие позиции для каждой команды
-        activeTeams.forEach((team, index) => {
-          const currentRank = index + 1;
+          const prevRanking = teamRankings[team.id];
           
-          // Если команда была в предыдущих рейтингах, используем эти данные
-          if (teamRankings[team.id]) {
-            newRankings[team.id] = {
-              // Сохраняем предыдущий ранг из текущего состояния
-              previousRank: teamRankings[team.id].previousRank, 
-              currentRank: currentRank,
-            };
-            
-            // Если счёт изменился, обновляем предыдущий ранг
-            // Сравниваем текущую позицию с сохраненной позицией
-            if (currentRank !== teamRankings[team.id].currentRank) {
-              newRankings[team.id].previousRank = teamRankings[team.id].currentRank;
+          if (prevRanking) {
+            // Если рейтинг изменился, обновляем previousRank
+            if (currentRank !== prevRanking.currentRank) {
+              newRankings[team.id] = {
+                previousRank: prevRanking.currentRank,
+                currentRank: currentRank
+              };
+              console.log(`Команда ${team.name}: изменение с ${prevRanking.currentRank} на ${currentRank}`);
+            } else {
+              // Если рейтинг не изменился, сохраняем предыдущие значения
+              newRankings[team.id] = { ...prevRanking };
             }
           } else {
             // Новая команда, устанавливаем одинаковые значения
@@ -72,12 +92,16 @@ export default function HomePage() {
             };
           }
         });
+        
+        // Обновляем состояние только если есть изменения
+        if (Object.keys(newRankings).length > 0) {
+          setTeamRankings(newRankings);
+          setPrevTeams([...activeTeams]);
+        }
       }
-      
-      // Обновляем состояние
-      setTeamRankings(newRankings);
     }
-  }, [activeTeams]);
+  // Зависимость только от teams, чтобы эффект срабатывал только при изменении данных с сервера
+  }, [teams, isLoading]);
 
   return (
     <div className="flex flex-col min-h-screen">
