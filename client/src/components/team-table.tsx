@@ -15,19 +15,31 @@ interface TeamTableProps {
 }
 
 export default function TeamTable({ teams, rankings = {} }: TeamTableProps) {
-  // Исключаем команды с флагом excluded
+  // Исключаем команды с флагом excluded и сортируем по очкам (высшие сверху)
   const activeTeams = teams.filter(team => !team.excluded).sort((a, b) => b.score - a.score);
+  
+  // Создаем карту с текущими рангами для каждой команды
+  const currentRanks = new Map<number, number>();
+  activeTeams.forEach((team, index) => {
+    currentRanks.set(team.id, index + 1);
+  });
   
   // Отладка данных о рейтингах
   console.log("Рейтинги команд:", rankings);
   
+  // Функция для определения класса изменения позиции (для анимации)
+  const getChangeClass = (diff: number) => {
+    if (diff > 0) return "animate-pulse-green"; // Улучшили позицию
+    if (diff < 0) return "animate-pulse-red";   // Ухудшили позицию
+    return ""; // Позиция не изменилась
+  };
+  
   // Функция для отображения изменения позиции
-  const renderPositionChange = (teamId: number, currentIndex: number) => {
-    // Проверяем наличие рейтинга для команды
+  const renderPositionChange = (teamId: number) => {
+    // Проверяем наличие рейтинга для этой команды
     const teamRanking = rankings[teamId];
-    console.log(`Команда ID ${teamId}, рейтинг:`, teamRanking);
     
-    // Если нет данных о рейтинге, возвращаем статический элемент
+    // Если нет данных о рейтинге или это первая загрузка, показываем статический элемент
     if (!teamRanking) {
       return (
         <div className="flex items-center text-gray-400 text-xs font-medium">
@@ -37,25 +49,29 @@ export default function TeamTable({ teams, rankings = {} }: TeamTableProps) {
       );
     }
     
+    // Получаем текущий ранг
+    const currentRank = currentRanks.get(teamId) || 0;
+    const previousRank = teamRanking.previousRank;
+    
     // Вычисляем разницу между предыдущей и текущей позицией
     // Если previousRank больше (хуже), то команда поднялась вверх (улучшила позицию)
-    const diff = teamRanking.previousRank - teamRanking.currentRank;
-    console.log(`Команда ID ${teamId}, предыдущий ранг: ${teamRanking.previousRank}, текущий ранг: ${teamRanking.currentRank}, разница: ${diff}`);
+    const diff = previousRank - currentRank;
+    console.log(`Команда ID ${teamId}: предыдущий ранг ${previousRank}, текущий ранг ${currentRank}, разница: ${diff}`);
     
     if (diff > 0) {
       // Поднялись в рейтинге (улучшили позицию)
       return (
-        <div className="flex items-center text-green-600 text-xs font-medium">
-          <ChevronUp className="h-4 w-4 mr-1" />
+        <div className={`flex items-center text-green-600 text-sm font-semibold ${getChangeClass(diff)}`}>
+          <ChevronUp className="h-5 w-5 mr-1" />
           <span>+{diff}</span>
         </div>
       );
     } else if (diff < 0) {
       // Опустились в рейтинге (ухудшили позицию)
       return (
-        <div className="flex items-center text-red-600 text-xs font-medium">
+        <div className={`flex items-center text-red-600 text-xs font-medium ${getChangeClass(diff)}`}>
           <ChevronDown className="h-4 w-4 mr-1" />
-          <span>{Math.abs(diff)}</span> {/* преобразуем отрицательное число в положительное для отображения */}
+          <span>{Math.abs(diff)}</span>
         </div>
       );
     } else {
@@ -128,7 +144,7 @@ export default function TeamTable({ teams, rankings = {} }: TeamTableProps) {
                     </div>
                   </td>
                   <td className="px-2 sm:px-6 py-3 sm:py-4 whitespace-nowrap hidden sm:table-cell">
-                    {renderPositionChange(team.id, index)}
+                    {renderPositionChange(team.id)}
                   </td>
                   <td className="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
                     <div className="flex items-center">
@@ -149,8 +165,8 @@ export default function TeamTable({ teams, rankings = {} }: TeamTableProps) {
                         <div className={`text-sm font-medium ${index < 3 ? 'text-primary font-semibold' : 'text-gray-900'}`}>
                           {team.name}
                         </div>
-                        <div className="text-xs text-green-600 sm:hidden flex items-center mt-1">
-                          {renderPositionChange(team.id, index)}
+                        <div className="text-xs sm:hidden flex items-center mt-1">
+                          {renderPositionChange(team.id)}
                         </div>
                       </div>
                     </div>
