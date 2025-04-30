@@ -7,7 +7,7 @@ export default function TeamPodium({ teams }: { teams: Team[] }) {
     .fill(null)
     .map((_, index) => teams[index] || null);
 
-  // Порядок позиций для сетки
+  // Порядок позиций для сетки (серебро, золото, бронза)
   const positionOrders = ["order-2 md:order-1", "order-1 md:order-2", "order-3"];
   
   // Цветовые классы команд по позициям
@@ -16,7 +16,9 @@ export default function TeamPodium({ teams }: { teams: Team[] }) {
       position: 2,
       bg: "bg-silver",
       border: "border-silver",
-      text: "text-silver",
+      text: "text-gray-700",  // Темный текст для лучшего контраста
+      badge: "bg-gradient-to-r from-gray-300 to-gray-400",
+      shadow: "shadow-silver/50",
       label: "2",
       icon: Medal
     },
@@ -24,7 +26,9 @@ export default function TeamPodium({ teams }: { teams: Team[] }) {
       position: 1,
       bg: "bg-gold",
       border: "border-gold",
-      text: "text-gold",
+      text: "text-amber-700",  // Темный текст для лучшего контраста
+      badge: "bg-gradient-to-r from-yellow-300 to-amber-500",
+      shadow: "shadow-gold/50",
       label: "1",
       icon: Trophy
     },
@@ -32,7 +36,9 @@ export default function TeamPodium({ teams }: { teams: Team[] }) {
       position: 3,
       bg: "bg-bronze",
       border: "border-bronze",
-      text: "text-bronze",
+      text: "text-orange-800",  // Темный текст для лучшего контраста
+      badge: "bg-gradient-to-r from-orange-300 to-orange-600",
+      shadow: "shadow-bronze/50",
       label: "3",
       icon: Award
     }
@@ -42,28 +48,29 @@ export default function TeamPodium({ teams }: { teams: Team[] }) {
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
       {podiumPositions.map((team, index) => {
         const colors = teamColors[index];
-        const isFirst = index === 1;
+        const isFirst = index === 1;  // Золото (первое место) в центре
         const Icon = colors.icon;
         
         return (
           <div key={index} className={positionOrders[index]}>
             {team ? (
               <div 
-                className={`bg-white border-2 ${colors.border} rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition duration-300 ${isFirst ? '-translate-y-4 md:-translate-y-8' : ''}`}
+                className={`bg-white border-2 ${colors.border} rounded-xl shadow-lg ${colors.shadow} overflow-hidden transform hover:scale-105 transition duration-300 ${isFirst ? '-translate-y-4 md:-translate-y-8' : ''}`}
               >
-                <div className={`${colors.bg} p-4 text-center relative`}>
-                  <span className="inline-block bg-white text-dark text-lg font-bold rounded-full w-10 h-10 flex items-center justify-center">
+                <div className={`${colors.badge} p-4 text-center relative`}>
+                  <span className="inline-block bg-white text-dark text-lg font-bold rounded-full w-10 h-10 flex items-center justify-center shadow-md">
                     {colors.label}
                   </span>
-                  <Icon className={`absolute top-0 right-2 transform -translate-y-1/2 w-8 h-8 ${colors.text}`} />
+                  <Icon className={`absolute top-0 right-2 transform -translate-y-1/2 w-8 h-8 text-white drop-shadow-md`} />
                 </div>
                 <div className="p-6 text-center">
-                  <div className={`mx-auto ${isFirst ? 'w-28 h-28' : 'w-24 h-24'} rounded-full bg-gray-100 mb-4 flex items-center justify-center overflow-hidden border-2 ${colors.border}`}>
+                  <div className={`mx-auto ${isFirst ? 'w-32 h-32' : 'w-28 h-28'} rounded-full bg-gray-50 mb-4 flex items-center justify-center overflow-hidden border-2 ${colors.border} shadow-md`}>
                     {team.logoUrl ? (
                       <img 
                         src={team.logoUrl} 
                         alt={`${team.name} logo`} 
                         className="w-full h-full object-cover rounded-full" 
+                        loading="lazy"
                       />
                     ) : (
                       <div className="text-gray-300 text-4xl font-bold">
@@ -81,7 +88,7 @@ export default function TeamPodium({ teams }: { teams: Team[] }) {
                 </div>
               </div>
             ) : (
-              <div className="bg-white border-2 border-gray-200 rounded-lg shadow-md overflow-hidden h-full opacity-50">
+              <div className="bg-white border-2 border-gray-200 rounded-xl shadow-md overflow-hidden h-full opacity-50">
                 <div className="bg-gray-200 p-4 text-center relative">
                   <span className="inline-block bg-white text-dark text-lg font-bold rounded-full w-10 h-10 flex items-center justify-center">
                     {colors.label}

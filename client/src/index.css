@@ -67,8 +67,14 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading font-bold;
   }
+  
+  /* Оптимизация изображений */
+  img {
+    @apply max-w-full h-auto;
+  }
 }
 
+/* Шрифты */
 .font-heading {
   font-family: 'Poppins', sans-serif;
 }
@@ -77,6 +83,7 @@
   font-family: 'Inter', sans-serif;
 }
 
+/* Классы для медалей */
 .bg-gold {
   background-color: hsl(var(--gold));
 }
@@ -111,4 +118,65 @@
 
 .border-bronze {
   border-color: hsl(var(--bronze));
+}
+
+.shadow-gold {
+  box-shadow: 0 10px 15px -3px rgba(251, 191, 36, 0.3), 0 4px 6px -4px rgba(251, 191, 36, 0.3);
+}
+
+.shadow-silver {
+  box-shadow: 0 10px 15px -3px rgba(156, 163, 175, 0.3), 0 4px 6px -4px rgba(156, 163, 175, 0.3);
+}
+
+.shadow-bronze {
+  box-shadow: 0 10px 15px -3px rgba(217, 119, 6, 0.3), 0 4px 6px -4px rgba(217, 119, 6, 0.3);
+}
+
+/* Улучшенные стили для баннеров */
+.banner-blue {
+  @apply bg-gradient-to-r from-blue-600 to-indigo-700;
+}
+
+.banner-teal {
+  @apply bg-gradient-to-r from-teal-600 to-teal-800;
+}
+
+.banner-purple {
+  @apply bg-gradient-to-r from-purple-600 to-purple-800;
+}
+
+/* Оптимизации для мобильных устройств */
+@layer components {
+  .responsive-container {
+    @apply px-4 sm:px-6 lg:px-8 mx-auto;
+  }
+  
+  .responsive-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+  
+  /* Компоненты с анимацией */
+  .card-hover {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
+  
+  /* Анимации */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-in-out;
+  }
+}
+
+/* Кастомные анимации */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
