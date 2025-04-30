@@ -155,9 +155,18 @@ export default function TeamTable({ teams, rankings = {} }: TeamTableProps) {
                             src={team.logoUrl} 
                             alt={`${team.name} logo`} 
                             className="h-full w-full object-cover rounded-full" 
+                            onError={(e) => {
+                              // Если изображение не загрузилось, показываем инициалы
+                              e.currentTarget.style.display = 'none';
+                              e.currentTarget.parentElement!.innerHTML = `
+                                <div class="text-gray-500 text-lg font-semibold flex items-center justify-center h-full w-full">
+                                  ${team.name.substring(0, 2).toUpperCase()}
+                                </div>
+                              `;
+                            }}
                           />
                         ) : (
-                          <div className="text-gray-300 text-lg font-semibold">
+                          <div className="text-gray-500 text-lg font-semibold">
                             {team.name.substring(0, 2).toUpperCase()}
                           </div>
                         )}

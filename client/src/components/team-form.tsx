@@ -51,6 +51,16 @@ export default function TeamForm({ team, onClose }: TeamFormProps) {
       let logoUrl = team?.logoUrl || "";
       
       if (data.logoFile) {
+        // Проверяем размер файла (не более 2MB)
+        if (data.logoFile.size > 2 * 1024 * 1024) {
+          throw new Error("Размер файла не должен превышать 2MB");
+        }
+        
+        // Проверяем тип файла (только изображения)
+        if (!data.logoFile.type.startsWith('image/')) {
+          throw new Error("Файл должен быть изображением");
+        }
+        
         // Конвертируем в base64 для хранения в памяти
         const reader = new FileReader();
         
@@ -63,6 +73,9 @@ export default function TeamForm({ team, onClose }: TeamFormProps) {
         
         reader.readAsDataURL(data.logoFile);
         logoUrl = await base64Promise;
+        
+        // Логируем для отладки
+        console.log("Изображение успешно преобразовано в base64");
       }
       
       const teamData = {
