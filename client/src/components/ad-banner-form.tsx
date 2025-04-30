@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Loader2 } from "lucide-react";
+import { Loader2, Upload, Image as ImageIcon, FileImage } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface AdBannerFormProps {
@@ -32,6 +32,8 @@ const formSchema = insertAdSchema.extend({
   buttonLink: z.string().url("Должен быть валидный URL").or(z.literal("#")),
   active: z.boolean(),
   order: z.coerce.number().int().min(0, "Порядок должен быть положительным числом"),
+  logoFile: z.instanceof(FileList).optional().transform(val => val && val.length > 0 ? val[0] : undefined),
+  bgImageFile: z.instanceof(FileList).optional().transform(val => val && val.length > 0 ? val[0] : undefined),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -48,6 +50,8 @@ const backgroundGradients = [
 export default function AdBannerForm({ ad, onClose }: AdBannerFormProps) {
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(true);
+  const [logoPreview, setLogoPreview] = useState<string | null>(ad?.logoUrl || null);
+  const [bgImagePreview, setBgImagePreview] = useState<string | null>(ad?.bgImage || null);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -78,11 +82,86 @@ export default function AdBannerForm({ ad, onClose }: AdBannerFormProps) {
 
   const mutation = useMutation({
     mutationFn: async (data: FormData) => {
+      // Обрабатываем загрузку логотипа, если он присутствует
+      let logoUrl = data.logoUrl;
+      let bgImage = data.bgImage;
+      
+      // Обработка загрузки логотипа
+      if (data.logoFile) {
+        // Проверяем размер файла (не более 2MB)
+        if (data.logoFile.size > 2 * 1024 * 1024) {
+          throw new Error("Размер файла логотипа не должен превышать 2MB");
+        }
+        
+        // Проверяем тип файла (только изображения)
+        if (!data.logoFile.type.startsWith('image/')) {
+          throw new Error("Файл логотипа должен быть изображением");
+        }
+        
+        // Конвертируем в base64 для хранения в памяти
+        const reader = new FileReader();
+        
+        // Создаем промис для ожидания FileReader
+        const base64Promise = new Promise<string>((resolve) => {
+          reader.onloadend = () => {
+            resolve(reader.result as string);
+          };
+        });
+        
+        reader.readAsDataURL(data.logoFile);
+        logoUrl = await base64Promise;
+        
+        // Логируем для отладки
+        console.log("Логотип баннера успешно преобразован в base64");
+      }
+      
+      // Обработка загрузки фонового изображения
+      if (data.bgImageFile) {
+        // Проверяем размер файла (не более 4MB для фонового изображения)
+        if (data.bgImageFile.size > 4 * 1024 * 1024) {
+          throw new Error("Размер файла фона не должен превышать 4MB");
+        }
+        
+        // Проверяем тип файла (только изображения)
+        if (!data.bgImageFile.type.startsWith('image/')) {
+          throw new Error("Файл фона должен быть изображением");
+        }
+        
+        // Конвертируем в base64 для хранения в памяти
+        const reader = new FileReader();
+        
+        // Создаем промис для ожидания FileReader
+        const base64Promise = new Promise<string>((resolve) => {
+          reader.onloadend = () => {
+            resolve(reader.result as string);
+          };
+        });
+        
+        reader.readAsDataURL(data.bgImageFile);
+        bgImage = await base64Promise;
+        
+        // Логируем для отладки
+        console.log("Фоновое изображение баннера успешно преобразовано в base64");
+      }
+
+      // Формируем данные баннера
+      const adData = {
+        title: data.title,
+        description: data.description,
+        logoUrl: logoUrl,
+        bgImage: bgImage,
+        bgColor: data.bgColor,
+        buttonText: data.buttonText,
+        buttonLink: data.buttonLink,
+        active: data.active,
+        order: data.order,
+      };
+      
       if (ad) {
-        const res = await apiRequest("PUT", `/api/ads/${ad.id}`, data);
+        const res = await apiRequest("PUT", `/api/ads/${ad.id}`, adData);
         return await res.json();
       } else {
-        const res = await apiRequest("POST", "/api/ads", data);
+        const res = await apiRequest("POST", "/api/ads", adData);
         return await res.json();
       }
     },
@@ -120,10 +199,32 @@ export default function AdBannerForm({ ad, onClose }: AdBannerFormProps) {
       window.open(url, "_blank");
     }
   };
+  
+  const handleLogoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setLogoPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  
+  const handleBgImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBgImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   // Предпросмотр баннера
   const previewData = form.watch();
-  const hasBgImage = !!previewData.bgImage;
+  const hasBgImage = !!previewData.bgImage || !!bgImagePreview;
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -170,46 +271,57 @@ export default function AdBannerForm({ ad, onClose }: AdBannerFormProps) {
                   )}
                 />
                 
-                <FormField
-                  control={form.control}
-                  name="logoUrl"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>URL логотипа</FormLabel>
-                      <div className="flex gap-2">
-                        <FormControl>
-                          <Input placeholder="https://example.com/logo.png" {...field} />
-                        </FormControl>
-                        <Button 
-                          type="button"
-                          variant="outline"
-                          onClick={() => handlePreviewImage("logoUrl")}
-                          disabled={!form.getValues("logoUrl")}
-                        >
-                          Просмотр
-                        </Button>
+                <div className="space-y-2">
+                  <FormLabel>Логотип баннера</FormLabel>
+                  <div className="flex items-center space-x-4 mb-4">
+                    <div className="w-24 h-24 bg-gray-100 rounded border flex items-center justify-center overflow-hidden">
+                      {logoPreview ? (
+                        <img 
+                          src={logoPreview} 
+                          alt="Предпросмотр логотипа" 
+                          className="w-full h-full object-contain" 
+                        />
+                      ) : (
+                        <ImageIcon className="w-10 h-10 text-gray-300" />
+                      )}
+                    </div>
+                    <div className="flex flex-col space-y-2">
+                      <label 
+                        htmlFor="logoFileInput" 
+                        className="cursor-pointer inline-flex items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md text-sm font-medium transition-smooth"
+                      >
+                        <Upload className="w-4 h-4 mr-2" />
+                        Загрузить логотип
+                      </label>
+                      <input
+                        type="file"
+                        id="logoFileInput"
+                        className="hidden"
+                        accept="image/*"
+                        {...form.register("logoFile")}
+                        onChange={handleLogoFileChange}
+                      />
+                      <div className="text-xs text-gray-500">
+                        Рекомендуемый размер: 100x100px, JPG или PNG
                       </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    </div>
+                  </div>
+                  
                   <FormField
                     control={form.control}
-                    name="bgImage"
+                    name="logoUrl"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>URL фонового изображения</FormLabel>
+                        <FormLabel>Или укажите URL логотипа</FormLabel>
                         <div className="flex gap-2">
                           <FormControl>
-                            <Input placeholder="https://example.com/bg.jpg" {...field} />
+                            <Input placeholder="https://example.com/logo.png" {...field} />
                           </FormControl>
                           <Button 
                             type="button"
                             variant="outline"
-                            onClick={() => handlePreviewImage("bgImage")}
-                            disabled={!form.getValues("bgImage")}
+                            onClick={() => handlePreviewImage("logoUrl")}
+                            disabled={!form.getValues("logoUrl")}
                           >
                             Просмотр
                           </Button>
@@ -218,6 +330,69 @@ export default function AdBannerForm({ ad, onClose }: AdBannerFormProps) {
                       </FormItem>
                     )}
                   />
+                </div>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <FormLabel>Фоновое изображение</FormLabel>
+                    <div className="flex items-center space-x-4 mb-4">
+                      <div className="w-24 h-16 bg-gray-100 rounded border flex items-center justify-center overflow-hidden">
+                        {bgImagePreview ? (
+                          <img 
+                            src={bgImagePreview} 
+                            alt="Предпросмотр фона" 
+                            className="w-full h-full object-cover" 
+                          />
+                        ) : (
+                          <FileImage className="w-8 h-8 text-gray-300" />
+                        )}
+                      </div>
+                      <div className="flex flex-col space-y-2">
+                        <label 
+                          htmlFor="bgImageFileInput" 
+                          className="cursor-pointer inline-flex items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md text-sm font-medium transition-smooth"
+                        >
+                          <Upload className="w-4 h-4 mr-2" />
+                          Загрузить фон
+                        </label>
+                        <input
+                          type="file"
+                          id="bgImageFileInput"
+                          className="hidden"
+                          accept="image/*"
+                          {...form.register("bgImageFile")}
+                          onChange={handleBgImageFileChange}
+                        />
+                        <div className="text-xs text-gray-500">
+                          Рекомендуемый размер: 1200x400px
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <FormField
+                      control={form.control}
+                      name="bgImage"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Или укажите URL фона</FormLabel>
+                          <div className="flex gap-2">
+                            <FormControl>
+                              <Input placeholder="https://example.com/bg.jpg" {...field} />
+                            </FormControl>
+                            <Button 
+                              type="button"
+                              variant="outline"
+                              onClick={() => handlePreviewImage("bgImage")}
+                              disabled={!form.getValues("bgImage")}
+                            >
+                              Просмотр
+                            </Button>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                   
                   <FormField
                     control={form.control}
@@ -345,8 +520,8 @@ export default function AdBannerForm({ ad, onClose }: AdBannerFormProps) {
             <h3 className="text-sm font-medium text-gray-500">Предпросмотр баннера</h3>
             <div 
               className={`bg-gradient-to-r ${previewData.bgColor} rounded-xl shadow-md overflow-hidden h-[200px]`}
-              style={previewData.bgImage ? {
-                backgroundImage: `url(${previewData.bgImage})`,
+              style={(bgImagePreview || previewData.bgImage) ? {
+                backgroundImage: `url(${bgImagePreview || previewData.bgImage})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center'
               } : {}}
@@ -371,10 +546,10 @@ export default function AdBannerForm({ ad, onClose }: AdBannerFormProps) {
                     </Button>
                   </div>
                   
-                  {previewData.logoUrl && (
+                  {(logoPreview || previewData.logoUrl) && (
                     <div className="flex-shrink-0">
                       <img 
-                        src={previewData.logoUrl}
+                        src={logoPreview || previewData.logoUrl}
                         alt="Логотип" 
                         className="h-16 w-16 object-contain rounded border-2 border-white"
                       />
