@@ -9,6 +9,7 @@ import AdBanner from "@/components/ad-banner";
 import PartnersSection from "@/components/partners-section";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
+import { logRankingChange } from "@/lib/utils";
 
 // Тип для хранения предыдущих позиций команд
 type TeamRankings = {
@@ -63,86 +64,80 @@ export default function HomePage() {
       currentRanks.set(team.id, index + 1);
     });
     
-    // Проверяем, есть ли какие-то изменения в очках команд
-    let scoresChanged = false;
+    // Проверяем, есть ли какие-то изменения в данных команд
+    let hasChanges = false;
     const prevTeams = prevTeamsRef.current;
     
-    // Если есть предыдущее состояние, проверяем изменения
+    // Проверяем изменения очков или состава команд
     if (prevTeams.length > 0) {
-      for (const team of activeTeams) {
-        const prevTeam = prevTeams.find(t => t.id === team.id);
-        if (!prevTeam || prevTeam.score !== team.score) {
-          scoresChanged = true;
-          console.log(`Изменение очков: команда ${team.name} (${prevTeam?.score || 'новая'} -> ${team.score})`);
-          break;
-        }
-      }
-    }
-    
-    // Создаем объект для новых или измененных позиций
-    let newRankings: TeamRankings = {};
-    
-    // Проверяем, нужно ли обновлять рейтинги
-    if (scoresChanged) {
-      // Для каждой активной команды определяем предыдущий и текущий ранг
-      activeTeams.forEach(team => {
-        const currentRank = currentRanks.get(team.id) || 1;
-        
-        // Для новой команды
-        if (!rankings[team.id]) {
-          newRankings[team.id] = {
-            previousRank: currentRank, // Начальное значение равно текущему
-            currentRank: currentRank
-          };
-        } else {
-          // Для существующей команды
-          const oldRank = rankings[team.id].currentRank;
-          const previousRank = rankings[team.id].previousRank;
-          
-          if (oldRank !== currentRank) {
-            // Позиция изменилась
-            newRankings[team.id] = {
-              previousRank: oldRank,
-              currentRank: currentRank
-            };
-            console.log(`Изменение позиции: команда ${team.name} (${oldRank} -> ${currentRank})`);
-          } else {
-            // Позиция не изменилась, сохраняем такой же рейтинг (включая предыдущие изменения)
-            newRankings[team.id] = {
-              previousRank: previousRank,
-              currentRank: currentRank
-            };
+      // Если количество команд изменилось
+      if (prevTeams.length !== activeTeams.length) {
+        hasChanges = true;
+      } else {
+        // Проверяем, изменились ли очки у какой-либо команды
+        for (const team of activeTeams) {
+          const prevTeam = prevTeams.find(t => t.id === team.id);
+          if (!prevTeam || prevTeam.score !== team.score) {
+            hasChanges = true;
+            console.log(`Изменение очков: команда ${team.name} (${prevTeam?.score || 'новая'} -> ${team.score})`);
+            break;
           }
         }
-      });
+      }
+    } else {
+      // Первая загрузка данных
+      hasChanges = true;
+    }
+    
+    // Создаем объект для обновленных рейтингов
+    let newRankings: TeamRankings = {};
+    
+    // Обрабатываем каждую команду и обновляем рейтинги
+    activeTeams.forEach(team => {
+      const currentRank = currentRanks.get(team.id) || 1;
       
-      // Обновляем состояние рейтингов
-      setRankings(newRankings);
-      
-      // Сохраняем в localStorage для будущих сессий
-      localStorage.setItem(RANKINGS_STORAGE_KEY, JSON.stringify(newRankings));
-    } else if (prevTeams.length === 0) {
-      // Если это первая загрузка и нет сохраненных рейтингов, 
-      // инициализируем с текущими позициями
-      activeTeams.forEach(team => {
-        const currentRank = currentRanks.get(team.id) || 1;
-        if (!rankings[team.id]) {
+      // Если это новая команда или первая загрузка без сохраненных данных
+      if (!rankings[team.id]) {
+        newRankings[team.id] = {
+          previousRank: currentRank,
+          currentRank: currentRank
+        };
+      } 
+      // Если позиция команды изменилась или были изменения в данных команд
+      else if (rankings[team.id].currentRank !== currentRank || hasChanges) {
+        const oldRank = rankings[team.id].currentRank;
+        
+        // Если позиция изменилась, обновляем previousRank
+        if (oldRank !== currentRank) {
           newRankings[team.id] = {
-            previousRank: currentRank,
+            previousRank: oldRank,
             currentRank: currentRank
           };
+          
+          // Используем новую функцию для красивого логирования изменений
+          logRankingChange(team.name, oldRank, currentRank);
         } else {
-          // Используем сохраненные данные, если они есть
-          newRankings[team.id] = {...rankings[team.id]};
+          // Позиция не изменилась, сохраняем существующие данные
+          newRankings[team.id] = {
+            previousRank: rankings[team.id].previousRank,
+            currentRank: currentRank
+          };
         }
-      });
-      
-      // Только если были добавлены новые команды, обновляем состояние
-      if (Object.keys(newRankings).length > 0) {
-        const updatedRankings = {...rankings, ...newRankings};
-        setRankings(updatedRankings);
-        localStorage.setItem(RANKINGS_STORAGE_KEY, JSON.stringify(updatedRankings));
+      } 
+      // Иначе просто копируем существующие данные
+      else {
+        newRankings[team.id] = {
+          ...rankings[team.id]
+        };
       }
+    });
+    
+    // Обновляем состояние рейтингов только если были изменения или это первая загрузка
+    if (hasChanges || prevTeams.length === 0 || Object.keys(rankings).length === 0) {
+      setRankings(newRankings);
+      
+      // Сохраняем обновленные данные в localStorage
+      localStorage.setItem(RANKINGS_STORAGE_KEY, JSON.stringify(newRankings));
     }
     
     // Сохраняем текущее состояние команд для следующего сравнения
