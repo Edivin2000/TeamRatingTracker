@@ -2,10 +2,16 @@ import { Trophy, Award, Medal } from "lucide-react";
 import { Team } from "@shared/schema";
 
 export default function TeamPodium({ teams }: { teams: Team[] }) {
-  // Создаем массив из 3 позиций, заполненных командами или null
-  const podiumPositions = Array(3)
-    .fill(null)
-    .map((_, index) => teams[index] || null);
+  // Создаем правильное расположение команд на пьедестале (2-е место, 1-е место, 3-е место)
+  // Сортируем команды по убыванию очков перед использованием, чтобы гарантировать правильный порядок
+  const sortedTeams = [...teams].sort((a, b) => b.score - a.score);
+  
+  // Создаем массив для отображения на пьедестале в порядке: [2-е место, 1-е место, 3-е место]
+  const podiumPositions = [
+    sortedTeams[1] || null, // 2-е место (слева)
+    sortedTeams[0] || null, // 1-е место (центр)
+    sortedTeams[2] || null  // 3-е место (справа)
+  ];
 
   // Порядок позиций для сетки (серебро, золото, бронза)
   const positionOrders = ["order-2 md:order-1", "order-1 md:order-2", "order-3"];
