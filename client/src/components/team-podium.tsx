@@ -1,4 +1,4 @@
-import { Trophy } from "lucide-react";
+import { Trophy, Award, Medal } from "lucide-react";
 import { Team } from "@shared/schema";
 
 export default function TeamPodium({ teams }: { teams: Team[] }) {
@@ -17,21 +17,24 @@ export default function TeamPodium({ teams }: { teams: Team[] }) {
       bg: "bg-silver",
       border: "border-silver",
       text: "text-silver",
-      label: "2"
+      label: "2",
+      icon: Medal
     },
     {
       position: 1,
       bg: "bg-gold",
       border: "border-gold",
       text: "text-gold",
-      label: "1"
+      label: "1",
+      icon: Trophy
     },
     {
       position: 3,
       bg: "bg-bronze",
       border: "border-bronze",
       text: "text-bronze",
-      label: "3"
+      label: "3",
+      icon: Award
     }
   ];
 
@@ -40,25 +43,22 @@ export default function TeamPodium({ teams }: { teams: Team[] }) {
       {podiumPositions.map((team, index) => {
         const colors = teamColors[index];
         const isFirst = index === 1;
+        const Icon = colors.icon;
         
         return (
           <div key={index} className={positionOrders[index]}>
             {team ? (
               <div 
-                className={`bg-white border-2 ${colors.border} rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition duration-300 ${isFirst ? '-translate-y-4' : ''}`}
+                className={`bg-white border-2 ${colors.border} rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition duration-300 ${isFirst ? '-translate-y-4 md:-translate-y-8' : ''}`}
               >
-                <div className={`${colors.bg} p-4 text-center`}>
+                <div className={`${colors.bg} p-4 text-center relative`}>
                   <span className="inline-block bg-white text-dark text-lg font-bold rounded-full w-10 h-10 flex items-center justify-center">
                     {colors.label}
                   </span>
+                  <Icon className={`absolute top-0 right-2 transform -translate-y-1/2 w-8 h-8 ${colors.text}`} />
                 </div>
                 <div className="p-6 text-center">
-                  {isFirst && (
-                    <div className="relative">
-                      <Trophy className={`${colors.text} absolute -top-2 left-1/2 transform -translate-x-1/2 -translate-y-full w-8 h-8`} />
-                    </div>
-                  )}
-                  <div className={`mx-auto ${isFirst ? 'w-28 h-28' : 'w-24 h-24'} rounded-full bg-gray-100 mb-4 flex items-center justify-center overflow-hidden`}>
+                  <div className={`mx-auto ${isFirst ? 'w-28 h-28' : 'w-24 h-24'} rounded-full bg-gray-100 mb-4 flex items-center justify-center overflow-hidden border-2 ${colors.border}`}>
                     {team.logoUrl ? (
                       <img 
                         src={team.logoUrl} 
@@ -82,13 +82,14 @@ export default function TeamPodium({ teams }: { teams: Team[] }) {
               </div>
             ) : (
               <div className="bg-white border-2 border-gray-200 rounded-lg shadow-md overflow-hidden h-full opacity-50">
-                <div className="bg-gray-200 p-4 text-center">
+                <div className="bg-gray-200 p-4 text-center relative">
                   <span className="inline-block bg-white text-dark text-lg font-bold rounded-full w-10 h-10 flex items-center justify-center">
                     {colors.label}
                   </span>
+                  <Icon className="absolute top-0 right-2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
                 </div>
                 <div className="p-6 text-center">
-                  <div className={`mx-auto ${isFirst ? 'w-28 h-28' : 'w-24 h-24'} rounded-full bg-gray-100 mb-4 flex items-center justify-center`}>
+                  <div className={`mx-auto ${isFirst ? 'w-28 h-28' : 'w-24 h-24'} rounded-full bg-gray-100 mb-4 flex items-center justify-center border-2 border-gray-200`}>
                     <span className="text-gray-300 text-4xl">?</span>
                   </div>
                   <h3 className="font-heading font-bold text-xl mb-2 text-gray-300">
