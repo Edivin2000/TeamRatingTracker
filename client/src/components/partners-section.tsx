@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { Partner } from "@shared/schema";
 import { Skeleton } from "./ui/skeleton";
+import { ExternalLink } from "lucide-react";
 
 export default function PartnersSection() {
   const { data: partners, isLoading, error } = useQuery<Partner[]>({
@@ -15,7 +16,10 @@ export default function PartnersSection() {
   
   if (error || !partners || partners.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-md p-6">
+      <div className="bg-gradient-to-br from-slate-50 to-white rounded-xl shadow-md p-6">
+        <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
+          Наши <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Партнеры</span>
+        </h2>
         <div className="mt-6 text-center text-sm text-gray-500">
           <p>Проект поддерживается <span className="font-medium">Фондом «АТР АЭС» и АО «Концерн Росэнергоатом»</span></p>
           <p className="mt-2">Разработчик: <span className="font-medium">ATOM﮳GAME Team</span></p>
@@ -24,35 +28,57 @@ export default function PartnersSection() {
     );
   }
   
+  // Сортируем партнеров по полю order, если оно есть
+  const sortedPartners = [...partners].sort((a, b) => {
+    const orderA = a.order !== null ? a.order : 999;
+    const orderB = b.order !== null ? b.order : 999;
+    return orderA - orderB;
+  });
+  
   return (
-    <div className="bg-white rounded-xl shadow-md p-6">
+    <div className="bg-gradient-to-br from-slate-50 to-white rounded-xl shadow-md p-6">
+      <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
+        Наши <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Партнеры</span>
+      </h2>
+      
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-        {partners.map((partner) => (
+        {sortedPartners.map((partner) => (
           <a 
             key={partner.id} 
             href={partner.website || "#"} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="block"
+            className={`group block ${partner.website ? 'cursor-pointer' : 'cursor-default'}`}
           >
-            <Card className="border-0 transition-all duration-200 hover:shadow-md">
-              <CardContent className="flex items-center justify-center p-4 h-24">
+            <Card className="border border-gray-100 overflow-hidden transition-all duration-300 
+                          group-hover:shadow-lg group-hover:border-gray-200">
+              <CardContent className="flex items-center justify-center p-4 h-28 bg-white">
                 <img 
                   src={partner.logoUrl || "https://placehold.co/160x80/gray/white?text=Partner"}
                   alt={`${partner.name} logo`}
-                  className="max-h-16 max-w-full"
+                  className="max-h-20 max-w-full transition-transform duration-300 group-hover:scale-105"
                 />
               </CardContent>
             </Card>
-            <div className="mt-2 text-center text-sm text-gray-600">
-              {partner.name}
+            <div className="mt-3 text-center">
+              <div className="text-sm font-medium text-gray-800 flex items-center justify-center">
+                {partner.name}
+                {partner.website && (
+                  <ExternalLink className="ml-1 w-3 h-3 text-gray-400 group-hover:text-blue-500 transition-colors" />
+                )}
+              </div>
             </div>
           </a>
         ))}
       </div>
-      <div className="mt-6 text-center text-sm text-gray-500">
-        <p>Проект поддерживается <span className="font-medium">Фондом «АТР АЭС» и АО «Концерн Росэнергоатом»</span></p>
-        <p className="mt-2">Разработчик: <span className="font-medium">ATOM﮳GAME Team</span></p>
+      
+      <div className="mt-10 pt-6 border-t border-gray-100 text-center">
+        <p className="text-sm text-gray-600">
+          Проект поддерживается <span className="font-semibold text-gray-800">Фондом «АТР АЭС» и АО «Концерн Росэнергоатом»</span>
+        </p>
+        <p className="mt-2 text-sm text-gray-600">
+          Разработчик: <span className="font-semibold text-gray-800">ATOM﮳GAME Team</span>
+        </p>
       </div>
     </div>
   );
@@ -60,18 +86,33 @@ export default function PartnersSection() {
 
 function PartnersSkeleton() {
   return (
-    <div className="bg-white rounded-xl shadow-md p-6">
+    <div className="bg-gradient-to-br from-slate-50 to-white rounded-xl shadow-md p-6">
+      <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
+        Наши <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Партнеры</span>
+      </h2>
+      
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         {[1, 2, 3, 4].map((id) => (
           <div key={id} className="block">
-            <Skeleton className="h-24 w-full bg-gray-100" />
-            <Skeleton className="h-5 w-2/3 mx-auto mt-2 bg-gray-100" />
+            <Card className="border border-gray-100 overflow-hidden">
+              <CardContent className="p-0">
+                <Skeleton className="h-28 w-full bg-gray-50" />
+              </CardContent>
+            </Card>
+            <div className="mt-3 flex justify-center">
+              <Skeleton className="h-5 w-24 bg-gray-50" />
+            </div>
           </div>
         ))}
       </div>
-      <div className="mt-6 text-center text-sm text-gray-500">
-        <p>Проект поддерживается <span className="font-medium">Фондом «АТР АЭС» и АО «Концерн Росэнергоатом»</span></p>
-        <p className="mt-2">Разработчик: <span className="font-medium">ATOM﮳GAME Team</span></p>
+      
+      <div className="mt-10 pt-6 border-t border-gray-100 text-center">
+        <p className="text-sm text-gray-600">
+          Проект поддерживается <span className="font-semibold text-gray-800">Фондом «АТР АЭС» и АО «Концерн Росэнергоатом»</span>
+        </p>
+        <p className="mt-2 text-sm text-gray-600">
+          Разработчик: <span className="font-semibold text-gray-800">ATOM﮳GAME Team</span>
+        </p>
       </div>
     </div>
   );
