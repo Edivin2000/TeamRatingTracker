@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import atomGameLogo from "../../assets/atom-game-logo.png";
+import atomGameLogo from "../../assets/atom-game-logo-blue.png";
 
 export default function Navbar() {
   const [location] = useLocation();
@@ -20,7 +20,7 @@ export default function Navbar() {
   };
   
   return (
-    <nav className="bg-black shadow-md">
+    <nav className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
@@ -28,8 +28,8 @@ export default function Navbar() {
               <div className="flex-shrink-0 flex items-center cursor-pointer">
                 <img 
                   src={atomGameLogo} 
-                  alt="ATOM﮳GAME" 
-                  className="h-10 md:h-12"
+                  alt="ATOM.GAME" 
+                  className="h-9 md:h-11"
                 />
               </div>
             </Link>
@@ -38,7 +38,7 @@ export default function Navbar() {
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-8 w-8 rounded-full text-white hover:bg-gray-800">
+                  <Button variant="ghost" className="relative h-8 w-8 rounded-full text-gray-700 hover:bg-gray-100">
                     <User className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -60,9 +60,9 @@ export default function Navbar() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <span className="text-xs text-gray-400">
+              <span className="text-xs text-gray-500">
                 <Link href="/auth">
-                  <span className="hover:text-white cursor-pointer transition">Администрация</span>
+                  <span className="hover:text-primary cursor-pointer transition">Администрация</span>
                 </Link>
               </span>
             )}
