@@ -183,21 +183,26 @@
 
 /* Анимации для индикаторов изменения позиций */
 @keyframes pulse-green {
-  0% { opacity: 0.8; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.1); }
-  100% { opacity: 0.8; transform: scale(1); }
+  0% { opacity: 0.9; transform: scale(1); box-shadow: 0 0 0 0 rgba(72, 187, 120, 0.4); }
+  50% { opacity: 1; transform: scale(1.05); box-shadow: 0 0 0 5px rgba(72, 187, 120, 0); }
+  100% { opacity: 0.9; transform: scale(1); box-shadow: 0 0 0 0 rgba(72, 187, 120, 0); }
 }
 
 @keyframes pulse-red {
-  0% { opacity: 0.8; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.1); }
-  100% { opacity: 0.8; transform: scale(1); }
+  0% { opacity: 0.9; transform: scale(1); box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.4); }
+  50% { opacity: 1; transform: scale(1.05); box-shadow: 0 0 0 5px rgba(229, 62, 62, 0); }
+  100% { opacity: 0.9; transform: scale(1); box-shadow: 0 0 0 0 rgba(229, 62, 62, 0); }
 }
 
 .animate-pulse-green {
-  animation: pulse-green 2s infinite;
+  animation: pulse-green 2s infinite ease-in-out;
 }
 
 .animate-pulse-red {
-  animation: pulse-red 2s infinite;
+  animation: pulse-red 2s infinite ease-in-out;
+}
+
+/* Добавляем более плавные эффекты для интерактивности */
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }

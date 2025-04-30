@@ -29,8 +29,8 @@ export default function TeamTable({ teams, rankings = {} }: TeamTableProps) {
   
   // Функция для определения класса изменения позиции (для анимации)
   const getChangeClass = (diff: number) => {
-    if (diff > 0) return "animate-pulse-green"; // Улучшили позицию
-    if (diff < 0) return "animate-pulse-red";   // Ухудшили позицию
+    if (diff > 0) return "animate-pulse-green transition-all hover:scale-110"; // Улучшили позицию
+    if (diff < 0) return "animate-pulse-red transition-all hover:scale-110";   // Ухудшили позицию
     return ""; // Позиция не изменилась
   };
   
@@ -62,23 +62,23 @@ export default function TeamTable({ teams, rankings = {} }: TeamTableProps) {
     if (diff > 0) {
       // Поднялись в рейтинге (улучшили позицию)
       return (
-        <div className={`flex items-center text-green-600 text-sm font-semibold ${getChangeClass(diff)}`}>
-          <ChevronUp className="h-5 w-5 mr-1" />
+        <div className={`flex items-center justify-center bg-green-100 text-green-700 text-sm font-semibold px-2 py-1 rounded-md ${getChangeClass(diff)}`}>
+          <ChevronUp className="h-4 w-4 mr-1" />
           <span className="font-bold">+{diff}</span>
         </div>
       );
     } else if (diff < 0) {
       // Опустились в рейтинге (ухудшили позицию)
       return (
-        <div className={`flex items-center text-red-600 text-sm font-semibold ${getChangeClass(diff)}`}>
-          <ChevronDown className="h-5 w-5 mr-1" />
-          <span className="font-bold">-{Math.abs(diff)}</span>
+        <div className={`flex items-center justify-center bg-red-100 text-red-700 text-sm font-semibold px-2 py-1 rounded-md ${getChangeClass(diff)}`}>
+          <ChevronDown className="h-4 w-4 mr-1" />
+          <span className="font-bold">{diff}</span>
         </div>
       );
     } else {
       // Позиция не изменилась
       return (
-        <div className="flex items-center text-gray-400 text-xs font-medium">
+        <div className="flex items-center justify-center bg-gray-100 text-gray-500 text-xs font-medium px-2 py-1 rounded-md">
           <Minus className="h-3 w-3 mr-1" />
           <span>0</span>
         </div>
@@ -166,8 +166,10 @@ export default function TeamTable({ teams, rankings = {} }: TeamTableProps) {
                         <div className={`text-sm font-medium ${index < 3 ? 'text-primary font-semibold' : 'text-gray-900'}`}>
                           {team.name}
                         </div>
-                        <div className="text-xs sm:hidden flex items-center mt-1">
-                          {renderPositionChange(team.id)}
+                        <div className="text-xs sm:hidden flex items-center mt-2">
+                          <div className="w-full">
+                            {renderPositionChange(team.id)}
+                          </div>
                         </div>
                       </div>
                     </div>
