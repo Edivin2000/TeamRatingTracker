@@ -19,7 +19,7 @@ interface PartnerFormProps {
 
 // Расширяем схему для валидации формы
 const formSchema = insertPartnerSchema.extend({
-  logoUrl: z.string().url("Должен быть валидный URL").or(z.literal("")),
+  logoUrl: z.string().nullable().optional(),
   website: z.string().url("Должен быть валидный URL").or(z.literal("")),
   order: z.coerce.number().int().min(0, "Порядок должен быть положительным числом"),
   logoFile: z.instanceof(FileList).optional().transform(val => val && val.length > 0 ? val[0] : undefined),
@@ -51,43 +51,23 @@ export default function PartnerForm({ partner, onClose }: PartnerFormProps) {
 
   const mutation = useMutation({
     mutationFn: async (data: FormData) => {
-      // Обрабатываем загрузку логотипа, если он присутствует
-      let logoUrl = data.logoUrl;
-      
-      if (data.logoFile) {
-        // Проверяем размер файла (не более 2MB)
-        if (data.logoFile.size > 2 * 1024 * 1024) {
-          throw new Error("Размер файла не должен превышать 2MB");
-        }
-        
-        // Проверяем тип файла (только изображения)
-        if (!data.logoFile.type.startsWith('image/')) {
-          throw new Error("Файл должен быть изображением");
-        }
-        
-        // Конвертируем в base64 для хранения в памяти
-        const reader = new FileReader();
-        
-        // Создаем промис для ожидания FileReader
-        const base64Promise = new Promise<string>((resolve) => {
-          reader.onloadend = () => {
-            resolve(reader.result as string);
-          };
-        });
-        
-        reader.readAsDataURL(data.logoFile);
-        logoUrl = await base64Promise;
-        
-        // Логируем для отладки
-        console.log("Изображение партнера успешно преобразовано в base64");
-      }
-
+      // Используем logoPreview, который уже содержит изображение,
+      // если оно было загружено или URL, если было указано вручную
       const partnerData = {
         name: data.name,
-        logoUrl: logoUrl,
+        logoUrl: logoPreview || data.logoUrl || "",
         website: data.website,
         order: data.order,
       };
+      
+      // Логируем для отладки
+      console.log("Отправляем данные партнера:", {
+        name: partnerData.name,
+        logoUrlLength: partnerData.logoUrl ? partnerData.logoUrl.length : 0,
+        hasLogo: Boolean(partnerData.logoUrl),
+        website: partnerData.website,
+        order: partnerData.order
+      });
       
       if (partner) {
         const res = await apiRequest("PUT", `/api/partners/${partner.id}`, partnerData);
@@ -125,14 +105,76 @@ export default function PartnerForm({ partner, onClose }: PartnerFormProps) {
     onClose();
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Функция оптимизации изображения
+  const optimizeImage = async (file: File, maxWidth = 200, maxHeight = 100): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const reader = new FileReader();
+      
+      reader.onload = (e) => {
+        img.src = e.target?.result as string;
+        
+        img.onload = () => {
+          // Создаем canvas для изменения размера
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          
+          // Вычисляем новые размеры с сохранением пропорций
+          if (width > height) {
+            if (width > maxWidth) {
+              height = Math.round(height * maxWidth / width);
+              width = maxWidth;
+            }
+          } else {
+            if (height > maxHeight) {
+              width = Math.round(width * maxHeight / height);
+              height = maxHeight;
+            }
+          }
+          
+          // Устанавливаем размеры canvas
+          canvas.width = width;
+          canvas.height = height;
+          
+          // Отрисовываем изображение с новыми размерами
+          const ctx = canvas.getContext('2d');
+          ctx?.drawImage(img, 0, 0, width, height);
+          
+          // Преобразуем в base64 с указанным качеством
+          const dataURL = canvas.toDataURL('image/jpeg', 0.7);
+          resolve(dataURL);
+        };
+        
+        img.onerror = () => {
+          reject(new Error('Не удалось загрузить изображение'));
+        };
+      };
+      
+      reader.onerror = () => {
+        reject(new Error('Не удалось прочитать файл'));
+      };
+      
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setLogoPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      try {
+        // Оптимизируем изображение перед отображением и перед загрузкой
+        const optimizedImage = await optimizeImage(file);
+        setLogoPreview(optimizedImage);
+        
+        // Обновляем значение logoUrl в форме, чтобы использовать оптимизированное изображение
+        form.setValue("logoUrl", optimizedImage);
+        
+        // Выводим в консоль информацию о загруженном файле для отладки
+        console.log("Оптимизированное изображение партнера готово к отправке");
+      } catch (error) {
+        console.error("Ошибка при оптимизации изображения:", error);
+      }
     }
   };
 
@@ -204,7 +246,14 @@ export default function PartnerForm({ partner, onClose }: PartnerFormProps) {
                   <FormItem>
                     <FormLabel>Или укажите URL логотипа</FormLabel>
                     <FormControl>
-                      <Input placeholder="https://example.com/logo.png" {...field} />
+                      <Input 
+                        placeholder="https://example.com/logo.png" 
+                        value={field.value || ""} 
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                        name={field.name}
+                        ref={field.ref}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
