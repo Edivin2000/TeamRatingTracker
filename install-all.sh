@@ -36,6 +36,48 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
+# Проверка и очистка существующей установки
+if [ -d "${APP_PATH}" ]; then
+  echo -e "\n${YELLOW}Обнаружена существующая установка в ${APP_PATH}${NC}"
+  echo -e "${YELLOW}Очистка старой установки...${NC}"
+  
+  # Останавливаем PM2 процессы, если они есть
+  pm2 list | grep -q "atom-game-server"
+  if [ $? -eq 0 ]; then
+    echo -e "${YELLOW}Останавливаем PM2 процессы...${NC}"
+    pm2 delete atom-game-server
+    pm2 save
+  fi
+  
+  # Удаляем старые файлы
+  echo -e "${YELLOW}Удаление старых файлов...${NC}"
+  rm -rf ${APP_PATH}/*
+else
+  echo -e "\n${GREEN}Путь установки ${APP_PATH} не существует, создаем...${NC}"
+  mkdir -p ${APP_PATH}
+fi
+
+# Очистка базы данных, если она существует
+echo -e "\n${YELLOW}Проверка существующей базы данных...${NC}"
+sudo -u postgres psql -tAc "SELECT 1 FROM pg_database WHERE datname='${DB_NAME}'" | grep -q 1
+if [ $? -eq 0 ]; then
+  echo -e "${YELLOW}Обнаружена существующая база данных ${DB_NAME}${NC}"
+  echo -e "${YELLOW}Пересоздание базы данных...${NC}"
+  
+  # Удаляем все соединения с базой
+  sudo -u postgres psql -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '${DB_NAME}' AND pid <> pg_backend_pid();"
+  
+  # Удаляем базу данных
+  sudo -u postgres psql -c "DROP DATABASE IF EXISTS ${DB_NAME};"
+  
+  # Удаляем пользователя, если он существует
+  sudo -u postgres psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='${DB_USER}'" | grep -q 1
+  if [ $? -eq 0 ]; then
+    sudo -u postgres psql -c "DROP ROLE IF EXISTS ${DB_USER};"
+    echo -e "${YELLOW}Пользователь ${DB_USER} удален${NC}"
+  fi
+fi
+
 # 1. Обновление системы и установка необходимых пакетов
 echo -e "\n${BOLD}${BLUE}[1/10] Обновление системы и установка пакетов...${NC}"
 apt update && apt upgrade -y
@@ -49,16 +91,24 @@ npm install -g pm2 tsx
 
 # 3. Подготовка директории приложения
 echo -e "\n${BOLD}${BLUE}[3/10] Подготовка директории приложения...${NC}"
-mkdir -p ${APP_PATH}
-rm -rf ${APP_PATH}/*
+# Этот шаг уже выполнен выше при очистке
 
 # 4. Клонирование репозитория
 echo -e "\n${BOLD}${BLUE}[4/10] Клонирование репозитория...${NC}"
-git clone https://github.com/Edivin2000/TeamRatingTracker.git ${APP_PATH}
+# Сначала клонируем во временную директорию
+TMP_DIR="/tmp/atom-temp-$(date +%s)"
+git clone https://github.com/Edivin2000/TeamRatingTracker.git ${TMP_DIR}
 if [ $? -ne 0 ]; then
   echo -e "${RED}Ошибка клонирования репозитория. Установка прервана.${NC}"
   exit 1
 fi
+
+# Копируем файлы в целевую директорию
+cp -R ${TMP_DIR}/* ${APP_PATH}/
+echo -e "${GREEN}Репозиторий успешно клонирован в ${APP_PATH}${NC}"
+
+# Удаляем временную директорию
+rm -rf ${TMP_DIR}
 
 # 5. Настройка базы данных PostgreSQL
 echo -e "\n${BOLD}${BLUE}[5/10] Настройка базы данных PostgreSQL...${NC}"
