@@ -53,7 +53,16 @@ SESSION_SECRET=$(openssl rand -hex 32)
 # Шаг 1: Установка необходимых пакетов
 log "Установка необходимых пакетов..."
 apt update
-apt install -y nginx postgresql postgresql-contrib nodejs npm curl git
+apt install -y nginx postgresql postgresql-contrib curl git
+
+# Установка Node.js и npm
+log "Установка/настройка NodeJS и npm..."
+curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+apt install -y nodejs
+
+# Проверка установки Node.js и npm
+node -v
+npm -v
 
 # Установка PM2 глобально
 log "Установка PM2..."

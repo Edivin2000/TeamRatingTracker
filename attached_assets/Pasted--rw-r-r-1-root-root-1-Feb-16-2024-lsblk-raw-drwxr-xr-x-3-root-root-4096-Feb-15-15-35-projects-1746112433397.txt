@@ -1,0 +1,117 @@
+-rw-r--r-- 1 root root    1 Feb 16  2024 lsblk_raw
+drwxr-xr-x 3 root root 4096 Feb 15 15:35 projects
+drwx------ 4 root root 4096 Feb 22 18:43 snap
+root@vm3218560:~# git clone https://github.com/Edivin2000/TeamRatingTracker.git
+cd TeamRatingTracker
+Cloning into 'TeamRatingTracker'...
+remote: Enumerating objects: 676, done.
+remote: Counting objects: 100% (676/676), done.
+remote: Compressing objects: 100% (313/313), done.
+remote: Total 676 (delta 386), reused 642 (delta 352), pack-reused 0 (from 0)
+Receiving objects: 100% (676/676), 843.42 KiB | 1.94 MiB/s, done.
+Resolving deltas: 100% (386/386), done.
+root@vm3218560:~/TeamRatingTracker# ls -l
+total 552
+-rwxr-xr-x 1 root root  11723 May  1 18:13 atomgame-install.sh
+drwxr-xr-x 2 root root   4096 May  1 18:13 attached_assets
+-rwxr-xr-x 1 root root   3618 May  1 18:13 backup.sh
+-rw-r--r-- 1 root root   7346 May  1 18:13 basic-server.js
+drwxr-xr-x 3 root root   4096 May  1 18:13 client
+-rw-r--r-- 1 root root    459 May  1 18:13 components.json
+-rwxr-xr-x 1 root root   5298 May  1 18:13 deploy.sh
+-rw-r--r-- 1 root root    325 May  1 18:13 drizzle.config.ts
+-rw-r--r-- 1 root root    518 May  1 18:13 ecosystem.config.js
+-rwxr-xr-x 1 root root   7571 May  1 18:13 fix-app-start.sh
+-rwxr-xr-x 1 root root   4178 May  1 18:13 fix-db-export.sh
+-rwxr-xr-x 1 root root   5668 May  1 18:13 fix-db.sh
+-rw-r--r-- 1 root root   9391 May  1 18:13 fix-deployment.sh
+-rwxr-xr-x 1 root root   5620 May  1 18:13 fix-encoding.sh
+-rwxr-xr-x 1 root root   4600 May  1 18:13 fix-final.sh
+-rwxr-xr-x 1 root root   5425 May  1 18:13 fix-nginx.sh
+-rwxr-xr-x 1 root root   6268 May  1 18:13 fix-production.sh
+-rwxr-xr-x 1 root root   7670 May  1 18:13 fix-simple-server.sh
+-rwxr-xr-x 1 root root   8911 May  1 18:13 fix-test-server.sh
+-rwxr-xr-x 1 root root   4443 May  1 18:13 fix-websocket.sh
+-rw-r--r-- 1 root root   3321 May  1 18:13 github-setup.md
+-rwxr-xr-x 1 root root   8897 May  1 18:13 install.sh
+-rw-r--r-- 1 root root   1065 May  1 18:13 LICENSE
+-rw-r--r-- 1 root root   2003 May  1 18:13 nginx.conf
+-rw-r--r-- 1 root root   3536 May  1 18:13 package.json
+-rw-r--r-- 1 root root 321998 May  1 18:13 package-lock.json
+-rw-r--r-- 1 root root     80 May  1 18:13 postcss.config.js
+-rw-r--r-- 1 root root   2570 May  1 18:13 README.md
+-rwxr-xr-x 1 root root   4363 May  1 18:13 run-basic-server.sh
+drwxr-xr-x 2 root root   4096 May  1 18:13 server
+-rw-r--r-- 1 root root   4198 May  1 18:13 server.js
+drwxr-xr-x 2 root root   4096 May  1 18:13 shared
+-rw-r--r-- 1 root root   1499 May  1 18:13 simple-server.mjs
+-rw-r--r-- 1 root root   2787 May  1 18:13 tailwind.config.ts
+-rw-r--r-- 1 root root    657 May  1 18:13 tsconfig.json
+-rwxr-xr-x 1 root root   6297 May  1 18:13 update.sh
+drwxr-xr-x 2 root root   4096 May  1 18:13 uploads
+-rw-r--r-- 1 root root    894 May  1 18:13 vite.config.ts
+root@vm3218560:~/TeamRatingTracker# sudo ./install.sh
+[ИНФО] Установка необходимых пакетов...
+Hit:1 http://mirror.yandex.ru/ubuntu noble InRelease
+Hit:2 http://mirror.yandex.ru/ubuntu noble-updates InRelease
+Hit:3 http://mirror.yandex.ru/ubuntu noble-backports InRelease
+Hit:4 https://dl.google.com/linux/chrome/deb stable InRelease
+Get:5 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Hit:6 https://deb.nodesource.com/node_18.x nodistro InRelease           
+Get:7 http://security.ubuntu.com/ubuntu noble-security/main amd64 Packages [782 kB]
+Get:8 http://security.ubuntu.com/ubuntu noble-security/main i386 Packages [270 kB]
+Fetched 1,179 kB in 2s (725 kB/s)                        
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+199 packages can be upgraded. Run 'apt list --upgradable' to see them.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+nginx is already the newest version (1.24.0-2ubuntu7.3).
+postgresql is already the newest version (16+257build1.1).
+postgresql-contrib is already the newest version (16+257build1.1).
+nodejs is already the newest version (18.20.8-1nodesource1).
+curl is already the newest version (8.5.0-2ubuntu10.6).
+git is already the newest version (1:2.43.0-1ubuntu7.2).
+Some packages could not be installed. This may mean that you have
+requested an impossible situation or if you are using the unstable
+distribution that some required packages have not yet been created
+or been moved out of Incoming.
+The following information may help to resolve the situation:
+
+The following packages have unmet dependencies:
+ nodejs : Conflicts: npm
+ npm : Depends: node-agent-base but it is not going to be installed
+       Depends: node-archy but it is not going to be installed
+       Depends: node-cacache (>= 17) but it is not going to be installed
+       Depends: node-chalk (>= 5.1.2-2~) but it is not going to be installed
+       Depends: node-cli-table3
+       Depends: node-columnify but it is not going to be installed
+       Depends: node-cssesc
+       Depends: node-debug but it is not going to be installed
+       Depends: node-emoji-regex
+       Depends: node-gyp but it is not going to be installed
+       Depends: node-http-proxy-agent but it is not going to be installed
+       Depends: node-https-proxy-agent but it is not going to be installed
+       Depends: node-mkdirp but it is not going to be installed
+       Depends: node-ms but it is not going to be installed
+       Depends: node-nopt but it is not going to be installed
+       Depends: node-normalize-package-data but it is not going to be installed
+       Depends: node-npm-bundled but it is not going to be installed
+       Depends: node-npm-normalize-package-bin
+       Depends: node-npm-package-arg (>= 10) but it is not going to be installed
+       Depends: node-npmlog but it is not going to be installed
+       Depends: node-postcss-selector-parser
+       Depends: node-read-package-json but it is not going to be installed
+       Depends: node-rimraf but it is not going to be installed
+       Depends: node-semver but it is not going to be installed
+       Depends: node-string-width but it is not going to be installed
+       Depends: node-strip-ansi but it is not going to be installed
+       Depends: node-tar but it is not going to be installed
+       Depends: node-validate-npm-package-name but it is not going to be installed
+       Depends: node-which but it is not going to be installed
+       Depends: nodejs:any
+       Recommends: node-tap but it is not going to be installed
+E: Unable to correct problems, you have held broken packages.
+root@vm3218560:~/TeamRatingTracker# 
