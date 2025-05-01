@@ -1,0 +1,134 @@
+==========================================
+   Исправление запуска сервера   
+==========================================
+
+[ИСПРАВЛЕНИЕ] Проверка логов сервера...
+file:///var/www/atomgame/simple.js:7
+import { Pool } from 'pg';
+         ^^^^
+SyntaxError: Named export 'Pool' not found. The requested module 'pg' is a CommonJS module, which may not support all module.exports as named exports.
+CommonJS modules can always be imported via the default export, for example using:
+
+import pkg from 'pg';
+const { Pool } = pkg;
+
+    at ModuleJob._instantiate (node:internal/modules/esm/module_job:123:21)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:191:5)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+    at async loadESM (node:internal/process/esm_loader:34:7)
+    at async handleMainPromise (node:internal/modules/run_main:106:12)
+
+Node.js v18.20.8
+[ИСПРАВЛЕНИЕ] Остановка всех процессов Node.js...
+[ИСПРАВЛЕНИЕ] Проверка доступности PostgreSQL...
+[ИСПРАВЛЕНИЕ] PostgreSQL запущен
+[ИСПРАВЛЕНИЕ] Проверка пользователя и базы данных...
+GRANT
+[ИСПРАВЛЕНИЕ] Установка пакета pg...
+
+changed 5 packages, and audited 489 packages in 6s
+
+66 packages are looking for funding
+  run `npm fund` for details
+
+7 moderate severity vulnerabilities
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+[ИСПРАВЛЕНИЕ] Исправление скрипта simple.js...
+[ИСПРАВЛЕНИЕ] Обновление скрипта запуска...
+[ИСПРАВЛЕНИЕ] Запуск сервера для проверки ошибок...
+Node.js работает, версия: v18.20.8
+Проверка simple.js на ошибки синтаксиса...
+[ИСПРАВЛЕНИЕ] Запуск сервера в фоновом режиме...
+[ИСПРАВЛЕНИЕ] Сервер запущен с PID: 1842277
+[ИСПРАВЛЕНИЕ] Ожидание запуска сервера (3 секунды)...
+[ИСПРАВЛЕНИЕ] Содержимое логов:
+Запуск сервера...
+Текущая директория: /var/www/atomgame
+Содержимое директории:
+total 748
+drwxr-xr-x  11 root root   4096 May  1 23:49 .
+drwxr-xr-x   4 root root   4096 May  1 22:38 ..
+-rwxr-xr-x   1 root root  24980 May  1 23:43 all_in_one.sh
+-rw-r--r--   1 root root    413 May  1 23:35 app.log
+-rw-r--r--   1 root root      8 May  1 23:35 app.pid
+drwxr-xr-x   2 root root   4096 May  1 22:39 attached_assets
+-rwxr-xr-x   1 root root  14289 May  1 22:39 auto_install.sh
+-rwxr-xr-x   1 root root   1355 May  1 22:39 backup.sh
+-rwxr-xr-x   1 root root   6362 May  1 23:18 build_client.sh
+-rwxr-xr-x   1 root root  13054 May  1 23:39 clean_start.sh
+drwxr-xr-x   4 root root   4096 May  1 23:19 client
+-rw-r--r--   1 root root    459 May  1 22:39 components.json
+-rwxr-xr-x   1 root root   7310 May  1 23:05 debug_app.sh
+-rw-r--r--   1 root root   9382 May  1 22:39 deployment-guide.md
+-rwxr-xr-x   1 root root  14114 May  1 22:39 deploy.sh
+-rwxr-xr-x   1 root root   2033 May  1 22:50 direct_run.sh
+drwxr-xr-x   3 root root   4096 May  1 23:35 dist
+-rw-r--r--   1 root root    325 May  1 22:39 drizzle.config.ts
+-rw-r--r--   1 root root    419 May  1 22:45 ecosystem.config.cjs
+-rw-r--r--   1 root root    416 May  1 23:45 .env
+-rwxr-xr-x   1 root root   9221 May  1 23:22 fix_connection.sh
+-rwxr-xr-x   1 root root   6516 May  1 22:51 fix_db_url.sh
+-rwxr-xr-x   1 root root   6186 May  1 22:44 fix_deploy.sh
+-rwxr-xr-x   1 root root   7902 May  1 23:08 fix_esm.sh
+-rwxr-xr-x   1 root root  10285 May  1 23:31 fix_netdeclaration.sh
+-rwxr-xr-x   1 root root   7886 May  1 22:59 fix_nginx.sh
+-rwxr-xr-x   1 root root   8376 May  1 23:12 fix_path_error.sh
+-rwxr-xr-x   1 root root   8521 May  1 23:17 fix_public.sh
+-rwxr-xr-x   1 root root  11212 May  1 23:48 fix_server_startup.sh
+drwxr-xr-x   8 root root   4096 May  1 23:19 .git
+-rw-r--r--   1 root root  13137 May  1 22:39 github-deployment.md
+-rw-r--r--   1 root root    466 May  1 22:39 .gitignore
+-rwxr-xr-x   1 root root   9410 May  1 22:39 install.sh
+drwxr-xr-x   2 root root   4096 May  1 22:45 logs
+-rwxr-xr-x   1 root root   7702 May  1 23:35 manual_fix.sh
+-rw-r--r--   1 root root   1270 May  1 22:39 nginx.conf
+drwxr-xr-x 321 root root  12288 May  1 23:49 node_modules
+-rw-r--r--   1 root root    380 May  1 23:32 nohup.out
+-rw-r--r--   1 root root   3557 May  1 23:49 package.json
+-rw-r--r--   1 root root 322023 May  1 23:49 package-lock.json
+-rw-r--r--   1 root root     80 May  1 22:39 postcss.config.js
+drwxr-xr-x   2 root root   4096 May  1 23:19 public
+-rw-r--r--   1 root root   3807 May  1 22:39 README.md
+-rw-r--r--   1 root root    724 May  1 22:39 .replit
+-rwxr-xr-x   1 root root    136 May  1 23:05 restart.sh
+-rwxr-xr-x   1 root root    498 May  1 23:32 run_manual.sh
+-rwxr-xr-x   1 root root    477 May  1 23:27 run_without_https.sh
+drwxr-xr-x   2 root root   4096 May  1 22:39 server
+-rw-r--r--   1 root root    129 May  1 23:49 server_fixed.log
+-rw-r--r--   1 root root      8 May  1 23:49 server_fixed.pid
+-rw-r--r--   1 root root    731 May  1 23:45 server.log
+-rw-r--r--   1 root root      8 May  1 23:45 server.pid
+-rwxr-xr-x   1 root root   5224 May  1 22:39 setup_nodejs.sh
+drwxr-xr-x   2 root root   4096 May  1 22:39 shared
+-rw-r--r--   1 root root   5792 May  1 23:49 simple.js
+-rwxr-xr-x   1 root root    565 May  1 23:00 start_app.sh
+-rwxr-xr-x   1 root root    420 May  1 23:09 start_esm.sh
+-rwxr-xr-x   1 root root    370 May  1 23:49 start_fixed.sh
+-rwxr-xr-x   1 root root    417 May  1 23:45 start_server.sh
+-rwxr-xr-x   1 root root    477 May  1 23:35 start_simple.sh
+-rwxr-xr-x   1 root root    271 May  1 23:00 stop_app.sh
+-rw-r--r--   1 root root   2787 May  1 22:39 tailwind.config.ts
+-rw-r--r--   1 root root    657 May  1 22:39 tsconfig.json
+-rwxr-xr-x   1 root root    215 May  1 23:05 update.sh
+-rwxr-xr-x   1 root root    105 May  1 23:05 view_logs.sh
+-rw-r--r--   1 root root    894 May  1 22:39 vite.config.ts
+Неожиданная ошибка: Error: listen EADDRINUSE: address already in use 0.0.0.0:5001
+    at Server.setupListenHandle [as _listen2] (node:net:1817:16)
+    at listenInCluster (node:net:1865:12)
+    at doListen (node:net:2014:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 5001
+}
+[ОШИБКА] Процесс не запущен или уже завершился. Проверьте логи.
+root@vm3218560:/var/www/atomgame# 
