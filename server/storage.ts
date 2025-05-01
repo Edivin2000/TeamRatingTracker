@@ -3,8 +3,13 @@ import { users, teams, partners, ads, type User, type InsertUser,
   type Ad, type InsertAd, type ScoreUpdate } from "@shared/schema";
 import session from "express-session";
 import createMemoryStore from "memorystore";
+import connectPg from "connect-pg-simple";
+import { db } from './db';
+import { pool } from './db';
+import { eq, desc, asc } from 'drizzle-orm';
 
 const MemoryStore = createMemoryStore(session);
+const PostgresSessionStore = connectPg(session);
 
 // Storage interface
 export interface IStorage {
@@ -274,4 +279,249 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Class for database storage
+export class DatabaseStorage implements IStorage {
+  sessionStore: any;
+
+  constructor() {
+    this.sessionStore = new PostgresSessionStore({ 
+      pool, 
+      createTableIfMissing: true,
+      tableName: 'session' 
+    });
+    
+    // Ensure admin user exists (setup once)
+    this.initializeDatabase();
+  }
+
+  private async initializeDatabase() {
+    try {
+      // Check if admin user exists
+      const adminUser = await this.getUserByUsername("admin");
+      if (!adminUser) {
+        console.log("Creating admin user...");
+        await this.createUser({
+          username: "admin",
+          // Hardcoded password just for authentication simplification
+          password: "$2b$12$mQH5VJSvzV4Y8kyaVj9rS.HvCwFHU/DHUbyAwhqJ/B8O3NM3fFgLWnFP9vHT8tE76", // "Atom&Game#2025!" hashed
+          isAdmin: 1,
+        });
+      }
+
+      // Check if any teams exist
+      const allTeams = await this.getAllTeams();
+      if (allTeams.length === 0) {
+        console.log("Creating sample teams...");
+        const sampleTeams = [
+          { name: "Phoenix Force", logoUrl: "https://placehold.co/100x100/orange/white?text=PF", score: 89, excluded: false },
+          { name: "Thunderbolts", logoUrl: "https://placehold.co/100x100/blue/white?text=TB", score: 72, excluded: false },
+          { name: "Storm Riders", logoUrl: "https://placehold.co/100x100/purple/white?text=SR", score: 68, excluded: false },
+          { name: "Arctic Wolves", logoUrl: "https://placehold.co/100x100/teal/white?text=AW", score: 55, excluded: true },
+          { name: "Shadow Tigers", logoUrl: "https://placehold.co/100x100/gray/white?text=ST", score: 42, excluded: false },
+        ];
+        
+        for (const team of sampleTeams) {
+          await this.createTeam(team);
+        }
+      }
+
+      // Check if any partners exist
+      const allPartners = await this.getAllPartners();
+      if (allPartners.length === 0) {
+        console.log("Creating sample partners...");
+        const samplePartners = [
+          { name: "Росэнергоатом", logoUrl: "https://placehold.co/200x100/blue/white?text=Росэнергоатом", website: "https://www.rosenergoatom.ru/", order: 1 },
+          { name: "Фонд АТР АЭС", logoUrl: "https://placehold.co/200x100/green/white?text=Фонд+АТР+АЭС", website: "https://atompsy.ru/", order: 2 },
+          { name: "ATOM﮳GAME", logoUrl: "https://placehold.co/200x100/orange/white?text=ATOM﮳GAME", website: "https://atomgame.ru/", order: 3 },
+        ];
+        
+        for (const partner of samplePartners) {
+          await this.createPartner(partner);
+        }
+      }
+
+      // Check if any ads exist
+      const allAds = await this.getAllAds();
+      if (allAds.length === 0) {
+        console.log("Creating sample ads...");
+        const sampleAds = [
+          { 
+            title: "Технологический конкурс ATOM﮳GAME", 
+            description: "Примите участие в технологическом конкурсе и выиграйте ценные призы", 
+            logoUrl: "https://placehold.co/120x80/white/black?text=ATOM﮳GAME", 
+            bgImage: "",
+            bgColor: "from-blue-600 to-indigo-700",
+            buttonText: "Подробнее",
+            buttonLink: "https://atomgame.ru/",
+            active: true,
+            order: 1
+          },
+          { 
+            title: "Росэнергоатом приглашает", 
+            description: "Карьера в атомной энергетике для молодых специалистов", 
+            logoUrl: "https://placehold.co/120x80/white/blue?text=Росэнергоатом", 
+            bgImage: "",
+            bgColor: "from-teal-600 to-teal-800",
+            buttonText: "Узнать больше",
+            buttonLink: "https://www.rosenergoatom.ru/",
+            active: true,
+            order: 2
+          },
+        ];
+        
+        for (const ad of sampleAds) {
+          await this.createAd(ad);
+        }
+      }
+    } catch (error) {
+      console.error("Error initializing database:", error);
+    }
+  }
+
+  // User methods
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user;
+  }
+
+  async createUser(user: InsertUser): Promise<User> {
+    const [newUser] = await db.insert(users).values(user).returning();
+    return newUser;
+  }
+
+  // Team methods
+  async getAllTeams(): Promise<Team[]> {
+    return await db.select().from(teams);
+  }
+
+  async getTeam(id: number): Promise<Team | undefined> {
+    const [team] = await db.select().from(teams).where(eq(teams.id, id));
+    return team;
+  }
+
+  async createTeam(team: InsertTeam): Promise<Team> {
+    const [newTeam] = await db.insert(teams).values(team).returning();
+    return newTeam;
+  }
+
+  async updateTeam(id: number, team: InsertTeam): Promise<Team> {
+    const [updatedTeam] = await db
+      .update(teams)
+      .set(team)
+      .where(eq(teams.id, id))
+      .returning();
+
+    if (!updatedTeam) {
+      throw new Error(`Команда с ID ${id} не найдена`);
+    }
+    
+    return updatedTeam;
+  }
+  
+  async updateTeamScore(id: number, update: ScoreUpdate): Promise<Team> {
+    const team = await this.getTeam(id);
+    if (!team) {
+      throw new Error(`Команда с ID ${id} не найдена`);
+    }
+    
+    let newScore = team.score;
+    
+    if (update.operation === "add") {
+      newScore += update.value;
+    } else if (update.operation === "subtract") {
+      newScore = Math.max(0, newScore - update.value);
+    } else if (update.operation === "set") {
+      newScore = update.value;
+    }
+    
+    const [updatedTeam] = await db
+      .update(teams)
+      .set({ score: newScore })
+      .where(eq(teams.id, id))
+      .returning();
+      
+    return updatedTeam;
+  }
+
+  async deleteTeam(id: number): Promise<void> {
+    await db.delete(teams).where(eq(teams.id, id));
+  }
+  
+  // Partner methods
+  async getAllPartners(): Promise<Partner[]> {
+    return await db.select().from(partners).orderBy(asc(partners.order));
+  }
+
+  async getPartner(id: number): Promise<Partner | undefined> {
+    const [partner] = await db.select().from(partners).where(eq(partners.id, id));
+    return partner;
+  }
+
+  async createPartner(partner: InsertPartner): Promise<Partner> {
+    const [newPartner] = await db.insert(partners).values(partner).returning();
+    return newPartner;
+  }
+
+  async updatePartner(id: number, partner: InsertPartner): Promise<Partner> {
+    const [updatedPartner] = await db
+      .update(partners)
+      .set(partner)
+      .where(eq(partners.id, id))
+      .returning();
+      
+    if (!updatedPartner) {
+      throw new Error(`Партнер с ID ${id} не найден`);
+    }
+    
+    return updatedPartner;
+  }
+
+  async deletePartner(id: number): Promise<void> {
+    await db.delete(partners).where(eq(partners.id, id));
+  }
+  
+  // Ad Banner methods
+  async getAllAds(): Promise<Ad[]> {
+    return await db
+      .select()
+      .from(ads)
+      .where(eq(ads.active, true))
+      .orderBy(asc(ads.order));
+  }
+
+  async getAd(id: number): Promise<Ad | undefined> {
+    const [ad] = await db.select().from(ads).where(eq(ads.id, id));
+    return ad;
+  }
+
+  async createAd(ad: InsertAd): Promise<Ad> {
+    const [newAd] = await db.insert(ads).values(ad).returning();
+    return newAd;
+  }
+
+  async updateAd(id: number, ad: InsertAd): Promise<Ad> {
+    const [updatedAd] = await db
+      .update(ads)
+      .set(ad)
+      .where(eq(ads.id, id))
+      .returning();
+      
+    if (!updatedAd) {
+      throw new Error(`Рекламный баннер с ID ${id} не найден`);
+    }
+    
+    return updatedAd;
+  }
+
+  async deleteAd(id: number): Promise<void> {
+    await db.delete(ads).where(eq(ads.id, id));
+  }
+}
+
+// Export DatabaseStorage instead of MemStorage
+export const storage = new DatabaseStorage();

@@ -8,7 +8,9 @@ import createMemoryStore from "memorystore";
 
 declare global {
   namespace Express {
-    interface User extends User {}
+    interface User extends Omit<User, 'id'> {
+      id: number;
+    }
   }
 }
 
@@ -34,9 +36,7 @@ export function setupAuth(app: Express) {
     secret: process.env.SESSION_SECRET || "team-rankings-secret-key",
     resave: false,
     saveUninitialized: false,
-    store: new MemoryStore({
-      checkPeriod: 86400000, // prune expired entries every 24h
-    }),
+    store: storage.sessionStore, // Используем хранилище сессий из DatabaseStorage
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
       secure: process.env.NODE_ENV === "production",
