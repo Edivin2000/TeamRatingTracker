@@ -1,0 +1,266 @@
+From https://github.com/Edivin2000/TeamRatingTracker
+ * branch            main       -> FETCH_HEAD
+   7da77ef..2ab77b4  main       -> origin/main
+Updating 7da77ef..2ab77b4
+Fast-forward
+ fix-db.sh | 143 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 143 insertions(+)
+ create mode 100755 fix-db.sh
+
+up to date, audited 489 packages in 4s
+
+66 packages are looking for funding
+  run `npm fund` for details
+
+7 moderate severity vulnerabilities
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+Use --update-env to update environment variables
+[PM2] Applying action restartProcessId on app [all](ids: [
+  0, 1, 2, 3,
+  4, 5, 6
+])
+[PM2] [atom-game](0) ✓
+[PM2] [atom-game](1) ✓
+[PM2] [atom-game](2) ✓
+[PM2] [atom-game](3) ✓
+[PM2] [atom-game](4) ✓
+[PM2] [atom-game](5) ✓
+[PM2] [atom-game](6) ✓
+┌────┬──────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id │ name         │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├────┼──────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 0  │ atom-game    │ default     │ 1.0.0   │ cluster │ 1763006  │ 0s     │ 5    │ online    │ 0%       │ 76.6mb   │ root     │ disabled │
+│ 1  │ atom-game    │ default     │ 1.0.0   │ cluster │ 1763007  │ 0s     │ 5    │ online    │ 0%       │ 77.1mb   │ root     │ disabled │
+│ 2  │ atom-game    │ default     │ 1.0.0   │ cluster │ 1763022  │ 0s     │ 5    │ online    │ 0%       │ 61.8mb   │ root     │ disabled │
+│ 3  │ atom-game    │ default     │ 1.0.0   │ cluster │ 1763023  │ 0s     │ 5    │ online    │ 0%       │ 63.7mb   │ root     │ disabled │
+│ 4  │ atom-game    │ default     │ 1.0.0   │ cluster │ 1763046  │ 0s     │ 5    │ online    │ 0%       │ 52.1mb   │ root     │ disabled │
+│ 5  │ atom-game    │ default     │ 1.0.0   │ cluster │ 1763052  │ 0s     │ 5    │ online    │ 0%       │ 54.2mb   │ root     │ disabled │
+│ 6  │ atom-game    │ default     │ 1.0.0   │ cluster │ 1763069  │ 0s     │ 5    │ online    │ 0%       │ 41.3mb   │ root     │ disabled │
+└────┴──────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+root@vm3218560:/var/www/atomgameblk# chmod +x fix-db.sh
+root@vm3218560:/var/www/atomgameblk# sudo ./fix-db.sh
+[ИНФО] Исправление проблемы с базой данных PostgreSQL...
+[ИНФО] Создание пользователя atomgame...
+CREATE ROLE
+[УСПЕХ] Пользователь atomgame создан
+[ИНФО] База данных atomgame уже существует
+[ИНФО] Настройка прав доступа к базе данных...
+GRANT
+ALTER DATABASE
+[УСПЕХ] Права доступа к базе данных настроены
+[ИНФО] Настройка конфигурации PostgreSQL...
+[УСПЕХ] Конфигурация PostgreSQL обновлена
+[ИНФО] Создание конфигурационного файла .env...
+[УСПЕХ] Файл .env создан с правильными настройками
+[ИНФО] Проверка соединения с базой данных...
+You are connected to database "atomgame" as user "atomgame" on host "localhost" (address "::1") at port "5432".
+SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, compression: off)
+[УСПЕХ] Соединение с базой данных установлено успешно
+[ИНФО] Применение миграций базы данных...
+
+> rest-express@1.0.0 db:push
+> drizzle-kit push
+
+No config path provided, using default 'drizzle.config.ts'
+Reading config file '/var/www/atomgameblk/drizzle.config.ts'
+Using 'pg' driver for database querying
+[✓] Pulling schema from database...
+error: character with byte sequence 0xd0 0x9f in encoding "UTF8" has no equivalent in encoding "LATIN1"
+    at /var/www/atomgameblk/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.query (/var/www/atomgameblk/node_modules/drizzle-kit/bin.cjs:78355:26)
+    at async pgPush (/var/www/atomgameblk/node_modules/drizzle-kit/bin.cjs:81944:13)
+    at async Object.handler (/var/www/atomgameblk/node_modules/drizzle-kit/bin.cjs:92168:9)
+    at async run (/var/www/atomgameblk/node_modules/drizzle-kit/bin.cjs:91408:7) {
+  length: 169,
+  severity: 'ERROR',
+  code: '22P05',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'mbutils.c',
+  line: '1756',
+  routine: 'report_untranslatable_char'
+}
+[УСПЕХ] Структура базы данных создана
+[ИНФО] Перезапуск приложения с PM2...
+[PM2] Applying action deleteProcessId on app [atom-game](ids: [
+  0, 1, 2, 3,
+  4, 5, 6
+])
+[PM2] [atom-game](3) ✓
+[PM2] [atom-game](2) ✓
+[PM2] [atom-game](1) ✓
+[PM2] [atom-game](0) ✓
+[PM2] [atom-game](4) ✓
+[PM2] [atom-game](6) ✓
+[PM2] [atom-game](5) ✓
+┌────┬───────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id │ name      │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+└────┴───────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+[PM2][WARN] Applications atom-game not running, starting...
+[PM2] App [atom-game] launched (7 instances)
+┌────┬──────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id │ name         │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├────┼──────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 0  │ atom-game    │ default     │ 1.0.0   │ cluster │ 1763237  │ 0s     │ 0    │ online    │ 0%       │ 62.5mb   │ root     │ disabled │
+│ 1  │ atom-game    │ default     │ 1.0.0   │ cluster │ 1763244  │ 0s     │ 0    │ online    │ 0%       │ 62.6mb   │ root     │ disabled │
+│ 2  │ atom-game    │ default     │ 1.0.0   │ cluster │ 1763251  │ 0s     │ 0    │ online    │ 0%       │ 58.2mb   │ root     │ disabled │
+│ 3  │ atom-game    │ default     │ 1.0.0   │ cluster │ 1763258  │ 0s     │ 0    │ online    │ 0%       │ 54.2mb   │ root     │ disabled │
+│ 4  │ atom-game    │ default     │ 1.0.0   │ cluster │ 1763269  │ 0s     │ 0    │ online    │ 0%       │ 54.4mb   │ root     │ disabled │
+│ 5  │ atom-game    │ default     │ 1.0.0   │ cluster │ 1763280  │ 0s     │ 0    │ online    │ 0%       │ 48.9mb   │ root     │ disabled │
+│ 6  │ atom-game    │ default     │ 1.0.0   │ cluster │ 1763291  │ 0s     │ 0    │ online    │ 0%       │ 41.8mb   │ root     │ disabled │
+└────┴──────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+[PM2] Saving current process list...
+[PM2] Successfully saved in /root/.pm2/dump.pm2
+[УСПЕХ] Приложение перезапущено
+==================================================================
+        ИСПРАВЛЕНИЕ БАЗЫ ДАННЫХ ЗАВЕРШЕНО УСПЕШНО!
+==================================================================
+
+Вы можете проверить работу приложения, открыв его в браузере.
+
+Для просмотра логов приложения используйте: pm2 logs atom-game
+==================================================================
+root@vm3218560:/var/www/atomgameblk# pm2 logs atom-game
+[TAILING] Tailing last 15 lines for [atom-game] process (change the value with --lines option)
+/root/.pm2/logs/atom-game-out-0.log last 15 lines:
+/root/.pm2/logs/atom-game-out-1.log last 15 lines:
+/root/.pm2/logs/atom-game-out-2.log last 15 lines:
+/root/.pm2/logs/atom-game-out-3.log last 15 lines:
+/root/.pm2/logs/atom-game-out-4.log last 15 lines:
+/root/.pm2/logs/atom-game-out-5.log last 15 lines:
+/root/.pm2/logs/atom-game-out-6.log last 15 lines:
+/root/.pm2/logs/atom-game-error-2.log last 15 lines:
+2|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+2|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+2|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+2|atom-gam | You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+2|atom-gam | Error: DATABASE_URL must be set. Did you forget to provision a database?
+2|atom-gam |     at file:///var/www/atomgameblk/dist/index.js:165:9
+2|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+2|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+2|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+2|atom-gam | You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+2|atom-gam | Error: DATABASE_URL must be set. Did you forget to provision a database?
+2|atom-gam |     at file:///var/www/atomgameblk/dist/index.js:165:9
+2|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+2|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+2|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+
+/root/.pm2/logs/atom-game-error-0.log last 15 lines:
+0|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+0|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+0|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+0|atom-gam | You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+0|atom-gam | Error: DATABASE_URL must be set. Did you forget to provision a database?
+0|atom-gam |     at file:///var/www/atomgameblk/dist/index.js:165:9
+0|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+0|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+0|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+0|atom-gam | You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+0|atom-gam | Error: DATABASE_URL must be set. Did you forget to provision a database?
+0|atom-gam |     at file:///var/www/atomgameblk/dist/index.js:165:9
+0|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+0|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+0|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+
+/root/.pm2/logs/atom-game-error-1.log last 15 lines:
+1|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+1|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+1|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+1|atom-gam | You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+1|atom-gam | Error: DATABASE_URL must be set. Did you forget to provision a database?
+1|atom-gam |     at file:///var/www/atomgameblk/dist/index.js:165:9
+1|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+1|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+1|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+1|atom-gam | You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+1|atom-gam | Error: DATABASE_URL must be set. Did you forget to provision a database?
+1|atom-gam |     at file:///var/www/atomgameblk/dist/index.js:165:9
+1|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+1|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+1|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+
+/root/.pm2/logs/atom-game-error-4.log last 15 lines:
+4|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+4|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+4|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+4|atom-gam | You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+4|atom-gam | Error: DATABASE_URL must be set. Did you forget to provision a database?
+4|atom-gam |     at file:///var/www/atomgameblk/dist/index.js:165:9
+4|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+4|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+4|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+4|atom-gam | You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+4|atom-gam | Error: DATABASE_URL must be set. Did you forget to provision a database?
+4|atom-gam |     at file:///var/www/atomgameblk/dist/index.js:165:9
+4|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+4|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+4|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+
+/root/.pm2/logs/atom-game-error-3.log last 15 lines:
+3|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+3|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+3|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+3|atom-gam | You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+3|atom-gam | Error: DATABASE_URL must be set. Did you forget to provision a database?
+3|atom-gam |     at file:///var/www/atomgameblk/dist/index.js:165:9
+3|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+3|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+3|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+3|atom-gam | You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+3|atom-gam | Error: DATABASE_URL must be set. Did you forget to provision a database?
+3|atom-gam |     at file:///var/www/atomgameblk/dist/index.js:165:9
+3|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+3|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+3|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+
+/root/.pm2/logs/atom-game-error-5.log last 15 lines:
+5|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+5|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+5|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+5|atom-gam | You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+5|atom-gam | Error: DATABASE_URL must be set. Did you forget to provision a database?
+5|atom-gam |     at file:///var/www/atomgameblk/dist/index.js:165:9
+5|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+5|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+5|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+5|atom-gam | You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+5|atom-gam | Error: DATABASE_URL must be set. Did you forget to provision a database?
+5|atom-gam |     at file:///var/www/atomgameblk/dist/index.js:165:9
+5|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+5|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+5|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+
+/root/.pm2/logs/atom-game-error-6.log last 15 lines:
+6|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+6|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+6|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+6|atom-gam | You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+6|atom-gam | Error: DATABASE_URL must be set. Did you forget to provision a database?
+6|atom-gam |     at file:///var/www/atomgameblk/dist/index.js:165:9
+6|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+6|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+6|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+6|atom-gam | You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+6|atom-gam | Error: DATABASE_URL must be set. Did you forget to provision a database?
+6|atom-gam |     at file:///var/www/atomgameblk/dist/index.js:165:9
+6|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+6|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+6|atom-gam |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
