@@ -82,67 +82,15 @@ export default function AdBannerForm({ ad, onClose }: AdBannerFormProps) {
 
   const mutation = useMutation({
     mutationFn: async (data: FormData) => {
-      // Обрабатываем загрузку логотипа, если он присутствует
-      let logoUrl = data.logoUrl;
-      let bgImage = data.bgImage;
+      // Так как превью изображений теперь напрямую устанавливаются в форму,
+      // нет необходимости обрабатывать файлы здесь - они уже преобразованы в base64
+      // и сохранены в поля logoUrl и bgImage формы через обработчики изменений файлов
+      console.log("logoUrl длина:", data.logoUrl?.length || 0);
+      console.log("bgImage длина:", data.bgImage?.length || 0);
       
-      // Обработка загрузки логотипа
-      if (data.logoFile) {
-        // Проверяем размер файла (не более 2MB)
-        if (data.logoFile.size > 2 * 1024 * 1024) {
-          throw new Error("Размер файла логотипа не должен превышать 2MB");
-        }
-        
-        // Проверяем тип файла (только изображения)
-        if (!data.logoFile.type.startsWith('image/')) {
-          throw new Error("Файл логотипа должен быть изображением");
-        }
-        
-        // Конвертируем в base64 для хранения в памяти
-        const reader = new FileReader();
-        
-        // Создаем промис для ожидания FileReader
-        const base64Promise = new Promise<string>((resolve) => {
-          reader.onloadend = () => {
-            resolve(reader.result as string);
-          };
-        });
-        
-        reader.readAsDataURL(data.logoFile);
-        logoUrl = await base64Promise;
-        
-        // Логируем для отладки
-        console.log("Логотип баннера успешно преобразован в base64");
-      }
-      
-      // Обработка загрузки фонового изображения
-      if (data.bgImageFile) {
-        // Проверяем размер файла (не более 4MB для фонового изображения)
-        if (data.bgImageFile.size > 4 * 1024 * 1024) {
-          throw new Error("Размер файла фона не должен превышать 4MB");
-        }
-        
-        // Проверяем тип файла (только изображения)
-        if (!data.bgImageFile.type.startsWith('image/')) {
-          throw new Error("Файл фона должен быть изображением");
-        }
-        
-        // Конвертируем в base64 для хранения в памяти
-        const reader = new FileReader();
-        
-        // Создаем промис для ожидания FileReader
-        const base64Promise = new Promise<string>((resolve) => {
-          reader.onloadend = () => {
-            resolve(reader.result as string);
-          };
-        });
-        
-        reader.readAsDataURL(data.bgImageFile);
-        bgImage = await base64Promise;
-        
-        // Логируем для отладки
-        console.log("Фоновое изображение баннера успешно преобразовано в base64");
-      }
+      // Используем данные напрямую из формы
+      const logoUrl = data.logoUrl;
+      const bgImage = data.bgImage;
 
       // Формируем данные баннера
       const adData = {
@@ -217,7 +165,12 @@ export default function AdBannerForm({ ad, onClose }: AdBannerFormProps) {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setLogoPreview(reader.result as string);
+        const base64Data = reader.result as string;
+        setLogoPreview(base64Data);
+        
+        // Автоматически устанавливаем значение в форму
+        form.setValue("logoUrl", base64Data);
+        console.log("Логотип установлен в форму:", base64Data.substring(0, 50) + "...");
       };
       reader.readAsDataURL(file);
     }
@@ -228,7 +181,12 @@ export default function AdBannerForm({ ad, onClose }: AdBannerFormProps) {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setBgImagePreview(reader.result as string);
+        const base64Data = reader.result as string;
+        setBgImagePreview(base64Data);
+        
+        // Автоматически устанавливаем значение в форму
+        form.setValue("bgImage", base64Data);
+        console.log("Фон установлен в форму:", base64Data.substring(0, 50) + "...");
       };
       reader.readAsDataURL(file);
     }
