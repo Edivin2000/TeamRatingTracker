@@ -103,13 +103,11 @@ export default function AdminTimerTable({
                       </div>
                       <div className="ml-4">
                         <div className="text-sm font-medium text-gray-900">
-                          {timer.title}
+                          {timer.displayName || timer.name}
                         </div>
-                        {timer.description && (
-                          <div className="text-xs text-gray-500 max-w-md truncate">
-                            {timer.description}
-                          </div>
-                        )}
+                        <div className="text-xs text-gray-500 max-w-md truncate">
+                          {timer.name}
+                        </div>
                       </div>
                     </div>
                   </td>

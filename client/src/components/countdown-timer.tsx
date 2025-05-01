@@ -106,13 +106,8 @@ export default function CountdownTimer() {
     <div className="bg-primary/5 rounded-lg p-6 mb-6">
       <div className="text-center mb-4">
         <h3 className="text-lg md:text-xl font-semibold text-primary">
-          {activeTimer.title}
+          {activeTimer.displayName || activeTimer.name}
         </h3>
-        {activeTimer.description && (
-          <p className="text-sm text-gray-600 mt-1">
-            {activeTimer.description}
-          </p>
-        )}
         <p className="text-sm text-gray-500 mt-1">
           До {formattedEndDate}
         </p>

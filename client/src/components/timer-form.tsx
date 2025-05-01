@@ -15,7 +15,7 @@ import { X } from "lucide-react";
 
 // Расширяем схему с дополнительной валидацией
 const formSchema = insertTimerSchema.extend({
-  title: z.string().min(1, "Название таймера обязательно"),
+  name: z.string().min(1, "Название таймера обязательно"),
   endDate: z.string().min(1, "Дата окончания обязательна"),
 });
 
@@ -41,16 +41,18 @@ export default function TimerForm({ timer, onClose }: TimerFormProps) {
     resolver: zodResolver(formSchema),
     defaultValues: timer
       ? {
-          title: timer.title,
-          description: timer.description || "",
+          name: timer.name,
+          displayName: timer.displayName || "",
           endDate: timer.endDate,
           active: timer.active ?? false,
+          color: timer.color || "",
         }
       : {
-          title: "",
-          description: "",
+          name: "",
+          displayName: "",
           endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + "T23:59:59",
           active: true,
+          color: "from-blue-600 to-indigo-700",
         },
   });
 
@@ -91,7 +93,7 @@ export default function TimerForm({ timer, onClose }: TimerFormProps) {
     saveMutation.mutate(data);
   };
 
-  const watchActive = watch("active");
+  const watchActive = watch("active") as boolean;
 
   // Обработчик переключения активности
   const handleToggleActive = () => {
@@ -117,27 +119,26 @@ export default function TimerForm({ timer, onClose }: TimerFormProps) {
 
         <form onSubmit={handleSubmit(onSubmit)} className="p-4 space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="title" className={errors.title ? "text-red-500" : ""}>
-              Название таймера
+            <Label htmlFor="name" className={errors.name ? "text-red-500" : ""}>
+              Системное название таймера
             </Label>
             <Input
-              id="title"
+              id="name"
               placeholder="Введите название таймера"
-              {...register("title")}
-              className={errors.title ? "border-red-500" : ""}
+              {...register("name")}
+              className={errors.name ? "border-red-500" : ""}
             />
-            {errors.title && (
-              <p className="text-red-500 text-xs">{errors.title.message}</p>
+            {errors.name && (
+              <p className="text-red-500 text-xs">{errors.name.message}</p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Описание (необязательно)</Label>
-            <Textarea
-              id="description"
-              placeholder="Введите описание таймера"
-              rows={3}
-              {...register("description")}
+            <Label htmlFor="displayName">Отображаемое название (необязательно)</Label>
+            <Input
+              id="displayName"
+              placeholder="Название для отображения пользователю"
+              {...register("displayName")}
             />
           </div>
 
@@ -154,6 +155,15 @@ export default function TimerForm({ timer, onClose }: TimerFormProps) {
             {errors.endDate && (
               <p className="text-red-500 text-xs">{errors.endDate.message}</p>
             )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="color">Цвет (необязательно)</Label>
+            <Input
+              id="color"
+              placeholder="CSS класс цвета, например 'from-blue-600 to-indigo-700'"
+              {...register("color")}
+            />
           </div>
 
           <div className="flex items-center space-x-2 pt-2">
