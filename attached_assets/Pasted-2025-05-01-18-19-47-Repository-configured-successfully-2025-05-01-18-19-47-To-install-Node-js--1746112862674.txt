@@ -1,0 +1,152 @@
+2025-05-01 18:19:47 - Repository configured successfully.
+2025-05-01 18:19:47 - To install Node.js, run: apt-get install nodejs -y
+2025-05-01 18:19:47 - You can use N|solid Runtime as a node.js alternative
+2025-05-01 18:19:47 - To install N|solid Runtime, run: apt-get install nsolid -y 
+
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  python3-attr python3-compose python3-docker python3-dockerpty python3-docopt python3-dotenv python3-json-pointer python3-jsonschema python3-packaging
+  python3-pyrsistent python3-texttable python3-websocket
+Use 'sudo apt autoremove' to remove them.
+The following packages will be upgraded:
+  nodejs
+1 upgraded, 0 newly installed, 0 to remove and 199 not upgraded.
+Need to get 32.0 MB of archives.
+After this operation, 11.6 MB of additional disk space will be used.
+Get:1 https://deb.nodesource.com/node_20.x nodistro/main amd64 nodejs amd64 20.19.1-1nodesource1 [32.0 MB]
+Fetched 32.0 MB in 2s (15.9 MB/s)  
+(Reading database ... 112547 files and directories currently installed.)
+Preparing to unpack .../nodejs_20.19.1-1nodesource1_amd64.deb ...
+Detected old npm client, removing...
+Unpacking nodejs (20.19.1-1nodesource1) over (18.20.8-1nodesource1) ...
+Setting up nodejs (20.19.1-1nodesource1) ...
+Processing triggers for man-db (2.12.0-4build2) ...
+v20.19.1
+10.8.2
+[ИНФО] Установка PM2...
+
+changed 134 packages in 10s
+
+13 packages are looking for funding
+  run `npm fund` for details
+[УСПЕХ] PM2 установлен
+[ИНФО] Создание директории проекта...
+[УСПЕХ] Директория проекта создана
+[ИНФО] Настройка базы данных PostgreSQL...
+ERROR:  role "atomgame" already exists
+ERROR:  database "atomgame" already exists
+ALTER ROLE
+[УСПЕХ] База данных создана
+[ИНФО] Клонирование репозитория из GitHub...
+Cloning into '.'...
+remote: Enumerating objects: 688, done.
+remote: Counting objects: 100% (688/688), done.
+remote: Compressing objects: 100% (321/321), done.
+remote: Total 688 (delta 390), reused 654 (delta 356), pack-reused 0 (from 0)
+Receiving objects: 100% (688/688), 850.02 KiB | 3.88 MiB/s, done.
+Resolving deltas: 100% (390/390), done.
+[УСПЕХ] Репозиторий клонирован
+[ИНФО] Установка зависимостей NPM...
+npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+
+added 488 packages, and audited 489 packages in 21s
+
+66 packages are looking for funding
+  run `npm fund` for details
+
+7 moderate severity vulnerabilities
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+[УСПЕХ] Зависимости установлены
+[ИНФО] Исправление файла подключения к базе данных...
+[УСПЕХ] Файл подключения к базе данных исправлен
+[ИНФО] Сборка приложения...
+
+> rest-express@1.0.0 build
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+
+vite v5.4.14 building for production...
+transforming (3) src/main.tsxBrowserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 2682 modules transformed.
+../dist/public/index.html                                 0.63 kB │ gzip:   0.38 kB
+../dist/public/assets/atom-game-logo-blue-zWFb6GXJ.png  670.19 kB
+../dist/public/assets/index-wEV2E3VN.css                 78.47 kB │ gzip:  13.45 kB
+../dist/public/assets/index-DOrnqSzR.js                 625.44 kB │ gzip: 184.59 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 14.77s
+
+  dist/index.js  42.6kb
+
+⚡ Done in 12ms
+[УСПЕХ] Приложение собрано
+[ИНФО] Применение миграций базы данных...
+
+> rest-express@1.0.0 db:push
+> drizzle-kit push
+
+No config path provided, using default 'drizzle.config.ts'
+Reading config file '/var/www/atomgameblk/drizzle.config.ts'
+DATABASE_URL, ensure the database is provisioned
+root@vm3218560:~/TeamRatingTracker# cd /var/www/atomgameblk
+sudo ./run-basic-server.sh
+Останавливаем PM2...
+[PM2] Applying action deleteProcessId on app [all](ids: [ 0, 1 ])
+[PM2] [all](0) ✓
+[PM2] [all](1) ✓
+┌────┬───────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id │ name      │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+└────┴───────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+Переходим в директорию проекта...
+Устанавливаем необходимые пакеты для базового сервера...
+
+changed 5 packages, and audited 489 packages in 4s
+
+66 packages are looking for funding
+  run `npm fund` for details
+
+7 moderate severity vulnerabilities
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+Запускаем базовый сервер...
+Лог будет доступен в текущем терминале.
+Для остановки сервера нажмите Ctrl+C
+-----------------------------------------------------
+file:///var/www/atomgameblk/basic-server.js:4
+const express = require('express');
+                ^
+
+ReferenceError: require is not defined in ES module scope, you can use import instead
+This file is being treated as an ES module because it has a '.js' file extension and '/var/www/atomgameblk/package.json' contains "type": "module". To treat it as a CommonJS script, rename it to use the '.cjs' file extension.
+    at file:///var/www/atomgameblk/basic-server.js:4:17
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.19.1
+root@vm3218560:/var/www/atomgameblk# pm2 status
+pm2 logs atom-game
+┌────┬───────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id │ name      │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+└────┴───────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+[TAILING] Tailing last 15 lines for [atom-game] process (change the value with --lines option)

@@ -1,4 +1,4 @@
-// basic-server.js
+// basic-server.mjs
 // Простой сервер для запуска в случае проблем с основным сервером
 
 import express from 'express';
