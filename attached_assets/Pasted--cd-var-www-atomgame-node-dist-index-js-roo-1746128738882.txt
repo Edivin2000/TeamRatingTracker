@@ -1,0 +1,31 @@
+Если приложение по-прежнему не работает, попробуйте:
+cd /var/www/atomgame && node dist/index.js
+
+root@vm3218560:/var/www/atomgame# pm2 logs
+[TAILING] Tailing last 15 lines for [all] processes (change the value with --lines option)
+/root/.pm2/pm2.log last 15 lines:
+PM2        | 2025-05-01T22:17:35: PM2 log: Node.js version      : 20.19.1
+PM2        | 2025-05-01T22:17:35: PM2 log: Current arch         : x64
+PM2        | 2025-05-01T22:17:35: PM2 log: PM2 home             : /root/.pm2
+PM2        | 2025-05-01T22:17:35: PM2 log: PM2 PID file         : /root/.pm2/pm2.pid
+PM2        | 2025-05-01T22:17:35: PM2 log: RPC socket file      : /root/.pm2/rpc.sock
+PM2        | 2025-05-01T22:17:35: PM2 log: BUS socket file      : /root/.pm2/pub.sock
+PM2        | 2025-05-01T22:17:35: PM2 log: Application log path : /root/.pm2/logs
+PM2        | 2025-05-01T22:17:35: PM2 log: Worker Interval      : 30000
+PM2        | 2025-05-01T22:17:35: PM2 log: Process dump file    : /root/.pm2/dump.pm2
+PM2        | 2025-05-01T22:17:35: PM2 log: Concurrent actions   : 2
+PM2        | 2025-05-01T22:17:35: PM2 log: SIGTERM timeout      : 1600
+PM2        | 2025-05-01T22:17:35: PM2 log: Runtime Binary       : /usr/bin/node
+PM2        | 2025-05-01T22:17:35: PM2 log: ===============================================================================
+PM2        | 2025-05-01T22:45:39: PM2 log: App [atomgame:0] starting in -cluster mode-
+PM2        | 2025-05-01T22:45:39: PM2 log: App [atomgame:0] online
+
+/var/www/atomgame/logs/output-0.log last 15 lines:
+/var/www/atomgame/logs/error-0.log last 15 lines:
+0|atomgame | You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+0|atomgame | Error: DATABASE_URL must be set. Did you forget to provision a database?
+0|atomgame |     at file:///var/www/atomgame/dist/index.js:165:9
+0|atomgame |     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+0|atomgame |     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+0|atomgame |     at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+
