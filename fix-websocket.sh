@@ -19,10 +19,7 @@ NC='\033[0m' # No Color
 
 # Переменные настройки
 PROJECT_DIR="/var/www/atomgameblk"
-DB_NAME="atomgame"
-DB_USER="atomgame"
-DB_PASSWORD="Atom&Game#2025!"
-ESCAPED_PASSWORD=$(echo $DB_PASSWORD | sed 's/&/%26/g; s/#/%23/g')
+APP_PORT=5000
 
 # Функции для вывода
 log() {
@@ -48,108 +45,82 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-# Проверка существования папки клиента
-if [ ! -d "$PROJECT_DIR/client" ]; then
-  error "Папка клиента не найдена: $PROJECT_DIR/client"
-  exit 1
-fi
+# Остановка всех PM2 процессов
+log "Остановка всех PM2 процессов..."
+pm2 delete all || true
+success "Все PM2 процессы остановлены"
 
-# Проверка существования папки сервера
-if [ ! -d "$PROJECT_DIR/server" ]; then
-  error "Папка сервера не найдена: $PROJECT_DIR/server"
-  exit 1
-fi
+# Исправление файла подключения к базе данных - отключение WebSocket
+log "Исправление файла подключения к базе данных (отключение WebSocket)..."
+if [ -f "$PROJECT_DIR/server/db.ts" ]; then
+  cp "$PROJECT_DIR/server/db.ts" "$PROJECT_DIR/server/db.ts.bak.$(date +%Y%m%d%H%M%S)"
+  cat > "$PROJECT_DIR/server/db.ts" << EOF
+import { Pool, neonConfig } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/neon-serverless';
+// Убираем импорт ws
+// import ws from "ws";
+import * as schema from "@shared/schema";
 
-# Искать и исправить WebSocket конфигурацию в клиентском коде
-log "Поиск и исправление WebSocket конфигурации в клиентском коде..."
+// ВНИМАНИЕ: Отключаем WebSocket для Neon DB и используем прямое соединение
+// neonConfig.webSocketConstructor = ws;
 
-# Создаем резервную копию клиентских JS файлов
-mkdir -p "$PROJECT_DIR/backups/$(date +%Y%m%d)"
-find "$PROJECT_DIR/client/src" -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" | xargs -I{} cp {} "$PROJECT_DIR/backups/$(date +%Y%m%d)/"
-success "Резервные копии созданы в папке $PROJECT_DIR/backups/$(date +%Y%m%d)"
+// Уточняем режим подключения
+console.log('Connecting to database using direct connection (WebSocket disabled)');
 
-# Исправляем файлы клиента
-FILES_TO_CHECK=$(find "$PROJECT_DIR/client/src" -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" -type f -exec grep -l "wss://" {} \;)
-if [ -n "$FILES_TO_CHECK" ]; then
-  for file in $FILES_TO_CHECK; do
-    log "Исправление WebSocket URL в файле: $file"
-    sed -i 's|wss://localhost|ws://localhost|g' "$file"
-    sed -i 's|const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";|const protocol = "ws:";|g' "$file"
-  done
-  success "WebSocket URLs исправлены в клиентских файлах"
-else
-  warn "Не найдены файлы с WebSocket URL для исправления"
-fi
+// Получение строки подключения из переменных окружения
+const DATABASE_URL = process.env.DATABASE_URL;
+console.log('Database URL is set:', !!DATABASE_URL);
 
-# Проверяем наличие WebSocket сервера в routes.ts
-if [ -f "$PROJECT_DIR/server/routes.ts" ]; then
-  log "Проверка настроек WebSocket сервера в routes.ts..."
-  if grep -q "WebSocketServer" "$PROJECT_DIR/server/routes.ts"; then
-    log "WebSocketServer найден в routes.ts, проверяем конфигурацию..."
-    
-    # Если в routes.ts есть настройка пути для WebSocketServer, меняем её
-    if grep -q "path: '/ws'" "$PROJECT_DIR/server/routes.ts"; then
-      success "WebSocketServer уже настроен с правильным путем '/ws'"
-    else
-      log "Исправление пути WebSocketServer в routes.ts..."
-      cp "$PROJECT_DIR/server/routes.ts" "$PROJECT_DIR/backups/$(date +%Y%m%d)/routes.ts.bak"
-      sed -i 's|new WebSocketServer({ server: httpServer|new WebSocketServer({ server: httpServer, path: "/ws"|g' "$PROJECT_DIR/server/routes.ts"
-      success "Путь WebSocketServer исправлен"
-    fi
-  else
-    warn "WebSocketServer не найден в routes.ts"
-  fi
-else
-  warn "Файл routes.ts не найден"
-fi
-
-# Перестройка приложения
-log "Перестройка приложения..."
-cd "$PROJECT_DIR"
-npm run build
-success "Приложение перестроено"
-
-# Обновление конфигурации PM2
-log "Обновление конфигурации PM2..."
-cat > $PROJECT_DIR/ecosystem.config.cjs << EOF
-module.exports = {
-  apps: [{
-    name: 'atom-game',
-    script: 'dist/index.js',
-    instances: 'max',
-    exec_mode: 'cluster',
-    env: {
-      NODE_ENV: 'production',
-      PORT: '5000',
-      PGUSER: '$DB_USER',
-      PGPASSWORD: '$DB_PASSWORD',
-      PGDATABASE: '$DB_NAME',
-      PGHOST: 'localhost',
-      PGPORT: '5432',
-      DATABASE_URL: 'postgresql://$DB_USER:$ESCAPED_PASSWORD@localhost:5432/$DB_NAME',
-      SESSION_SECRET: '$(openssl rand -hex 32)',
-      NODE_TLS_REJECT_UNAUTHORIZED: '0'
-    },
-    max_memory_restart: '500M'
-  }]
+// Опции без WebSocket
+const poolOptions = { 
+  connectionString: DATABASE_URL,
+  ssl: true  // Добавляем SSL для безопасного соединения
 };
+
+// Создание пула соединений
+const pool = new Pool(poolOptions);
+const db = drizzle({ client: pool, schema });
+
+console.log('Database connection pool created successfully');
+
+export { pool, db };
 EOF
-success "Файл конфигурации PM2 обновлен"
+  success "Файл подключения к базе данных исправлен (WebSocket отключен)"
+else
+  error "Файл db.ts не найден. Исправление не выполнено."
+  exit 1
+fi
 
-# Перезапуск приложения с PM2
-log "Перезапуск приложения с PM2..."
-pm2 delete atom-game || true
-pm2 start ecosystem.config.cjs
+# Сборка приложения
+log "Сборка приложения..."
+cd $PROJECT_DIR
+npm run build
+success "Приложение собрано"
+
+# Запуск приложения через PM2
+log "Запуск приложения через PM2..."
+cd $PROJECT_DIR
+pm2 start ecosystem.config.cjs --only atom-game
 pm2 save
-success "Приложение перезапущено"
+success "Приложение запущено через PM2"
+
+# Проверка статуса через 5 секунд
+log "Проверка статуса приложения через 5 секунд..."
+sleep 5
+if pm2 list | grep -q "atom-game" && pm2 list | grep -q "online"; then
+  success "Приложение запущено и находится в статусе online"
+else
+  warn "Приложение может быть не запущено. Проверьте логи: pm2 logs atom-game"
+fi
 
 echo "=================================================================="
-echo "        ИСПРАВЛЕНИЕ WEBSOCKET СОЕДИНЕНИЯ ЗАВЕРШЕНО!"
+echo "    ИСПРАВЛЕНИЕ WEBSOCKET СОЕДИНЕНИЯ ЗАВЕРШЕНО!"
 echo "=================================================================="
 echo ""
-echo "Проверьте логи приложения для подтверждения исправления ошибки:"
-echo "pm2 logs atom-game"
+echo "Проверьте доступность сайта по адресам:"
+echo "  http://atomgameblk.ru"
+echo "  http://193.109.78.85"
 echo ""
-echo "Теперь перезагрузите страницу в браузере и проверьте, работает ли сайт:"
-echo "http://atomgameblk.ru"
+echo "Для проверки работы приложения, запустите:"
+echo "  pm2 logs atom-game"
 echo "=================================================================="
