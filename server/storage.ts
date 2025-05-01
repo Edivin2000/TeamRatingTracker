@@ -1,6 +1,7 @@
-import { users, teams, partners, ads, timers, type User, type InsertUser, 
+import { users, teams, partners, ads, timers, siteSettings, type User, type InsertUser, 
   type Team, type InsertTeam, type Partner, type InsertPartner, 
-  type Ad, type InsertAd, type Timer, type InsertTimer, type ScoreUpdate } from "@shared/schema";
+  type Ad, type InsertAd, type Timer, type InsertTimer, type ScoreUpdate,
+  type SiteSettings, type InsertSiteSettings } from "@shared/schema";
 import session from "express-session";
 import createMemoryStore from "memorystore";
 import connectPg from "connect-pg-simple";

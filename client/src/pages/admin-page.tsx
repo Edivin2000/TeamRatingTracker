@@ -235,7 +235,7 @@ export default function AdminPage() {
       {/* Основное содержимое */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs defaultValue="teams" className="w-full">
-          <TabsList className="mb-6 grid grid-cols-4 h-auto">
+          <TabsList className="mb-6 grid grid-cols-5 h-auto">
             <TabsTrigger value="teams" className="py-3 data-[state=active]:bg-primary data-[state=active]:text-white">
               <Users className="w-4 h-4 mr-2" /> Команды
             </TabsTrigger>
@@ -245,9 +245,11 @@ export default function AdminPage() {
             <TabsTrigger value="ads" className="py-3 data-[state=active]:bg-primary data-[state=active]:text-white">
               <Image className="w-4 h-4 mr-2" /> Рекламные баннеры
             </TabsTrigger>
+            <TabsTrigger value="timers" className="py-3 data-[state=active]:bg-primary data-[state=active]:text-white">
+              <Clock className="w-4 h-4 mr-2" /> Таймеры
+            </TabsTrigger>
             <TabsTrigger value="settings" className="py-3 data-[state=active]:bg-primary data-[state=active]:text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 mr-2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-              Настройки
+              <Palette className="w-4 h-4 mr-2" /> Дизайн сайта
             </TabsTrigger>
           </TabsList>
           
@@ -542,9 +544,9 @@ export default function AdminPage() {
             </Card>
           </TabsContent>
           
-          {/* Вкладка Настройки */}
-          <TabsContent value="settings">
-            <Card className="mb-8">
+          {/* Вкладка Таймеры */}
+          <TabsContent value="timers">
+            <Card>
               <CardHeader>
                 <div className="flex justify-between items-center">
                   <div>
@@ -576,12 +578,197 @@ export default function AdminPage() {
                 )}
               </CardContent>
             </Card>
-            
+          </TabsContent>
+          
+          {/* Вкладка Настройки дизайна */}
+          <TabsContent value="settings">
             <Card>
               <CardHeader>
                 <div className="flex justify-between items-center">
                   <div>
-                    <CardTitle>Настройки системы</CardTitle>
+                    <CardTitle>Настройки дизайна сайта</CardTitle>
+                    <CardDescription>
+                      Изменение цветовой схемы, шрифтов и других элементов дизайна сайта
+                    </CardDescription>
+                  </div>
+                  <Button
+                    onClick={() => setIsSiteSettingsFormOpen(true)}
+                    className="bg-indigo-500 hover:bg-indigo-600"
+                  >
+                    <Palette className="mr-2 h-4 w-4" /> Редактировать дизайн
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                {isSettingsLoading ? (
+                  <Skeleton className="h-64 w-full" />
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-medium">Текущие настройки дизайна</h3>
+                      
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="rounded-md p-4 border border-gray-200">
+                          <h4 className="text-sm font-medium text-gray-500 mb-1">Основной цвет</h4>
+                          <div className="flex items-center gap-2">
+                            <div 
+                              className="h-6 w-6 rounded-full border border-gray-300" 
+                              style={{ backgroundColor: siteSettings?.primaryColor || '#0f172a' }}
+                            />
+                            <span className="text-sm">{siteSettings?.primaryColor || '#0f172a'}</span>
+                          </div>
+                        </div>
+                        
+                        <div className="rounded-md p-4 border border-gray-200">
+                          <h4 className="text-sm font-medium text-gray-500 mb-1">Второстепенный цвет</h4>
+                          <div className="flex items-center gap-2">
+                            <div 
+                              className="h-6 w-6 rounded-full border border-gray-300" 
+                              style={{ backgroundColor: siteSettings?.secondaryColor || '#1e293b' }}
+                            />
+                            <span className="text-sm">{siteSettings?.secondaryColor || '#1e293b'}</span>
+                          </div>
+                        </div>
+                        
+                        <div className="rounded-md p-4 border border-gray-200">
+                          <h4 className="text-sm font-medium text-gray-500 mb-1">Акцентный цвет</h4>
+                          <div className="flex items-center gap-2">
+                            <div 
+                              className="h-6 w-6 rounded-full border border-gray-300" 
+                              style={{ backgroundColor: siteSettings?.accentColor || '#3b82f6' }}
+                            />
+                            <span className="text-sm">{siteSettings?.accentColor || '#3b82f6'}</span>
+                          </div>
+                        </div>
+                        
+                        <div className="rounded-md p-4 border border-gray-200">
+                          <h4 className="text-sm font-medium text-gray-500 mb-1">Цвет заголовка</h4>
+                          <div className="flex items-center gap-2">
+                            <div 
+                              className="h-6 w-6 rounded-full border border-gray-300" 
+                              style={{ backgroundColor: siteSettings?.headerBgColor || '#0f172a' }}
+                            />
+                            <span className="text-sm">{siteSettings?.headerBgColor || '#0f172a'}</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="rounded-md p-4 border border-gray-200">
+                          <h4 className="text-sm font-medium text-gray-500 mb-1">Основной шрифт</h4>
+                          <div className="flex items-center">
+                            <span className="text-sm font-medium" style={{ fontFamily: siteSettings?.fontPrimary || 'Inter' }}>
+                              {siteSettings?.fontPrimary || 'Inter'}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <div className="rounded-md p-4 border border-gray-200">
+                          <h4 className="text-sm font-medium text-gray-500 mb-1">Радиус скругления</h4>
+                          <div className="flex items-center">
+                            <span className="text-sm">
+                              {siteSettings?.borderRadius || '0.5rem'}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <div className="rounded-md p-4 border border-gray-200">
+                          <h4 className="text-sm font-medium text-gray-500 mb-1">Стиль кнопок</h4>
+                          <div className="flex items-center">
+                            <span className="text-sm capitalize">
+                              {siteSettings?.buttonStyle || 'default'}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <div className="rounded-md p-4 border border-gray-200">
+                          <h4 className="text-sm font-medium text-gray-500 mb-1">Позиция логотипа</h4>
+                          <div className="flex items-center">
+                            <span className="text-sm capitalize">
+                              {siteSettings?.logoPosition === 'center' ? 'По центру' : 
+                               siteSettings?.logoPosition === 'left' ? 'Слева' : 
+                               siteSettings?.logoPosition === 'right' ? 'Справа' : 'По центру'}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div 
+                      className="rounded-lg overflow-hidden shadow-md" 
+                      style={{ backgroundColor: siteSettings?.primaryColor || '#0f172a' }}
+                    >
+                      <div 
+                        className="h-16 px-4 flex items-center justify-center" 
+                        style={{ 
+                          backgroundColor: siteSettings?.headerBgColor || '#0f172a',
+                          justifyContent: siteSettings?.logoPosition === 'center' ? 'center' : 
+                                         siteSettings?.logoPosition === 'left' ? 'flex-start' : 
+                                         siteSettings?.logoPosition === 'right' ? 'flex-end' : 'center'
+                        }}
+                      >
+                        <div className="text-white font-bold text-xl">ATOM﮳GAME</div>
+                      </div>
+                      
+                      <div className="p-6 space-y-4">
+                        <div 
+                          className="rounded-lg p-4 text-white" 
+                          style={{ 
+                            backgroundColor: siteSettings?.secondaryColor || '#1e293b',
+                            borderRadius: siteSettings?.borderRadius || '0.5rem'
+                          }}
+                        >
+                          <h3 className="font-bold mb-2">Пример карточки</h3>
+                          <p className="text-sm opacity-75">Это пример карточки с выбранными настройками дизайна</p>
+                          <button 
+                            style={{ 
+                              backgroundColor: siteSettings?.accentColor || '#3b82f6',
+                              borderRadius: siteSettings?.borderRadius || '0.5rem',
+                              padding: '0.5rem 1rem',
+                              marginTop: '1rem',
+                              fontWeight: 'bold',
+                              border: 'none' 
+                            }}
+                          >
+                            Кнопка
+                          </button>
+                        </div>
+                        
+                        <div 
+                          className="rounded-lg p-4 text-white" 
+                          style={{ 
+                            backgroundColor: siteSettings?.tableBgColor || '#1e293b',
+                            borderRadius: siteSettings?.borderRadius || '0.5rem'
+                          }}
+                        >
+                          <h3 className="font-bold mb-2">Пример таблицы</h3>
+                          <div className="w-full border-collapse">
+                            <div className="flex justify-between border-b border-gray-700 pb-2 mb-2">
+                              <div className="font-medium">Команда</div>
+                              <div className="font-medium">Очки</div>
+                            </div>
+                            <div className="flex justify-between py-1">
+                              <div>Команда A</div>
+                              <div>100</div>
+                            </div>
+                            <div className="flex justify-between py-1">
+                              <div>Команда B</div>
+                              <div>85</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+            
+            <Card className="mt-8">
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle>Системные настройки</CardTitle>
                     <CardDescription>
                       Управление глобальными настройками и функциями приложения
                     </CardDescription>
