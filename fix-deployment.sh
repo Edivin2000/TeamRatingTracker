@@ -20,10 +20,12 @@ NC='\033[0m' # No Color
 # Переменные настройки с реальными данными
 PROJECT_DIR="/var/www/atomgameblk"
 DOMAIN="atomgameblk.ru"
+SERVER_IP="193.109.78.85"
 DB_NAME="atomgame"
 DB_USER="atomgame"
 DB_PASSWORD="Atom&Game#2025!"
 ADMIN_PASSWORD="Atom&Game#2025!"
+APP_PORT=5000  # Будет изменен на свободный порт при выполнении скрипта
 
 # Функции для вывода
 log() {
