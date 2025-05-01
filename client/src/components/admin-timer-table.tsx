@@ -1,15 +1,13 @@
-import React from 'react';
-import { useQuery, useMutation } from '@tanstack/react-query';
-import { queryClient, apiRequest } from '@/lib/queryClient';
-import { Button } from '@/components/ui/button';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Switch } from '@/components/ui/switch';
-import { formatDistanceToNow, isAfter } from 'date-fns';
-import { ru } from 'date-fns/locale';
-import { useToast } from '@/hooks/use-toast';
-import { Badge } from '@/components/ui/badge';
-import { Timer } from '@shared/schema';
-import { Loader2, Pencil, Trash2 } from 'lucide-react';
+import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { Timer } from "@shared/schema";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { format } from "date-fns";
+import { ru } from "date-fns/locale";
+import { Edit, Trash2, Clock } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface AdminTimerTableProps {
   timers: Timer[];
@@ -18,128 +16,145 @@ interface AdminTimerTableProps {
 }
 
 export default function AdminTimerTable({ 
-  timers, 
-  onEdit, 
-  onDelete 
+  timers,
+  onEdit,
+  onDelete
 }: AdminTimerTableProps) {
   const { toast } = useToast();
-
-  // Мутация для обновления статуса active
+  
+  // Мутация для изменения статуса активности таймера
   const toggleActiveMutation = useMutation({
     mutationFn: async ({ timer, active }: { timer: Timer, active: boolean }) => {
-      const res = await apiRequest("PUT", `/api/timers/${timer.id}`, { 
-        ...timer, 
-        active 
+      return await apiRequest("PATCH", `/api/timers/${timer.id}`, { 
+        ...timer,
+        active
       });
-      return res.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/timers"] });
       queryClient.invalidateQueries({ queryKey: ["/api/timers"] });
       toast({
-        title: "Статус таймера обновлен",
-        description: "Статус таймера успешно обновлен",
+        title: "Статус таймера изменен",
+        description: "Статус активности таймера был успешно обновлен.",
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Ошибка",
-        description: `Не удалось обновить статус таймера: ${error.message}`,
+        title: "Ошибка при изменении статуса",
+        description: error.message,
         variant: "destructive",
       });
     },
   });
 
+  // Обработчик изменения статуса активности таймера
   const handleToggleActive = (timer: Timer) => {
-    toggleActiveMutation.mutate({ timer, active: !timer.active });
+    const newActive = !(timer.active ?? false);
+    toggleActiveMutation.mutate({ timer, active: newActive });
   };
 
-  const isExpired = (endDate: string) => {
-    const now = new Date();
-    const end = new Date(endDate);
-    return !isAfter(end, now);
+  const formatDate = (dateString: string) => {
+    try {
+      return format(new Date(dateString), "d MMMM yyyy, HH:mm", { locale: ru });
+    } catch (e) {
+      return "Некорректная дата";
+    }
   };
-
-  if (!timers) {
-    return (
-      <div className="flex justify-center items-center py-8">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-      </div>
-    );
-  }
-
-  if (timers.length === 0) {
-    return (
-      <div className="text-center py-8 text-muted-foreground">
-        Таймеры не найдены
-      </div>
-    );
-  }
 
   return (
     <div className="overflow-x-auto">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-16 text-center">ID</TableHead>
-            <TableHead>Название</TableHead>
-            <TableHead>Отображаемое название</TableHead>
-            <TableHead>Дата окончания</TableHead>
-            <TableHead>Статус</TableHead>
-            <TableHead className="w-24 text-center">Активен</TableHead>
-            <TableHead className="w-24 text-center">Цвет</TableHead>
-            <TableHead className="w-32 text-right">Действия</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {timers.map((timer) => (
-            <TableRow key={timer.id}>
-              <TableCell className="text-center">{timer.id}</TableCell>
-              <TableCell>{timer.name}</TableCell>
-              <TableCell>{timer.displayName || '-'}</TableCell>
-              <TableCell>
-                {formatDistanceToNow(new Date(timer.endDate), { 
-                  addSuffix: true,
-                  locale: ru 
-                })}
-              </TableCell>
-              <TableCell>
-                {isExpired(timer.endDate) ? (
-                  <Badge variant="destructive">Истёк</Badge>
-                ) : (
-                  <Badge variant="outline">Активен</Badge>
-                )}
-              </TableCell>
-              <TableCell className="text-center">
-                <Switch 
-                  checked={timer.active} 
-                  onCheckedChange={() => handleToggleActive(timer)}
-                  disabled={toggleActiveMutation.isPending}
-                />
-              </TableCell>
-              <TableCell>
-                <div className={`w-6 h-6 rounded-full bg-gradient-to-r ${timer.color} mx-auto`}></div>
-              </TableCell>
-              <TableCell className="text-right space-x-1">
-                <Button 
-                  variant="ghost" 
-                  size="icon"
-                  onClick={() => onEdit(timer)}
-                >
-                  <Pencil className="h-4 w-4" />
-                </Button>
-                <Button 
-                  variant="ghost" 
-                  size="icon"
-                  onClick={() => onDelete(timer.id)}
-                >
-                  <Trash2 className="h-4 w-4 text-red-500" />
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-100">
+          <tr>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Название
+            </th>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Дата окончания
+            </th>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Статус
+            </th>
+            <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Действия
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {timers && timers.length > 0 ? (
+            [...timers]
+              .sort((a, b) => {
+                // Сортировка: сначала активные, затем по дате окончания
+                if ((a.active ?? false) !== (b.active ?? false)) {
+                  return (a.active ?? false) ? -1 : 1;
+                }
+                
+                // По дате - более ранняя дата вначале
+                const dateA = new Date(a.endDate).getTime();
+                const dateB = new Date(b.endDate).getTime();
+                return dateA - dateB;
+              })
+              .map((timer) => (
+                <tr key={timer.id} className="hover:bg-gray-50">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0 h-10 w-10 bg-gray-100 rounded-full flex items-center justify-center">
+                        <Clock className="h-5 w-5 text-primary" />
+                      </div>
+                      <div className="ml-4">
+                        <div className="text-sm font-medium text-gray-900">
+                          {timer.title}
+                        </div>
+                        {timer.description && (
+                          <div className="text-xs text-gray-500 max-w-md truncate">
+                            {timer.description}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className="text-sm text-gray-900">
+                      {formatDate(timer.endDate)}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <Badge 
+                      className={`cursor-pointer ${timer.active ? "bg-green-100 text-green-800 hover:bg-green-200" : "bg-gray-100 text-gray-800 hover:bg-gray-200"}`}
+                      onClick={() => handleToggleActive(timer)}
+                    >
+                      {timer.active ? "Активен" : "Неактивен"}
+                    </Badge>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="text-indigo-600 hover:text-indigo-900 mr-2"
+                      onClick={() => onEdit(timer)}
+                    >
+                      <Edit className="w-4 h-4 mr-1" /> Изменить
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="text-red-600 hover:text-red-900"
+                      onClick={() => onDelete(timer.id)}
+                    >
+                      <Trash2 className="w-4 h-4 mr-1" /> Удалить
+                    </Button>
+                  </td>
+                </tr>
+              ))
+          ) : (
+            <tr>
+              <td colSpan={4} className="px-6 py-10 text-center text-gray-500">
+                Нет доступных таймеров. Добавьте таймер, чтобы начать.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 }

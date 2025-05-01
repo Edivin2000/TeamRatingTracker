@@ -1,198 +1,180 @@
-import React from 'react';
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Timer, insertTimerSchema } from "@shared/schema";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import { z } from "zod";
-import { format } from 'date-fns';
-import { useMutation } from '@tanstack/react-query';
-import { insertTimerSchema } from '@shared/schema';
-import { queryClient, apiRequest } from '@/lib/queryClient';
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { X } from 'lucide-react';
+import { X } from "lucide-react";
+
+// Расширяем схему с дополнительной валидацией
+const formSchema = insertTimerSchema.extend({
+  title: z.string().min(1, "Название таймера обязательно"),
+  endDate: z.string().min(1, "Дата окончания обязательна"),
+});
 
 interface TimerFormProps {
-  timer: any | null;
+  timer: Timer | null;
   onClose: () => void;
 }
 
-// Расширяем схему для валидации формы
-const formSchema = insertTimerSchema.extend({
-  endDate: z.string().min(1, "Дата окончания обязательна"),
-  name: z.string().min(1, "Название обязательно"),
-  displayName: z.string().optional(),
-  color: z.string().min(1, "Цвет обязателен"),
-  active: z.boolean().default(true),
-});
-
 type FormData = z.infer<typeof formSchema>;
-
-const colors = [
-  { value: "from-blue-600 to-indigo-700", label: "Синий" },
-  { value: "from-green-600 to-green-800", label: "Зеленый" },
-  { value: "from-red-600 to-red-800", label: "Красный" },
-  { value: "from-purple-600 to-purple-800", label: "Фиолетовый" },
-  { value: "from-orange-500 to-amber-700", label: "Оранжевый" },
-  { value: "from-teal-600 to-teal-800", label: "Бирюзовый" },
-  { value: "from-gray-700 to-gray-900", label: "Серый" },
-  { value: "from-pink-600 to-rose-700", label: "Розовый" },
-];
 
 export default function TimerForm({ timer, onClose }: TimerFormProps) {
   const { toast } = useToast();
-  
-  const defaultValues: Partial<FormData> = {
-    name: timer?.name || "",
-    displayName: timer?.displayName || "",
-    endDate: timer?.endDate || format(new Date(Date.now() + 24 * 60 * 60 * 1000), "yyyy-MM-dd'T'HH:mm"),
-    color: timer?.color || "from-blue-600 to-indigo-700",
-    active: timer?.active !== undefined ? timer.active : true,
-  };
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const form = useForm<FormData>({
+  // Настройка формы
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useForm<FormData>({
     resolver: zodResolver(formSchema),
-    defaultValues,
+    defaultValues: timer
+      ? {
+          title: timer.title,
+          description: timer.description || "",
+          endDate: timer.endDate,
+          active: timer.active ?? false,
+        }
+      : {
+          title: "",
+          description: "",
+          endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + "T23:59:59",
+          active: true,
+        },
   });
 
-  const mutation = useMutation({
+  // Мутация для создания/обновления таймера
+  const saveMutation = useMutation({
     mutationFn: async (data: FormData) => {
-      const endpoint = timer ? `/api/timers/${timer.id}` : "/api/timers";
-      const method = timer ? "PUT" : "POST";
-      const res = await apiRequest(method, endpoint, data);
-      return res.json();
+      if (timer) {
+        // Обновление существующего таймера
+        return await apiRequest("PATCH", `/api/timers/${timer.id}`, data);
+      } else {
+        // Создание нового таймера
+        return await apiRequest("POST", "/api/timers", data);
+      }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/timers"] });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/timers"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/timers"] });
       toast({
         title: timer ? "Таймер обновлен" : "Таймер создан",
-        description: timer ? "Таймер успешно обновлен" : "Таймер успешно создан",
+        description: timer
+          ? "Таймер был успешно обновлен."
+          : "Новый таймер был успешно создан.",
       });
       onClose();
     },
     onError: (error: Error) => {
       toast({
         title: "Ошибка",
-        description: `Не удалось ${timer ? "обновить" : "создать"} таймер: ${error.message}`,
+        description: error.message,
         variant: "destructive",
       });
+      setIsSubmitting(false);
     },
   });
 
   const onSubmit = (data: FormData) => {
-    mutation.mutate(data);
+    setIsSubmitting(true);
+    saveMutation.mutate(data);
+  };
+
+  const watchActive = watch("active");
+
+  // Обработчик переключения активности
+  const handleToggleActive = () => {
+    setValue("active", !watchActive);
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold">{timer ? "Редактировать таймер" : "Новый таймер"}</h2>
-        <Button variant="ghost" size="icon" onClick={onClose}>
-          <X className="h-4 w-4" />
-        </Button>
-      </div>
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-lg max-h-[90vh] overflow-auto">
+        <div className="flex justify-between items-center p-4 border-b">
+          <h2 className="text-xl font-semibold">
+            {timer ? "Редактировать таймер" : "Создать таймер"}
+          </h2>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onClose}
+            className="hover:bg-gray-100"
+          >
+            <X className="h-5 w-5" />
+          </Button>
+        </div>
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Название (внутреннее)</FormLabel>
-                <FormControl>
-                  <Input placeholder="Например: Финал конкурса" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+        <form onSubmit={handleSubmit(onSubmit)} className="p-4 space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="title" className={errors.title ? "text-red-500" : ""}>
+              Название таймера
+            </Label>
+            <Input
+              id="title"
+              placeholder="Введите название таймера"
+              {...register("title")}
+              className={errors.title ? "border-red-500" : ""}
+            />
+            {errors.title && (
+              <p className="text-red-500 text-xs">{errors.title.message}</p>
             )}
-          />
+          </div>
 
-          <FormField
-            control={form.control}
-            name="displayName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Отображаемое название</FormLabel>
-                <FormControl>
-                  <Input placeholder="Например: До конца финала осталось" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+          <div className="space-y-2">
+            <Label htmlFor="description">Описание (необязательно)</Label>
+            <Textarea
+              id="description"
+              placeholder="Введите описание таймера"
+              rows={3}
+              {...register("description")}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="endDate" className={errors.endDate ? "text-red-500" : ""}>
+              Дата окончания
+            </Label>
+            <Input
+              id="endDate"
+              type="datetime-local"
+              {...register("endDate")}
+              className={errors.endDate ? "border-red-500" : ""}
+            />
+            {errors.endDate && (
+              <p className="text-red-500 text-xs">{errors.endDate.message}</p>
             )}
-          />
+          </div>
 
-          <FormField
-            control={form.control}
-            name="endDate"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Дата и время окончания</FormLabel>
-                <FormControl>
-                  <Input type="datetime-local" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="flex items-center space-x-2 pt-2">
+            <Switch
+              id="active"
+              checked={watchActive}
+              onCheckedChange={handleToggleActive}
+            />
+            <Label htmlFor="active">Активный таймер</Label>
+          </div>
 
-          <FormField
-            control={form.control}
-            name="color"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Цвет</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Выберите цвет" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {colors.map((color) => (
-                      <SelectItem key={color.value} value={color.value}>
-                        {color.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="active"
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3">
-                <div className="space-y-0.5">
-                  <FormLabel>Активен</FormLabel>
-                </div>
-                <FormControl>
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <div className="flex justify-end space-x-2 pt-4">
+          <div className="border-t pt-4 flex justify-end space-x-2 mt-4">
             <Button type="button" variant="outline" onClick={onClose}>
               Отмена
             </Button>
-            <Button type="submit" disabled={mutation.isPending}>
-              {mutation.isPending ? "Сохранение..." : "Сохранить"}
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Сохранение..." : timer ? "Сохранить" : "Создать"}
             </Button>
           </div>
         </form>
-      </Form>
+      </div>
     </div>
   );
 }

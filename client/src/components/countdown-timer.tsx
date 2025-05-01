@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { useQuery } from '@tanstack/react-query';
+import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Timer } from "@shared/schema";
+import { format } from "date-fns";
+import { ru } from "date-fns/locale";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type TimeLeft = {
   days: number;
@@ -11,26 +14,31 @@ type TimeLeft = {
 
 const calculateTimeLeft = (endDate: string): TimeLeft => {
   const difference = new Date(endDate).getTime() - new Date().getTime();
-  let timeLeft: TimeLeft = {
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  };
-
-  if (difference > 0) {
-    timeLeft = {
-      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-      minutes: Math.floor((difference / 1000 / 60) % 60),
-      seconds: Math.floor((difference / 1000) % 60)
+  
+  if (difference <= 0) {
+    // Время вышло
+    return {
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0
     };
   }
-
-  return timeLeft;
+  
+  return {
+    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+    minutes: Math.floor((difference / 1000 / 60) % 60),
+    seconds: Math.floor((difference / 1000) % 60)
+  };
 };
 
 export default function CountdownTimer() {
+  const { data: timers, isLoading } = useQuery<Timer[]>({
+    queryKey: ["/api/timers"],
+    staleTime: 60000, // 1 минута кеширования
+  });
+
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
     days: 0,
     hours: 0,
@@ -38,68 +46,107 @@ export default function CountdownTimer() {
     seconds: 0
   });
 
-  const { data: timers, isLoading } = useQuery({
-    queryKey: ['/api/timers'],
-    refetchInterval: 60000, // Refetch every minute
-  });
+  // Находим активный таймер с самой ранней датой окончания
+  const activeTimer = timers && timers.length > 0
+    ? [...timers]
+        .filter(timer => timer.active)
+        .sort((a, b) => new Date(a.endDate).getTime() - new Date(b.endDate).getTime())[0]
+    : null;
 
-  const activeTimer = timers && timers.length > 0 ? timers[0] : null;
-  
   useEffect(() => {
     if (!activeTimer) return;
-    
-    // Начальный расчет
+
+    // Сразу устанавливаем текущее оставшееся время
     setTimeLeft(calculateTimeLeft(activeTimer.endDate));
-    
-    // Обновление каждую секунду
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft(activeTimer.endDate));
+
+    // Обновляем каждую секунду
+    const interval = setInterval(() => {
+      const newTimeLeft = calculateTimeLeft(activeTimer.endDate);
+      setTimeLeft(newTimeLeft);
+      
+      // Если таймер закончился, очищаем интервал
+      if (newTimeLeft.days === 0 && 
+          newTimeLeft.hours === 0 && 
+          newTimeLeft.minutes === 0 && 
+          newTimeLeft.seconds === 0) {
+        clearInterval(interval);
+      }
     }, 1000);
 
-    return () => clearInterval(timer);
+    return () => clearInterval(interval);
   }, [activeTimer]);
 
+  // Если нет активных таймеров или идет загрузка
   if (isLoading) {
-    return null; // or loading spinner
+    return (
+      <div className="bg-primary/5 rounded-lg p-6 mb-6">
+        <Skeleton className="h-7 w-48 mb-4" />
+        <div className="grid grid-cols-4 gap-2">
+          <Skeleton className="h-20 rounded-md" />
+          <Skeleton className="h-20 rounded-md" />
+          <Skeleton className="h-20 rounded-md" />
+          <Skeleton className="h-20 rounded-md" />
+        </div>
+      </div>
+    );
   }
 
   if (!activeTimer) {
-    return null; // no active timer
+    return null; // Не показываем таймер если нет активных
   }
 
-  const { days, hours, minutes, seconds } = timeLeft;
-  const isExpired = days <= 0 && hours <= 0 && minutes <= 0 && seconds <= 0;
-
-  if (isExpired) {
-    return null; // timer expired
-  }
+  // Форматируем дату для отображения
+  const formattedEndDate = format(
+    new Date(activeTimer.endDate),
+    "d MMMM yyyy, HH:mm",
+    { locale: ru }
+  );
 
   return (
-    <Card className="w-full max-w-md mx-auto mb-8">
-      <CardContent className="p-4">
-        <div className="flex flex-col">
-          <h3 className="text-xl font-bold mb-4">{activeTimer.displayName || 'Обратный отсчет'}</h3>
-          
-          <div className={`grid grid-cols-4 gap-2 text-center bg-gradient-to-r ${activeTimer.color}`}>
-            <div className="flex flex-col items-center justify-center p-3 text-white">
-              <div className="text-2xl font-bold">{days}</div>
-              <div className="text-xs">дней</div>
-            </div>
-            <div className="flex flex-col items-center justify-center p-3 text-white">
-              <div className="text-2xl font-bold">{hours}</div>
-              <div className="text-xs">часов</div>
-            </div>
-            <div className="flex flex-col items-center justify-center p-3 text-white">
-              <div className="text-2xl font-bold">{minutes}</div>
-              <div className="text-xs">минут</div>
-            </div>
-            <div className="flex flex-col items-center justify-center p-3 text-white">
-              <div className="text-2xl font-bold">{seconds}</div>
-              <div className="text-xs">секунд</div>
-            </div>
+    <div className="bg-primary/5 rounded-lg p-6 mb-6">
+      <div className="text-center mb-4">
+        <h3 className="text-lg md:text-xl font-semibold text-primary">
+          {activeTimer.title}
+        </h3>
+        {activeTimer.description && (
+          <p className="text-sm text-gray-600 mt-1">
+            {activeTimer.description}
+          </p>
+        )}
+        <p className="text-sm text-gray-500 mt-1">
+          До {formattedEndDate}
+        </p>
+      </div>
+
+      <div className="grid grid-cols-4 gap-2">
+        <div className="flex flex-col items-center">
+          <div className="bg-primary text-white text-2xl md:text-4xl font-bold rounded-md flex items-center justify-center w-full h-16 md:h-20">
+            {String(timeLeft.days).padStart(2, '0')}
           </div>
+          <span className="text-xs mt-1 text-gray-600">Дней</span>
         </div>
-      </CardContent>
-    </Card>
+        
+        <div className="flex flex-col items-center">
+          <div className="bg-primary text-white text-2xl md:text-4xl font-bold rounded-md flex items-center justify-center w-full h-16 md:h-20">
+            {String(timeLeft.hours).padStart(2, '0')}
+          </div>
+          <span className="text-xs mt-1 text-gray-600">Часов</span>
+        </div>
+        
+        <div className="flex flex-col items-center">
+          <div className="bg-primary text-white text-2xl md:text-4xl font-bold rounded-md flex items-center justify-center w-full h-16 md:h-20">
+            {String(timeLeft.minutes).padStart(2, '0')}
+          </div>
+          <span className="text-xs mt-1 text-gray-600">Минут</span>
+        </div>
+        
+        <div className="flex flex-col items-center">
+          <div className="bg-primary text-white text-2xl md:text-4xl font-bold rounded-md flex items-center justify-center w-full h-16 md:h-20 animate-pulse">
+            {String(timeLeft.seconds).padStart(2, '0')}
+          </div>
+          <span className="text-xs mt-1 text-gray-600">Секунд</span>
+        </div>
+      </div>
+    </div>
   );
 }

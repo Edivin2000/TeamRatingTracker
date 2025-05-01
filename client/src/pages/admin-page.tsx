@@ -537,6 +537,39 @@ export default function AdminPage() {
           
           {/* Вкладка Настройки */}
           <TabsContent value="settings">
+            <Card className="mb-8">
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle>Таймеры обратного отсчета</CardTitle>
+                    <CardDescription>
+                      Добавьте таймеры для отображения на главной странице
+                    </CardDescription>
+                  </div>
+                  <Button
+                    onClick={() => {
+                      setEditingTimer(null);
+                      setIsTimerFormOpen(true);
+                    }}
+                    className="bg-green-500 hover:bg-green-600"
+                  >
+                    <PlusCircle className="mr-2 h-4 w-4" /> Добавить таймер
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                {isTimersLoading ? (
+                  <Skeleton className="h-64 w-full" />
+                ) : (
+                  <AdminTimerTable
+                    timers={timers || []}
+                    onEdit={handleEditTimer}
+                    onDelete={handleDeleteTimer}
+                  />
+                )}
+              </CardContent>
+            </Card>
+            
             <Card>
               <CardHeader>
                 <div className="flex justify-between items-center">
@@ -638,6 +671,16 @@ export default function AdminPage() {
           onClose={() => {
             setIsAdFormOpen(false);
             setEditingAd(null);
+          }}
+        />
+      )}
+      
+      {isTimerFormOpen && (
+        <TimerForm
+          timer={editingTimer}
+          onClose={() => {
+            setIsTimerFormOpen(false);
+            setEditingTimer(null);
           }}
         />
       )}
