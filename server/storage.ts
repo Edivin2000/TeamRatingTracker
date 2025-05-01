@@ -675,13 +675,21 @@ export class DatabaseStorage implements IStorage {
   // Site Settings methods
   async getSiteSettings(): Promise<SiteSettings | undefined> {
     try {
-      const settings = await db.select().from(siteSettings);
-      return settings[0];
+      // Прямой запрос без дополнительной логики
+      const result = await db.select().from(siteSettings);
+      if (result.length > 0) {
+        return result[0];
+      }
+      return undefined;
     } catch (error) {
       console.error('Error getting site settings:', error);
-      
-      // Если таблица еще не создана, создадим настройки по умолчанию
-      const defaultSettings: InsertSiteSettings = {
+      return undefined;
+    }
+  }
+
+  async createDefaultSiteSettings(): Promise<SiteSettings | undefined> {
+    try {
+      const defaultSettings = {
         primaryColor: "#0f172a",
         secondaryColor: "#1e293b",
         accentColor: "#3b82f6",
@@ -693,42 +701,49 @@ export class DatabaseStorage implements IStorage {
         cardBgColor: "#1e293b",
         podiumStyle: "default",
         bgPattern: "none",
-        logoPosition: "center"
+        logoPosition: "center",
+        updated: new Date().toISOString()
       };
       
-      // Попробуем создать настройки по умолчанию
-      try {
-        return await this.updateSiteSettings(defaultSettings);
-      } catch (insertError) {
-        console.error('Error creating default site settings:', insertError);
-        throw new Error('Не удалось получить или создать настройки сайта');
-      }
+      const [newSettings] = await db
+        .insert(siteSettings)
+        .values(defaultSettings)
+        .returning();
+        
+      return newSettings;
+    } catch (error) {
+      console.error('Error creating default site settings:', error);
+      return undefined;
     }
   }
 
   async updateSiteSettings(settings: InsertSiteSettings): Promise<SiteSettings> {
     try {
-      const current = await this.getSiteSettings();
+      // Сначала проверяем, существуют ли настройки, напрямую через базу данных
+      const existingSettings = await db.select().from(siteSettings);
       
-      if (current) {
-        // Обновление существующих настроек
+      // Устанавливаем текущую дату обновления
+      const dataToSave = { 
+        ...settings, 
+        updated: new Date().toISOString() 
+      };
+      
+      if (existingSettings.length > 0) {
+        // Обновляем существующие настройки
         const [updated] = await db
           .update(siteSettings)
-          .set({ ...settings, updated: new Date().toISOString() })
-          .where(eq(siteSettings.id, current.id))
+          .set(dataToSave)
+          .where(eq(siteSettings.id, existingSettings[0].id))
           .returning();
-        
+          
         return updated;
       } else {
-        // Создание новых настроек, если они еще не существуют
+        // Создаем новые настройки
         const [newSettings] = await db
           .insert(siteSettings)
-          .values({ 
-            ...settings, 
-            updated: new Date().toISOString() 
-          })
+          .values(dataToSave)
           .returning();
-        
+          
         return newSettings;
       }
     } catch (error) {

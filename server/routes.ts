@@ -430,9 +430,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get current site settings - public
   app.get("/api/site-settings", async (req, res) => {
     try {
-      const settings = await storage.getSiteSettings();
+      let settings = await storage.getSiteSettings();
+      
+      // Если настройки не найдены, создаем настройки по умолчанию
+      if (!settings) {
+        settings = await storage.createDefaultSiteSettings();
+      }
+      
       res.json(settings || {});
     } catch (error) {
+      console.error('Error in GET /api/site-settings:', error);
       res.status(500).json({ message: "Не удалось получить настройки сайта" });
     }
   });
