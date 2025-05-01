@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { setupAuth } from "./auth";
 import { storage } from "./storage";
 import { z } from "zod";
-import { insertTeamSchema, insertPartnerSchema, insertAdSchema, insertTimerSchema, scoreUpdateSchema } from "@shared/schema";
+import { insertTeamSchema, insertPartnerSchema, insertAdSchema, insertTimerSchema, scoreUpdateSchema, insertSiteSettingsSchema } from "@shared/schema";
 
 // Middleware to check if user is authenticated and admin
 const isAdmin = (req: Request, res: Response, next: Function) => {
@@ -423,6 +423,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.sendStatus(204);
     } catch (error) {
       res.status(500).json({ message: "Не удалось удалить таймер" });
+    }
+  });
+
+  // Site Settings routes
+  // Get current site settings - public
+  app.get("/api/site-settings", async (req, res) => {
+    try {
+      const settings = await storage.getSiteSettings();
+      res.json(settings || {});
+    } catch (error) {
+      res.status(500).json({ message: "Не удалось получить настройки сайта" });
+    }
+  });
+
+  // Update site settings - admin only
+  app.put("/api/site-settings", isAdmin, async (req, res) => {
+    try {
+      // Validate request body
+      const result = insertSiteSettingsSchema.safeParse(req.body);
+      if (!result.success) {
+        return res.status(400).json({ message: "Неверные данные настроек сайта" });
+      }
+
+      const updatedSettings = await storage.updateSiteSettings(req.body);
+      res.json(updatedSettings);
+    } catch (error) {
+      res.status(500).json({ message: "Не удалось обновить настройки сайта" });
     }
   });
 

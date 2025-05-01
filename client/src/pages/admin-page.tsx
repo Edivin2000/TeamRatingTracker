@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { Team, Partner, Ad, Timer } from "@shared/schema";
+import { Team, Partner, Ad, Timer, SiteSettings } from "@shared/schema";
 import { useAuth } from "@/hooks/use-auth";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { clearRankingsHistory } from "@/lib/utils";
@@ -16,13 +16,15 @@ import {
   Trash2,
   BarChart, 
   BriefcaseBusiness,
-  Clock
+  Clock,
+  Palette
 } from "lucide-react";
 import TeamForm from "@/components/team-form";
 import TeamScoreForm from "@/components/team-score-form";
 import PartnerForm from "@/components/partner-form";
 import AdBannerForm from "@/components/ad-banner-form";
 import TimerForm from "@/components/timer-form";
+import SiteSettingsForm from "@/components/site-settings-form";
 import AdminTeamTable from "@/components/admin-team-table";
 import AdminTimerTable from "@/components/admin-timer-table";
 import { useToast } from "@/hooks/use-toast";
@@ -39,6 +41,7 @@ export default function AdminPage() {
   const [isPartnerFormOpen, setIsPartnerFormOpen] = useState(false);
   const [isAdFormOpen, setIsAdFormOpen] = useState(false);
   const [isTimerFormOpen, setIsTimerFormOpen] = useState(false);
+  const [isSiteSettingsFormOpen, setIsSiteSettingsFormOpen] = useState(false);
   
   // Состояния для редактирования
   const [editingTeam, setEditingTeam] = useState<Team | null>(null);
@@ -62,6 +65,10 @@ export default function AdminPage() {
   
   const { data: timers, isLoading: isTimersLoading } = useQuery<Timer[]>({
     queryKey: ["/api/admin/timers"],
+  });
+  
+  const { data: siteSettings, isLoading: isSettingsLoading } = useQuery<SiteSettings>({
+    queryKey: ["/api/site-settings"],
   });
 
   // Мутации для удаления
