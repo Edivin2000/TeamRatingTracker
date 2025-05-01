@@ -1,836 +1,162 @@
 #!/bin/bash
 
-# Полный скрипт для исправления всех проблем сайта ATOM-GAME
-# Автор: ATOM-GAME Team
-# Версия: 3.0.0
-
 # Цвета для вывода
+RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
-RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-echo -e "${YELLOW}===== НАЧИНАЕМ ПОЛНОЕ ИСПРАВЛЕНИЕ САЙТА ATOM-GAME =====${NC}"
+echo -e "${GREEN}Полное исправление сервера...${NC}"
 
-# Переходим в директорию проекта
-cd /var/www/atomgameblk
+# 1. Исправляем порт в index.ts
+echo -e "${YELLOW}[1/5] Установка порта 5001 в index.ts...${NC}"
+cat > server/index.ts << 'EOF'
+import express, { type Request, Response, NextFunction } from "express";
+import { registerRoutes } from "./routes";
+import { setupVite, serveStatic, log } from "./vite";
 
-# Останавливаем все процессы PM2
-echo -e "${YELLOW}Останавливаем все процессы PM2...${NC}"
-pm2 delete all || true
+const app = express();
+// Увеличиваем лимит размера запроса до 10MB для загрузки изображений
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: false, limit: '10mb' }));
 
-# Настройки базы данных
-DB_USER="atomgame"
-DB_NAME="atomgame"
-DB_PASSWORD="Atom&Game#2025!"
+app.use((req, res, next) => {
+  const start = Date.now();
+  const path = req.path;
+  let capturedJsonResponse: Record<string, any> | undefined = undefined;
 
-# 1. ИСПРАВЛЕНИЕ БАЗЫ ДАННЫХ
-echo -e "${YELLOW}[1/4] Исправляем базу данных...${NC}"
+  const originalResJson = res.json;
+  res.json = function (bodyJson, ...args) {
+    capturedJsonResponse = bodyJson;
+    return originalResJson.apply(res, [bodyJson, ...args]);
+  };
 
-export PGPASSWORD="$DB_PASSWORD"
+  res.on("finish", () => {
+    const duration = Date.now() - start;
+    if (path.startsWith("/api")) {
+      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
+      if (capturedJsonResponse) {
+        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
+      }
 
-# Проверяем наличие таблиц и создаем их если нужно
-psql -U "$DB_USER" -d "$DB_NAME" << 'EOF'
--- Создаем таблицы, если они отсутствуют
-CREATE TABLE IF NOT EXISTS users (
-  id SERIAL PRIMARY KEY,
-  username VARCHAR(255) NOT NULL UNIQUE,
-  password VARCHAR(255) NOT NULL,
-  is_admin BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+      if (logLine.length > 80) {
+        logLine = logLine.slice(0, 79) + "…";
+      }
 
-CREATE TABLE IF NOT EXISTS teams (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  logo_url TEXT,
-  score INTEGER DEFAULT 0,
-  excluded BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+      log(logLine);
+    }
+  });
 
-CREATE TABLE IF NOT EXISTS partners (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  logo_url TEXT NOT NULL,
-  website_url TEXT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+  next();
+});
 
-CREATE TABLE IF NOT EXISTS ads (
-  id SERIAL PRIMARY KEY,
-  title VARCHAR(255) NOT NULL,
-  image_url TEXT NOT NULL,
-  link_url TEXT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+(async () => {
+  const server = await registerRoutes(app);
 
-CREATE TABLE IF NOT EXISTS timers (
-  id SERIAL PRIMARY KEY,
-  title VARCHAR(255) NOT NULL,
-  end_date TIMESTAMP NOT NULL,
-  active BOOLEAN DEFAULT TRUE,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    const status = err.status || err.statusCode || 500;
+    const message = err.message || "Internal Server Error";
 
-CREATE TABLE IF NOT EXISTS site_settings (
-  id SERIAL PRIMARY KEY,
-  site_name VARCHAR(255) DEFAULT 'ATOM-GAME',
-  team_section_title VARCHAR(255) DEFAULT 'Рейтинг команд',
-  footer_text TEXT DEFAULT 'Проект ATOM﮳GAME поддерживается Фондом «АТР АЭС» и АО «Концерн Росэнергоатом»',
-  logo_url TEXT,
-  primary_color VARCHAR(20) DEFAULT '#3b82f6',
-  secondary_color VARCHAR(20) DEFAULT '#10b981',
-  text_color VARCHAR(20) DEFAULT '#1f2937',
-  background_color VARCHAR(20) DEFAULT '#ffffff',
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+    res.status(status).json({ message });
+    throw err;
+  });
 
--- Добавляем администратора если его нет
-INSERT INTO users (username, password, is_admin)
-SELECT 'admin', '$2b$10$8eeZUlKwmeoKJj9x7hfn6OQlcD.fYCqX8vJOqYi4xLVf9BnqtMdYO', TRUE
-WHERE NOT EXISTS (SELECT 1 FROM users WHERE username = 'admin');
+  // importantly only setup vite in development and after
+  // setting up all the other routes so the catch-all route
+  // doesn't interfere with the other routes
+  if (app.get("env") === "development") {
+    await setupVite(app, server);
+  } else {
+    serveStatic(app);
+  }
 
--- Добавляем настройки сайта если их нет
-INSERT INTO site_settings (site_name, team_section_title, footer_text, logo_url, primary_color, secondary_color, text_color, background_color)
-SELECT 'ATOM-GAME', 'Рейтинг команд', 'Проект ATOM﮳GAME поддерживается Фондом «АТР АЭС» и АО «Концерн Росэнергоатом»', '/assets/atom-game-logo-blue-zWFb6GXJ.png', '#3b82f6', '#10b981', '#1f2937', '#ffffff'
-WHERE NOT EXISTS (SELECT 1 FROM site_settings);
-
--- Добавляем тестовую команду если нет других команд
-INSERT INTO teams (name, logo_url, score)
-SELECT 'ATOM-GAME Команда', '/assets/atom-game-logo-blue-zWFb6GXJ.png', 100
-WHERE NOT EXISTS (SELECT 1 FROM teams);
-
--- Добавляем тестовый таймер если нет других таймеров
-INSERT INTO timers (title, end_date, active)
-SELECT 'Открытие сезона 2025', NOW() + INTERVAL '90 days', TRUE
-WHERE NOT EXISTS (SELECT 1 FROM timers);
+  // Явно указываем порт 5001
+  const port = 5001;
+  const host = "0.0.0.0";
+  const domain = process.env.DOMAIN || "localhost";
+  
+  server.listen({
+    port,
+    host,
+    reusePort: true,
+  }, () => {
+    const baseUrl = process.env.NODE_ENV === "production" ? 
+      `http://${domain}` : 
+      `http://${host === '0.0.0.0' ? 'localhost' : host}:${port}`;
+    
+    log(`Server running at ${baseUrl} (port: ${port})`);
+  });
+})();
 EOF
 
-if [ $? -ne 0 ]; then
-    echo -e "${RED}Ошибка при исправлении базы данных. Продолжаем...${NC}"
-fi
+# 2. Исправляем базу данных
+echo -e "${YELLOW}[2/5] Исправление подключения к базе данных...${NC}"
+cat > server/db.ts << 'EOF'
+import { Pool, neonConfig } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/neon-serverless';
+import * as schema from "@shared/schema";
+import ws from 'ws';
 
-# 2. СОЗДАНИЕ ПОЛНОСТЬЮ РАБОЧЕГО СЕРВЕРА
-echo -e "${YELLOW}[2/4] Создаем полностью рабочий сервер...${NC}"
+// Configure WebSocket for Neon Database
+neonConfig.webSocketConstructor = ws;
 
-cat > complete-server.mjs << 'EOF'
-// complete-server.mjs
-// Полная версия сервера для ATOM-GAME сайта
-// Версия: 3.0.0
-
-import express from 'express';
-import path from 'path';
-import fs from 'fs';
-import pg from 'pg';
-import { fileURLToPath } from 'url';
-import crypto from 'crypto';
-import bcrypt from 'bcrypt';
-
-const { Pool } = pg;
-const app = express();
-const PORT = process.env.PORT || 8080;
-
-// Получение текущей директории для ES модулей
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Настройка базы данных
-const dbConfig = {
-  user: process.env.PGUSER || 'atomgame',
-  password: process.env.PGPASSWORD || 'Atom&Game#2025!',
-  database: process.env.PGDATABASE || 'atomgame',
-  host: process.env.PGHOST || 'localhost',
-  port: process.env.PGPORT || 5432,
-  ssl: false
-};
+// Получение строки подключения из переменных окружения
+const DATABASE_URL = process.env.DATABASE_URL;
+console.log('Подключение к базе данных...');
 
 // Создание пула соединений
-const pool = new Pool(dbConfig);
+const pool = new Pool({ 
+  connectionString: DATABASE_URL,
+});
 
-// Проверка соединения
+// Тестирование соединения
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
     console.error('Ошибка соединения с базой данных:', err);
   } else {
-    console.log('Соединение с базой данных успешно установлено:', res.rows[0]);
+    console.log('Подключение к базе данных успешно:', res.rows[0]);
   }
 });
 
-// Логирование запросов
-app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  next();
-});
+// Создание экземпляра Drizzle ORM
+const db = drizzle({ client: pool, schema });
+console.log('Database connection pool created successfully');
 
-// Настройка папки uploads если она не существует
-const uploadsDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
-}
-
-// Парсинг JSON с увеличенным лимитом для загрузки изображений
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ extended: true, limit: '50mb' }));
-
-// Настройка статических файлов
-app.use(express.static(path.join(__dirname, 'dist/public')));
-app.use('/assets', express.static(path.join(__dirname, 'dist/public/assets')));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-// Middleware для проверки авторизации
-const isAdmin = (req, res, next) => {
-  // Для простоты работы фронтенда всегда пропускаем (в продакшене нужно реализовать сессии)
-  next();
-};
-
-// API АУТЕНТИФИКАЦИИ
-
-// Авторизация
-app.post('/api/login', async (req, res) => {
-  try {
-    const { username, password } = req.body;
-    
-    // Для простоты всегда авторизуем как админа с правильным паролем
-    if (username === 'admin' && password === 'Atom&Game#2025!') {
-      res.json({
-        id: 1,
-        username: 'admin',
-        isAdmin: true,
-        createdAt: new Date().toISOString()
-      });
-    } else {
-      res.status(401).json({ error: 'Неверное имя пользователя или пароль' });
-    }
-  } catch (error) {
-    console.error('Ошибка при авторизации:', error);
-    res.status(500).json({ error: 'Ошибка при авторизации' });
-  }
-});
-
-// Получение текущего пользователя
-app.get('/api/user', (req, res) => {
-  // Для простоты всегда возвращаем админа
-  res.json({
-    id: 1,
-    username: 'admin',
-    isAdmin: true,
-    createdAt: new Date().toISOString()
-  });
-});
-
-// Выход из системы
-app.post('/api/logout', (req, res) => {
-  res.status(200).json({ message: 'Выход выполнен успешно' });
-});
-
-// API КОМАНД
-
-// Получение всех команд
-app.get('/api/teams', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM teams ORDER BY score DESC');
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Ошибка при получении команд:', error);
-    res.status(500).json({ error: 'Ошибка при получении команд' });
-  }
-});
-
-// Получение одной команды
-app.get('/api/teams/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const result = await pool.query('SELECT * FROM teams WHERE id = $1', [id]);
-    
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Команда не найдена' });
-    }
-    
-    res.json(result.rows[0]);
-  } catch (error) {
-    console.error('Ошибка при получении команды:', error);
-    res.status(500).json({ error: 'Ошибка при получении команды' });
-  }
-});
-
-// Создание команды
-app.post('/api/teams', isAdmin, async (req, res) => {
-  try {
-    const { name, logoUrl, score = 0, excluded = false } = req.body;
-    
-    const result = await pool.query(
-      'INSERT INTO teams (name, logo_url, score, excluded) VALUES ($1, $2, $3, $4) RETURNING *',
-      [name, logoUrl, score, excluded]
-    );
-    
-    res.status(201).json(result.rows[0]);
-  } catch (error) {
-    console.error('Ошибка при создании команды:', error);
-    res.status(500).json({ error: 'Ошибка при создании команды' });
-  }
-});
-
-// Обновление команды
-app.patch('/api/teams/:id', isAdmin, async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { name, logoUrl, score, excluded } = req.body;
-    
-    const result = await pool.query(
-      'UPDATE teams SET name = $1, logo_url = $2, score = $3, excluded = $4 WHERE id = $5 RETURNING *',
-      [name, logoUrl, score, excluded, id]
-    );
-    
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Команда не найдена' });
-    }
-    
-    res.json(result.rows[0]);
-  } catch (error) {
-    console.error('Ошибка при обновлении команды:', error);
-    res.status(500).json({ error: 'Ошибка при обновлении команды' });
-  }
-});
-
-// Обновление очков команды
-app.patch('/api/teams/:id/score', isAdmin, async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { score } = req.body;
-    
-    const result = await pool.query(
-      'UPDATE teams SET score = $1 WHERE id = $2 RETURNING *',
-      [score, id]
-    );
-    
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Команда не найдена' });
-    }
-    
-    res.json(result.rows[0]);
-  } catch (error) {
-    console.error('Ошибка при обновлении очков команды:', error);
-    res.status(500).json({ error: 'Ошибка при обновлении очков команды' });
-  }
-});
-
-// Удаление команды
-app.delete('/api/teams/:id', isAdmin, async (req, res) => {
-  try {
-    const { id } = req.params;
-    
-    const result = await pool.query('DELETE FROM teams WHERE id = $1 RETURNING *', [id]);
-    
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Команда не найдена' });
-    }
-    
-    res.json({ message: 'Команда успешно удалена' });
-  } catch (error) {
-    console.error('Ошибка при удалении команды:', error);
-    res.status(500).json({ error: 'Ошибка при удалении команды' });
-  }
-});
-
-// API ПАРТНЕРОВ
-
-// Получение всех партнеров
-app.get('/api/partners', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM partners');
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Ошибка при получении партнеров:', error);
-    res.status(500).json({ error: 'Ошибка при получении партнеров' });
-  }
-});
-
-// Создание партнера
-app.post('/api/partners', isAdmin, async (req, res) => {
-  try {
-    const { name, logoUrl, websiteUrl } = req.body;
-    
-    const result = await pool.query(
-      'INSERT INTO partners (name, logo_url, website_url) VALUES ($1, $2, $3) RETURNING *',
-      [name, logoUrl, websiteUrl]
-    );
-    
-    res.status(201).json(result.rows[0]);
-  } catch (error) {
-    console.error('Ошибка при создании партнера:', error);
-    res.status(500).json({ error: 'Ошибка при создании партнера' });
-  }
-});
-
-// Обновление партнера
-app.patch('/api/partners/:id', isAdmin, async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { name, logoUrl, websiteUrl } = req.body;
-    
-    const result = await pool.query(
-      'UPDATE partners SET name = $1, logo_url = $2, website_url = $3 WHERE id = $4 RETURNING *',
-      [name, logoUrl, websiteUrl, id]
-    );
-    
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Партнер не найден' });
-    }
-    
-    res.json(result.rows[0]);
-  } catch (error) {
-    console.error('Ошибка при обновлении партнера:', error);
-    res.status(500).json({ error: 'Ошибка при обновлении партнера' });
-  }
-});
-
-// Удаление партнера
-app.delete('/api/partners/:id', isAdmin, async (req, res) => {
-  try {
-    const { id } = req.params;
-    
-    const result = await pool.query('DELETE FROM partners WHERE id = $1 RETURNING *', [id]);
-    
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Партнер не найден' });
-    }
-    
-    res.json({ message: 'Партнер успешно удален' });
-  } catch (error) {
-    console.error('Ошибка при удалении партнера:', error);
-    res.status(500).json({ error: 'Ошибка при удалении партнера' });
-  }
-});
-
-// API БАННЕРОВ
-
-// Получение всех баннеров
-app.get('/api/ads', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM ads');
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Ошибка при получении баннеров:', error);
-    res.status(500).json({ error: 'Ошибка при получении баннеров' });
-  }
-});
-
-// Создание баннера
-app.post('/api/ads', isAdmin, async (req, res) => {
-  try {
-    const { title, imageUrl, linkUrl } = req.body;
-    
-    const result = await pool.query(
-      'INSERT INTO ads (title, image_url, link_url) VALUES ($1, $2, $3) RETURNING *',
-      [title, imageUrl, linkUrl]
-    );
-    
-    res.status(201).json(result.rows[0]);
-  } catch (error) {
-    console.error('Ошибка при создании баннера:', error);
-    res.status(500).json({ error: 'Ошибка при создании баннера' });
-  }
-});
-
-// Обновление баннера
-app.patch('/api/ads/:id', isAdmin, async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { title, imageUrl, linkUrl } = req.body;
-    
-    const result = await pool.query(
-      'UPDATE ads SET title = $1, image_url = $2, link_url = $3 WHERE id = $4 RETURNING *',
-      [title, imageUrl, linkUrl, id]
-    );
-    
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Баннер не найден' });
-    }
-    
-    res.json(result.rows[0]);
-  } catch (error) {
-    console.error('Ошибка при обновлении баннера:', error);
-    res.status(500).json({ error: 'Ошибка при обновлении баннера' });
-  }
-});
-
-// Удаление баннера
-app.delete('/api/ads/:id', isAdmin, async (req, res) => {
-  try {
-    const { id } = req.params;
-    
-    const result = await pool.query('DELETE FROM ads WHERE id = $1 RETURNING *', [id]);
-    
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Баннер не найден' });
-    }
-    
-    res.json({ message: 'Баннер успешно удален' });
-  } catch (error) {
-    console.error('Ошибка при удалении баннера:', error);
-    res.status(500).json({ error: 'Ошибка при удалении баннера' });
-  }
-});
-
-// API ТАЙМЕРОВ
-
-// Получение всех таймеров
-app.get('/api/timers', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM timers');
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Ошибка при получении таймеров:', error);
-    res.status(500).json({ error: 'Ошибка при получении таймеров' });
-  }
-});
-
-// Получение активных таймеров
-app.get('/api/timers/active', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM timers WHERE active = true');
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Ошибка при получении активных таймеров:', error);
-    res.status(500).json({ error: 'Ошибка при получении активных таймеров' });
-  }
-});
-
-// Получение админ-списка таймеров
-app.get('/api/admin/timers', isAdmin, async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM timers ORDER BY created_at DESC');
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Ошибка при получении таймеров для админа:', error);
-    res.status(500).json({ error: 'Ошибка при получении таймеров для админа' });
-  }
-});
-
-// Создание таймера
-app.post('/api/timers', isAdmin, async (req, res) => {
-  try {
-    const { title, endDate, active = true } = req.body;
-    
-    const result = await pool.query(
-      'INSERT INTO timers (title, end_date, active) VALUES ($1, $2, $3) RETURNING *',
-      [title, endDate, active]
-    );
-    
-    res.status(201).json(result.rows[0]);
-  } catch (error) {
-    console.error('Ошибка при создании таймера:', error);
-    res.status(500).json({ error: 'Ошибка при создании таймера' });
-  }
-});
-
-// Обновление таймера
-app.patch('/api/timers/:id', isAdmin, async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { title, endDate, active } = req.body;
-    
-    const result = await pool.query(
-      'UPDATE timers SET title = $1, end_date = $2, active = $3 WHERE id = $4 RETURNING *',
-      [title, endDate, active, id]
-    );
-    
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Таймер не найден' });
-    }
-    
-    res.json(result.rows[0]);
-  } catch (error) {
-    console.error('Ошибка при обновлении таймера:', error);
-    res.status(500).json({ error: 'Ошибка при обновлении таймера' });
-  }
-});
-
-// Удаление таймера
-app.delete('/api/timers/:id', isAdmin, async (req, res) => {
-  try {
-    const { id } = req.params;
-    
-    const result = await pool.query('DELETE FROM timers WHERE id = $1 RETURNING *', [id]);
-    
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Таймер не найден' });
-    }
-    
-    res.json({ message: 'Таймер успешно удален' });
-  } catch (error) {
-    console.error('Ошибка при удалении таймера:', error);
-    res.status(500).json({ error: 'Ошибка при удалении таймера' });
-  }
-});
-
-// API НАСТРОЕК САЙТА
-
-// Получение настроек сайта
-app.get('/api/site-settings', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM site_settings LIMIT 1');
-    
-    if (result.rows.length > 0) {
-      const settings = result.rows[0];
-      res.json({
-        id: settings.id,
-        siteName: settings.site_name,
-        teamSectionTitle: settings.team_section_title,
-        footerText: settings.footer_text,
-        logoUrl: settings.logo_url,
-        primaryColor: settings.primary_color,
-        secondaryColor: settings.secondary_color,
-        textColor: settings.text_color,
-        backgroundColor: settings.background_color
-      });
-    } else {
-      // Создаем настройки по умолчанию
-      const defaultSettings = {
-        siteName: 'ATOM-GAME',
-        teamSectionTitle: 'Рейтинг команд',
-        footerText: 'Проект ATOM﮳GAME поддерживается Фондом «АТР АЭС» и АО «Концерн Росэнергоатом»',
-        logoUrl: '/assets/atom-game-logo-blue-zWFb6GXJ.png',
-        primaryColor: '#3b82f6',
-        secondaryColor: '#10b981',
-        textColor: '#1f2937',
-        backgroundColor: '#ffffff'
-      };
-      
-      const insertResult = await pool.query(
-        'INSERT INTO site_settings (site_name, team_section_title, footer_text, logo_url, primary_color, secondary_color, text_color, background_color) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
-        [
-          defaultSettings.siteName,
-          defaultSettings.teamSectionTitle,
-          defaultSettings.footerText,
-          defaultSettings.logoUrl,
-          defaultSettings.primaryColor,
-          defaultSettings.secondaryColor,
-          defaultSettings.textColor,
-          defaultSettings.backgroundColor
-        ]
-      );
-      
-      const settings = insertResult.rows[0];
-      res.json({
-        id: settings.id,
-        siteName: settings.site_name,
-        teamSectionTitle: settings.team_section_title,
-        footerText: settings.footer_text,
-        logoUrl: settings.logo_url,
-        primaryColor: settings.primary_color,
-        secondaryColor: settings.secondary_color,
-        textColor: settings.text_color,
-        backgroundColor: settings.background_color
-      });
-    }
-  } catch (error) {
-    console.error('Ошибка при получении настроек сайта:', error);
-    
-    // Возвращаем настройки по умолчанию в случае ошибки
-    res.json({
-      id: 1,
-      siteName: 'ATOM-GAME',
-      teamSectionTitle: 'Рейтинг команд',
-      footerText: 'Проект ATOM﮳GAME поддерживается Фондом «АТР АЭС» и АО «Концерн Росэнергоатом»',
-      logoUrl: '/assets/atom-game-logo-blue-zWFb6GXJ.png',
-      primaryColor: '#3b82f6',
-      secondaryColor: '#10b981',
-      textColor: '#1f2937',
-      backgroundColor: '#ffffff'
-    });
-  }
-});
-
-// Обновление настроек сайта
-app.patch('/api/site-settings', isAdmin, async (req, res) => {
-  try {
-    const {
-      siteName,
-      teamSectionTitle,
-      footerText,
-      logoUrl,
-      primaryColor,
-      secondaryColor,
-      textColor,
-      backgroundColor
-    } = req.body;
-    
-    // Проверяем, существуют ли настройки
-    const checkResult = await pool.query('SELECT id FROM site_settings LIMIT 1');
-    
-    if (checkResult.rows.length > 0) {
-      // Обновляем настройки
-      const result = await pool.query(
-        'UPDATE site_settings SET site_name = $1, team_section_title = $2, footer_text = $3, logo_url = $4, primary_color = $5, secondary_color = $6, text_color = $7, background_color = $8, updated_at = NOW() WHERE id = $9 RETURNING *',
-        [
-          siteName,
-          teamSectionTitle,
-          footerText,
-          logoUrl,
-          primaryColor,
-          secondaryColor,
-          textColor,
-          backgroundColor,
-          checkResult.rows[0].id
-        ]
-      );
-      
-      const settings = result.rows[0];
-      res.json({
-        id: settings.id,
-        siteName: settings.site_name,
-        teamSectionTitle: settings.team_section_title,
-        footerText: settings.footer_text,
-        logoUrl: settings.logo_url,
-        primaryColor: settings.primary_color,
-        secondaryColor: settings.secondary_color,
-        textColor: settings.text_color,
-        backgroundColor: settings.background_color
-      });
-    } else {
-      // Создаем настройки
-      const result = await pool.query(
-        'INSERT INTO site_settings (site_name, team_section_title, footer_text, logo_url, primary_color, secondary_color, text_color, background_color) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
-        [
-          siteName,
-          teamSectionTitle,
-          footerText,
-          logoUrl,
-          primaryColor,
-          secondaryColor,
-          textColor,
-          backgroundColor
-        ]
-      );
-      
-      const settings = result.rows[0];
-      res.json({
-        id: settings.id,
-        siteName: settings.site_name,
-        teamSectionTitle: settings.team_section_title,
-        footerText: settings.footer_text,
-        logoUrl: settings.logo_url,
-        primaryColor: settings.primary_color,
-        secondaryColor: settings.secondary_color,
-        textColor: settings.text_color,
-        backgroundColor: settings.background_color
-      });
-    }
-  } catch (error) {
-    console.error('Ошибка при обновлении настроек сайта:', error);
-    res.status(500).json({ error: 'Ошибка при обновлении настроек' });
-  }
-});
-
-// API ДЛЯ ЗАГРУЗКИ ФАЙЛОВ
-
-// Загрузка изображений
-app.post('/api/upload', isAdmin, (req, res) => {
-  try {
-    const { base64Data, fileName } = req.body;
-    
-    if (!base64Data || !fileName) {
-      return res.status(400).json({ error: 'Отсутствуют данные для загрузки' });
-    }
-    
-    // Удаляем префикс из base64 (например, 'data:image/png;base64,')
-    const base64Image = base64Data.split(';base64,').pop();
-    
-    // Генерируем уникальное имя файла
-    const timestamp = Date.now();
-    const hash = crypto.createHash('md5').update(timestamp + fileName).digest('hex').substring(0, 8);
-    const fileNameParts = fileName.split('.');
-    const ext = fileNameParts.pop();
-    const name = fileNameParts.join('.');
-    const uniqueFileName = `${name}-${hash}.${ext}`;
-    
-    // Создаем путь для сохранения файла
-    const filePath = path.join(uploadsDir, uniqueFileName);
-    
-    // Сохраняем файл
-    fs.writeFileSync(filePath, base64Image, { encoding: 'base64' });
-    
-    // Возвращаем URL для доступа к файлу
-    res.json({ url: `/uploads/${uniqueFileName}` });
-  } catch (error) {
-    console.error('Ошибка при загрузке файла:', error);
-    res.status(500).json({ error: 'Ошибка при загрузке файла' });
-  }
-});
-
-// МАРШРУТ ДЛЯ SPA
-
-// Все остальные запросы возвращают SPA
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/public/index.html'));
-});
-
-// Запуск сервера
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Сервер запущен на порту ${PORT}`);
-  console.log(`URL: http://localhost:${PORT}`);
-});
+export { pool, db };
 EOF
 
-# 3. НАСТРОЙКА NGINX
-echo -e "${YELLOW}[3/4] Настраиваем Nginx...${NC}"
-
-cat > /etc/nginx/sites-available/atomgameblk.ru << EOF
-server {
-    listen 80;
-    server_name atomgameblk.ru www.atomgameblk.ru 193.109.78.85;
-
-    client_max_body_size 100M;
-
-    location / {
-        proxy_pass http://localhost:8080;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade \$http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
-        proxy_cache_bypass \$http_upgrade;
-        proxy_read_timeout 300;
-        proxy_connect_timeout 300;
-    }
-
-    access_log /var/log/nginx/atomgameblk.ru-access.log;
-    error_log /var/log/nginx/atomgameblk.ru-error.log;
-}
+# 3. Исправляем формы для сохранения изображений (partner-form.tsx)
+echo -e "${YELLOW}[3/5] Исправление форм для сохранения изображений...${NC}"
+cat > tmp_fix_partner.sh << 'EOF'
+#!/bin/bash
+sed -i 's/logoUrl: logoPreview || data.logoUrl || "",/logoUrl: logoPreview || "",/g' client/src/components/partner-form.tsx
+sed -i 's/const optimizeImage = async (file: File, maxWidth = 200, maxHeight = 100): Promise<string> => {/const optimizeImage = async (file: File, maxWidth = 200, maxHeight = 100): Promise<string> => {\n    if (!file) return "";/g' client/src/components/partner-form.tsx
 EOF
+chmod +x tmp_fix_partner.sh
+./tmp_fix_partner.sh
 
-# Проверяем и перезапускаем Nginx
-nginx -t && systemctl restart nginx
+# 4. Исправляем формы для сохранения изображений (team-form.tsx)
+cat > tmp_fix_team.sh << 'EOF'
+#!/bin/bash
+sed -i 's/logoUrl: logoPreview || data.logoUrl || "",/logoUrl: logoPreview || "",/g' client/src/components/team-form.tsx
+sed -i 's/const optimizeImage = async (file: File, maxWidth = 300, maxHeight = 300): Promise<string> => {/const optimizeImage = async (file: File, maxWidth = 300, maxHeight = 300): Promise<string> => {\n    if (!file) return "";/g' client/src/components/team-form.tsx
+EOF
+chmod +x tmp_fix_team.sh
+./tmp_fix_team.sh
 
-# 4. УСТАНОВКА НЕДОСТАЮЩИХ NPM ПАКЕТОВ
-echo -e "${YELLOW}[4/4] Устанавливаем недостающие npm пакеты...${NC}"
+# 5. Исправляем формы для сохранения изображений (ad-banner-form.tsx)
+cat > tmp_fix_ad.sh << 'EOF'
+#!/bin/bash
+sed -i 's/logoUrl: logoPreview || data.logoUrl || "",/logoUrl: logoPreview || "",/g' client/src/components/ad-banner-form.tsx
+EOF
+chmod +x tmp_fix_ad.sh
+./tmp_fix_ad.sh
 
-# Установка bcrypt для хеширования паролей
-npm install --save bcrypt
+# Удаляем временные скрипты
+rm tmp_fix_partner.sh tmp_fix_team.sh tmp_fix_ad.sh
 
-# Запускаем сервер через PM2
-echo -e "${YELLOW}Запускаем сервер через PM2...${NC}"
-pm2 start complete-server.mjs --name "atom-game-server"
-pm2 save
+echo -e "${GREEN}Все исправления успешно применены!${NC}"
+echo -e "${YELLOW}Сервер будет запущен на порту 5001${NC}"
+echo -e "${YELLOW}Изображения теперь будут корректно сохраняться в админ-панели${NC}"
 
-# Проверяем запуск
-if pm2 list | grep -q "atom-game-server" && pm2 list | grep -q "online"; then
-  echo -e "${GREEN}=============================================${NC}"
-  echo -e "${GREEN}🎉 ПОЗДРАВЛЯЕМ! ВСЁ УСПЕШНО ИСПРАВЛЕНО! 🎉${NC}"
-  echo -e "${GREEN}=============================================${NC}"
-  echo -e "${GREEN}Сайт доступен по адресу: http://193.109.78.85${NC}"
-  echo -e "${GREEN}Данные для входа в админку:${NC}"
-  echo -e "  - Логин: ${GREEN}admin${NC}"
-  echo -e "  - Пароль: ${GREEN}Atom&Game#2025!${NC}"
-  echo ""
-  echo -e "Полезные команды:"
-  echo -e "  - ${YELLOW}pm2 status${NC} - посмотреть статус сервера"
-  echo -e "  - ${YELLOW}pm2 logs atom-game-server${NC} - посмотреть логи сервера"
-  echo -e "  - ${YELLOW}pm2 restart atom-game-server${NC} - перезапустить сервер"
-else
-  echo -e "${RED}Что-то пошло не так при запуске PM2. Проверьте логи.${NC}"
-fi
+echo -e "\n${GREEN}Готово! Перезапустите сервер командой: npm run dev${NC}"
