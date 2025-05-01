@@ -18,7 +18,7 @@ cd /var/www/atomgame
 # Создание JavaScript файла для запуска через PM2
 echo -e "\n${BLUE}[1/4] Создание файла для запуска сервера...${NC}"
 cat > start-server.js << 'EOFJS'
-const { spawn } = require('child_process');
+import { spawn } from 'child_process';
 
 console.log('Запуск ATOM-GAME сервера...');
 
