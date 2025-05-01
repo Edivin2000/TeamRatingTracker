@@ -1,0 +1,80 @@
+Failed to load resource: the server responded with a status of 502 (Bad Gateway)
+api/ads:1 
+        
+        
+       Failed to load resource: the server responded with a status of 502 (Bad Gateway)
+api/partners:1 
+        
+        
+       Failed to load resource: the server responded with a status of 502 (Bad Gateway)
+api/teams:1 
+        
+        
+       Failed to load resource: the server responded with a status of 502 (Bad Gateway)
+api/site-settings:1 
+        
+        
+       Failed to load resource: the server responded with a status of 502 (Bad Gateway)
+api/user:1 
+        
+        
+       Failed to load resource: the server responded with a status of 502 (Bad Gateway)
+index-DOrnqSzR.js:258 Рейтинги команд: Object
+api/login:1 
+        
+        
+       Failed to load resource: the server responded with a status of 502 (Bad Gateway)
+index-DOrnqSzR.js:48 
+        
+        
+       POST http://193.109.78.85/api/login 502 (Bad Gateway)
+xt @ index-DOrnqSzR.js:48
+mutationFn @ index-DOrnqSzR.js:218
+fn @ index-DOrnqSzR.js:48
+w @ index-DOrnqSzR.js:48
+start @ index-DOrnqSzR.js:48
+execute @ index-DOrnqSzR.js:48
+await in execute
+mutate @ index-DOrnqSzR.js:48
+(anonymous) @ index-DOrnqSzR.js:48
+a @ index-DOrnqSzR.js:263
+(anonymous) @ index-DOrnqSzR.js:263
+await in (anonymous)
+t2 @ index-DOrnqSzR.js:37
+r2 @ index-DOrnqSzR.js:37
+s2 @ index-DOrnqSzR.js:37
+Gg @ index-DOrnqSzR.js:37
+Z1 @ index-DOrnqSzR.js:37
+(anonymous) @ index-DOrnqSzR.js:37
+Ym @ index-DOrnqSzR.js:40
+w1 @ index-DOrnqSzR.js:37
+Jd @ index-DOrnqSzR.js:37
+jm @ index-DOrnqSzR.js:37
+w2 @ index-DOrnqSzR.js:37
+index-DOrnqSzR.js:48 
+        
+        
+       POST http://193.109.78.85/api/login 502 (Bad Gateway)
+xt @ index-DOrnqSzR.js:48
+mutationFn @ index-DOrnqSzR.js:218
+fn @ index-DOrnqSzR.js:48
+w @ index-DOrnqSzR.js:48
+start @ index-DOrnqSzR.js:48
+execute @ index-DOrnqSzR.js:48
+await in execute
+mutate @ index-DOrnqSzR.js:48
+(anonymous) @ index-DOrnqSzR.js:48
+a @ index-DOrnqSzR.js:263
+(anonymous) @ index-DOrnqSzR.js:263
+await in (anonymous)
+t2 @ index-DOrnqSzR.js:37
+r2 @ index-DOrnqSzR.js:37
+s2 @ index-DOrnqSzR.js:37
+Gg @ index-DOrnqSzR.js:37
+Z1 @ index-DOrnqSzR.js:37
+(anonymous) @ index-DOrnqSzR.js:37
+Ym @ index-DOrnqSzR.js:40
+w1 @ index-DOrnqSzR.js:37
+Jd @ index-DOrnqSzR.js:37
+jm @ index-DOrnqSzR.js:37
+w2 @ index-DOrnqSzR.js:37
