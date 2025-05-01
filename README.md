@@ -19,7 +19,7 @@ chmod +x auto_install.sh
 sudo ./auto_install.sh
 ```
 
-**Важно:** Перед запуском отредактируйте строку `GIT_REPO_URL="https://github.com/yourusername/atomgame.git"` в скрипте, указав правильный URL вашего репозитория.
+**Важно:** В скрипте уже указан правильный URL репозитория: `GIT_REPO_URL="https://github.com/Edivin2000/TeamRatingTracker.git"`
 
 Скрипт установит:
 - Node.js 18.x

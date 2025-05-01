@@ -18,7 +18,7 @@ DB_USER="atomgame"
 DB_PASSWORD="AtomGame2025"
 DB_NAME="atomgame"
 SESSION_SECRET="AtomGameSecretKey2025"
-GIT_REPO_URL="https://github.com/yourusername/atomgame.git" # УКАЖИТЕ ПРАВИЛЬНЫЙ РЕПОЗИТОРИЙ
+GIT_REPO_URL="https://github.com/Edivin2000/TeamRatingTracker.git" # Репозиторий пользователя
 
 # Функции вывода
 log() {
