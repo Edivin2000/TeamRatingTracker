@@ -1,6 +1,6 @@
-import { users, teams, partners, ads, type User, type InsertUser, 
+import { users, teams, partners, ads, timers, type User, type InsertUser, 
   type Team, type InsertTeam, type Partner, type InsertPartner, 
-  type Ad, type InsertAd, type ScoreUpdate } from "@shared/schema";
+  type Ad, type InsertAd, type Timer, type InsertTimer, type ScoreUpdate } from "@shared/schema";
 import session from "express-session";
 import createMemoryStore from "memorystore";
 import connectPg from "connect-pg-simple";
@@ -284,6 +284,31 @@ export class MemStorage implements IStorage {
     }
     
     this.ads.delete(id);
+  }
+  
+  // Timer methods - заглушки для соответствия интерфейсу
+  async getAllTimers(): Promise<Timer[]> {
+    return [];
+  }
+  
+  async getActiveTimers(): Promise<Timer[]> {
+    return [];
+  }
+  
+  async getTimer(id: number): Promise<Timer | undefined> {
+    return undefined;
+  }
+  
+  async createTimer(timer: InsertTimer): Promise<Timer> {
+    throw new Error("Таймеры не поддерживаются в версии с хранением в памяти");
+  }
+  
+  async updateTimer(id: number, timer: InsertTimer): Promise<Timer> {
+    throw new Error("Таймеры не поддерживаются в версии с хранением в памяти");
+  }
+  
+  async deleteTimer(id: number): Promise<void> {
+    throw new Error("Таймеры не поддерживаются в версии с хранением в памяти");
   }
 }
 

@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { setupAuth } from "./auth";
 import { storage } from "./storage";
 import { z } from "zod";
-import { insertTeamSchema, insertPartnerSchema, insertAdSchema, scoreUpdateSchema } from "@shared/schema";
+import { insertTeamSchema, insertPartnerSchema, insertAdSchema, insertTimerSchema, scoreUpdateSchema } from "@shared/schema";
 
 // Middleware to check if user is authenticated and admin
 const isAdmin = (req: Request, res: Response, next: Function) => {
@@ -321,6 +321,108 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.sendStatus(204);
     } catch (error) {
       res.status(500).json({ message: "Не удалось удалить баннер" });
+    }
+  });
+  
+  // Timer routes
+  // Get all active timers - public
+  app.get("/api/timers", async (req, res) => {
+    try {
+      const timers = await storage.getActiveTimers();
+      res.json(timers);
+    } catch (error) {
+      res.status(500).json({ message: "Не удалось получить список таймеров" });
+    }
+  });
+
+  // Get a single timer by ID - public
+  app.get("/api/timers/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Неверный ID таймера" });
+      }
+
+      const timer = await storage.getTimer(id);
+      if (!timer) {
+        return res.status(404).json({ message: "Таймер не найден" });
+      }
+
+      res.json(timer);
+    } catch (error) {
+      res.status(500).json({ message: "Не удалось получить данные таймера" });
+    }
+  });
+
+  // Get all timers (active and inactive) - admin only
+  app.get("/api/admin/timers", isAdmin, async (req, res) => {
+    try {
+      const timers = await storage.getAllTimers();
+      res.json(timers);
+    } catch (error) {
+      res.status(500).json({ message: "Не удалось получить список всех таймеров" });
+    }
+  });
+
+  // Create a new timer - admin only
+  app.post("/api/timers", isAdmin, async (req, res) => {
+    try {
+      // Validate request body
+      const result = insertTimerSchema.safeParse(req.body);
+      if (!result.success) {
+        return res.status(400).json({ message: "Неверные данные таймера" });
+      }
+
+      const newTimer = await storage.createTimer(req.body);
+      res.status(201).json(newTimer);
+    } catch (error) {
+      res.status(500).json({ message: "Не удалось создать таймер" });
+    }
+  });
+
+  // Update an existing timer - admin only
+  app.put("/api/timers/:id", isAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Неверный ID таймера" });
+      }
+
+      // Validate request body
+      const result = insertTimerSchema.safeParse(req.body);
+      if (!result.success) {
+        return res.status(400).json({ message: "Неверные данные таймера" });
+      }
+
+      const timer = await storage.getTimer(id);
+      if (!timer) {
+        return res.status(404).json({ message: "Таймер не найден" });
+      }
+
+      const updatedTimer = await storage.updateTimer(id, req.body);
+      res.json(updatedTimer);
+    } catch (error) {
+      res.status(500).json({ message: "Не удалось обновить таймер" });
+    }
+  });
+
+  // Delete a timer - admin only
+  app.delete("/api/timers/:id", isAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Неверный ID таймера" });
+      }
+
+      const timer = await storage.getTimer(id);
+      if (!timer) {
+        return res.status(404).json({ message: "Таймер не найден" });
+      }
+
+      await storage.deleteTimer(id);
+      res.sendStatus(204);
+    } catch (error) {
+      res.status(500).json({ message: "Не удалось удалить таймер" });
     }
   });
 
