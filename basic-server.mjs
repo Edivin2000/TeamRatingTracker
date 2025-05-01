@@ -44,8 +44,8 @@ app.use((req, res, next) => {
 });
 
 // Статические файлы (из папки dist)
-app.use(express.static(path.join(__dirname, 'dist')));
-app.use('/assets', express.static(path.join(__dirname, 'dist/assets')));
+app.use(express.static(path.join(__dirname, 'dist/public')));
+app.use('/assets', express.static(path.join(__dirname, 'dist/public/assets')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Парсинг JSON
@@ -112,7 +112,7 @@ app.get('/api/site-settings', async (req, res) => {
 
 // Маршрут для всех остальных запросов (SPA)
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
+  res.sendFile(path.join(__dirname, 'dist/public/index.html'));
 });
 
 // Обработка ошибок
