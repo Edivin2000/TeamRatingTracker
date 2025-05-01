@@ -878,6 +878,15 @@ export default function AdminPage() {
           }}
         />
       )}
+      
+      {isSiteSettingsFormOpen && (
+        <SiteSettingsForm
+          settings={siteSettings || null}
+          onClose={() => {
+            setIsSiteSettingsFormOpen(false);
+          }}
+        />
+      )}
     </div>
   );
 }
