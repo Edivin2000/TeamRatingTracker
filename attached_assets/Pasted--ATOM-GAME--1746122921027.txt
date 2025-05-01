@@ -1,0 +1,97 @@
+
+====================================================
+       ATOM-GAME сервер успешно запущен!             
+====================================================
+Для перезапуска сервера используйте:
+./restart-server.sh
+
+Для просмотра логов:
+pm2 logs atom-game-server
+root@vm3218560:~/TeamRatingTracker# pm2 logs atom-game-server
+[TAILING] Tailing last 15 lines for [atom-game-server] process (change the value with --lines option)
+/root/.pm2/logs/atom-game-server-out.log last 15 lines:
+0|atom-gam | [2025-05-01T16:46:58.508Z] GET /api/admin/timers
+0|atom-gam | Сервер запущен на порту 8080
+0|atom-gam | URL: http://localhost:8080
+0|atom-gam | Соединение с базой данных успешно установлено: { now: 2025-05-01T16:47:21.893Z }
+0|atom-gam | Сервер запущен на порту 8080
+0|atom-gam | URL: http://localhost:8080
+0|atom-gam | Соединение с базой данных успешно установлено: { now: 2025-05-01T16:48:27.886Z }
+0|atom-gam | [2025-05-01T16:52:33.238Z] GET /
+0|atom-gam | Сервер запущен на порту 8080
+0|atom-gam | URL: http://localhost:8080
+0|atom-gam | Соединение с базой данных успешно установлено: { now: 2025-05-01T16:53:22.873Z }
+0|atom-gam | Сервер запущен на порту 8080
+0|atom-gam | URL: http://localhost:8080
+0|atom-gam | Соединение с базой данных успешно установлено: { now: 2025-05-01T16:53:57.865Z }
+0|atom-gam | [2025-05-01T16:54:10.624Z] GET /
+
+/root/.pm2/logs/atom-game-server-error.log last 15 lines:
+0|atom-gam |   where: undefined,
+0|atom-gam |   schema: undefined,
+0|atom-gam |   table: undefined,
+0|atom-gam |   column: undefined,
+0|atom-gam |   dataType: undefined,
+0|atom-gam |   constraint: undefined,
+0|atom-gam |   file: 'parse_relation.c',
+0|atom-gam |   line: '3722',
+0|atom-gam |   routine: 'errorMissingColumn'
+0|atom-gam | }
+0|atom-gam | ReferenceError: require is not defined in ES module scope, you can use import instead
+0|atom-gam | This file is being treated as an ES module because it has a '.js' file extension and '/var/www/atomgame/package.json' contains "type": "module". To treat it as a CommonJS script, rename it to use the '.cjs' file extension.
+0|atom-gam |     at file:///var/www/atomgame/start-server.js:1:19
+0|atom-gam |     at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+0|atom-gam |     at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+
+^C
+root@vm3218560:~/TeamRatingTracker# git pull
+chmod +x fix-server.sh
+sudo ./fix-server.sh
+Already up to date.
+====================================================
+       Исправление и запуск ATOM-GAME                
+====================================================
+
+[1/4] Создание файла для запуска сервера...
+
+[2/4] Создание скрипта перезапуска...
+
+[3/4] Установка прав на исполнение...
+
+[4/4] Запуск сервера...
+[PM2] Applying action deleteProcessId on app [atom-game-server](ids: [ 0 ])
+[PM2] [atom-game-server](0) ✓
+┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
+│ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
+└────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
+[PM2] Starting /var/www/atomgame/start-server.js in fork_mode (1 instance)
+[PM2] Done.
+┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
+│ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
+├────┼────────────────────┼──────────┼──────┼───────────┼──────────┼──────────┤
+│ 0  │ atom-game-server   │ fork     │ 0    │ online    │ 0%       │ 19.5mb   │
+└────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
+[PM2] Saving current process list...
+[PM2] Successfully saved in /root/.pm2/dump.pm2
+
+====================================================
+       ATOM-GAME сервер успешно запущен!             
+====================================================
+Для перезапуска сервера используйте:
+./restart-server.sh
+
+Для просмотра логов:
+pm2 logs atom-game-server
+root@vm3218560:~/TeamRatingTracker# pm2 logs atom-game-serve
+[TAILING] Tailing last 15 lines for [atom-game-serve] process (change the value with --lines option)
+pm2 status
+^C
+root@vm3218560:~/TeamRatingTracker# [200~pm2 status~
+[200~pm2: command not found
+root@vm3218560:~/TeamRatingTracker# pm2 status
+┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
+│ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
+├────┼────────────────────┼──────────┼──────┼───────────┼──────────┼──────────┤
+│ 0  │ atom-game-server   │ fork     │ 0    │ online    │ 0%       │ 49.7mb   │
+└────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
+root@vm3218560:~/TeamRatingTracker# 
