@@ -1,0 +1,88 @@
+==========================================
+   Исправление проблем с ES модулями   
+==========================================
+
+[УСТАНОВКА] Остановка всех процессов...
+[УСТАНОВКА] Проверка версии Node.js...
+[УСТАНОВКА] Используется Node.js v18.20.8
+[УСТАНОВКА] Переходим в директорию приложения /var/www/atomgame...
+[УСТАНОВКА] Проверка и обновление package.json...
+[УСТАНОВКА] type: module уже присутствует в package.json
+[УСТАНОВКА] Проверка использования ESM в основных файлах...
+[УСТАНОВКА] Файл index.js уже использует ESM синтаксис
+[УСТАНОВКА] Обновление .env файла...
+[УСТАНОВКА] Настройка переменных NODE_OPTIONS для поддержки ESM...
+[УСТАНОВКА] Создание systemd службы с поддержкой ESM...
+[УСТАНОВКА] Перезагрузка конфигурации systemd...
+[УСТАНОВКА] Создание скрипта для прямого запуска с поддержкой ESM...
+[УСТАНОВКА] Проверка статуса приложения...
+* atomgame.service - ATOM-GAME Application
+     Loaded: loaded (/etc/systemd/system/atomgame.service; enabled; preset: enabled)
+     Active: activating (auto-restart) (Result: exit-code) since Thu 2025-05-01 23:09:42 MSK; 4s ago
+    Process: 1838809 ExecStart=/usr/bin/node /var/www/atomgame/dist/index.js (code=exited, status=1/FAILURE)
+   Main PID: 1838809 (code=exited, status=1/FAILURE)
+        CPU: 965ms
+
+==========================================
+   Исправление завершено!   
+==========================================
+
+Если проблема сохраняется, выполните:
+cd /var/www/atomgame && ./start_esm.sh
+
+Для просмотра логов:
+journalctl -u atomgame -f
+или
+tail -f /var/www/atomgame/app.log
+
+root@vm3218560:/var/www/atomgame# journalctl -u atomgame -f
+May 01 23:09:52 vm3218560.firstbyte.club systemd[1]: atomgame.service: Scheduled restart job, restart counter is at 92.
+May 01 23:09:52 vm3218560.firstbyte.club systemd[1]: Started atomgame.service - ATOM-GAME Application.
+May 01 23:09:53 vm3218560.firstbyte.club systemd[1]: atomgame.service: Main process exited, code=exited, status=1/FAILURE
+May 01 23:09:53 vm3218560.firstbyte.club systemd[1]: atomgame.service: Failed with result 'exit-code'.
+May 01 23:09:53 vm3218560.firstbyte.club systemd[1]: atomgame.service: Consumed 1.041s CPU time.
+May 01 23:10:03 vm3218560.firstbyte.club systemd[1]: atomgame.service: Scheduled restart job, restart counter is at 93.
+May 01 23:10:03 vm3218560.firstbyte.club systemd[1]: Started atomgame.service - ATOM-GAME Application.
+May 01 23:10:04 vm3218560.firstbyte.club systemd[1]: atomgame.service: Main process exited, code=exited, status=1/FAILURE
+May 01 23:10:04 vm3218560.firstbyte.club systemd[1]: atomgame.service: Failed with result 'exit-code'.
+May 01 23:10:04 vm3218560.firstbyte.club systemd[1]: atomgame.service: Consumed 1.072s CPU time.
+cd /var/www/atomgame && ./start_esm.sh
+May 01 23:10:14 vm3218560.firstbyte.club systemd[1]: atomgame.service: Scheduled restart job, restart counter is at 94.
+May 01 23:10:14 vm3218560.firstbyte.club systemd[1]: Started atomgame.service - ATOM-GAME Application.
+May 01 23:10:15 vm3218560.firstbyte.club systemd[1]: atomgame.service: Main process exited, code=exited, status=1/FAILURE
+May 01 23:10:15 vm3218560.firstbyte.club systemd[1]: atomgame.service: Failed with result 'exit-code'.
+May 01 23:10:15 vm3218560.firstbyte.club systemd[1]: atomgame.service: Consumed 1.110s CPU time.
+tail -f /var/www/atomgame/app.log
+^C
+root@vm3218560:/var/www/atomgame# tail -f /var/www/atomgame/app.log
+    at Object.resolve (node:path:1115:7)
+    at file:///var/www/atomgame/dist/index.js:910:17
+    at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+    at async loadESM (node:internal/process/esm_loader:34:7)
+    at async handleMainPromise (node:internal/modules/run_main:106:12) {
+  code: 'ERR_INVALID_ARG_TYPE'
+}
+
+Node.js v18.20.8
+(node:1838912) ExperimentalWarning: The Node.js specifier resolution flag is experimental. It could change or be removed at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+node:internal/errors:496
+    ErrorCaptureStackTrace(err);
+    ^
+
+TypeError [ERR_INVALID_ARG_TYPE]: The "paths[0]" argument must be of type string. Received undefined
+    at new NodeError (node:internal/errors:405:5)
+    at validateString (node:internal/validators:162:11)
+    at Object.resolve (node:path:1115:7)
+    at file:///var/www/atomgame/dist/index.js:910:17
+    at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+    at async loadESM (node:internal/process/esm_loader:34:7)
+    at async handleMainPromise (node:internal/modules/run_main:106:12) {
+  code: 'ERR_INVALID_ARG_TYPE'
+}
+
+Node.js v18.20.8
+^C
+root@vm3218560:/var/www/atomgame# 
