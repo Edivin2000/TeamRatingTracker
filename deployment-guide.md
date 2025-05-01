@@ -1,82 +1,95 @@
-# Руководство по развертыванию ATOM-GAME на вашем сервере
+# Подробная инструкция по установке ATOM-GAME на ваш сервер
 
-Это пошаговое руководство поможет вам установить и запустить ATOM-GAME на вашем сервере.
+Эта инструкция поможет вам установить вашу рейтинговую систему ATOM-GAME с нуля на любой Linux-сервер.
 
-## Необходимые условия
+## Что понадобится
 
-- Linux сервер (Ubuntu 20.04+ или Debian 11+ рекомендуется)
-- Root-доступ или пользователь с sudo правами
-- Доменное имя, настроенное на ваш сервер (если вы планируете использовать SSL)
+- Сервер с Linux (лучше всего Ubuntu 20.04 или новее)
+- Пользователь с root-правами
+- Ваше доменное имя, уже направленное на IP-адрес сервера
 
 ## Шаг 1: Подготовка сервера
 
-Подключитесь к серверу через SSH и обновите систему:
+Подключитесь к вашему серверу через SSH и выполните:
 
 ```bash
-sudo apt update
-sudo apt upgrade -y
-```
+# Обновление системы
+sudo apt update && sudo apt upgrade -y
 
-Установите необходимые пакеты:
-
-```bash
-sudo apt install -y curl git nginx postgresql postgresql-contrib
+# Установка необходимых программ
+sudo apt install -y curl git nginx postgresql postgresql-contrib build-essential
 ```
 
 ## Шаг 2: Установка Node.js
 
-Установите Node.js версии 18.x:
-
 ```bash
+# Добавление репозитория Node.js
 curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+
+# Установка Node.js
 sudo apt install -y nodejs
-```
 
-Проверьте установку:
-
-```bash
+# Проверка установки
 node -v  # Должно показать v18.x.x
 npm -v   # Должно показать 8.x.x или выше
 ```
 
-## Шаг 3: Настройка PostgreSQL
-
-Создайте пользователя и базу данных:
+## Шаг 3: Настройка базы данных PostgreSQL
 
 ```bash
-sudo -u postgres psql -c "CREATE USER atomgame WITH ENCRYPTED PASSWORD 'Создайте_сложный_пароль';"
+# Создание пользователя и базы данных
+sudo -u postgres psql -c "CREATE USER atomgame WITH ENCRYPTED PASSWORD 'ВашСложныйПароль123';"
 sudo -u postgres psql -c "CREATE DATABASE atomgame OWNER atomgame;"
 ```
 
-## Шаг 4: Загрузка проекта
+❗ Обязательно замените `ВашСложныйПароль123` на действительно сложный пароль и запомните его.
 
-Создайте директорию для проекта и клонируйте репозиторий (или скопируйте файлы с Replit):
+## Шаг 4: Копирование файлов проекта
 
 ```bash
-sudo mkdir -p /var/www/atomgameblk
-sudo chown -R $USER:$USER /var/www/atomgameblk
-cd /var/www/atomgameblk
+# Создание директории для проекта
+sudo mkdir -p /var/www/atomgame
+sudo chown -R $USER:$USER /var/www/atomgame
 
-# Если у вас есть Git репозиторий:
-git clone ваш-репозиторий-url .
-
-# Или скопируйте файлы с Replit
-# (Вам нужно будет загрузить файлы на сервер через scp, rsync, или другой метод)
+# Переход в директорию
+cd /var/www/atomgame
 ```
 
-## Шаг 5: Установка зависимостей
+Теперь вам нужно скопировать файлы с Replit на ваш сервер. Есть несколько способов:
 
-Установите PM2 глобально и установите зависимости проекта:
+### Вариант 1: Загрузка через архив (самый простой)
+1. На Replit нажмите кнопку "Download as zip" в меню проекта
+2. Загрузите архив на ваш компьютер
+3. Используйте SCP для загрузки архива на сервер:
+   ```bash
+   # Выполните эту команду на своём компьютере, не на сервере
+   scp ваш_архив.zip пользователь@адрес_сервера:/var/www/atomgame/
+   ```
+4. На сервере распакуйте архив:
+   ```bash
+   cd /var/www/atomgame
+   unzip ваш_архив.zip
+   ```
+
+### Вариант 2: Использование Git (если у вас есть Git-репозиторий)
+```bash
+git clone ваш-репозиторий-url .
+```
+
+## Шаг 5: Установка зависимостей проекта
 
 ```bash
+# Установка менеджера процессов PM2
 sudo npm install -g pm2
-cd /var/www/atomgameblk
+
+# Установка зависимостей проекта
+cd /var/www/atomgame
 npm install
 ```
 
 ## Шаг 6: Настройка переменных окружения
 
-Создайте файл .env:
+Создайте файл `.env` с настройками:
 
 ```bash
 cat > .env << EOF
@@ -86,38 +99,107 @@ PORT=3000
 
 # База данных PostgreSQL
 PGUSER=atomgame
-PGPASSWORD=Создайте_сложный_пароль
+PGPASSWORD=ВашСложныйПароль123
 PGDATABASE=atomgame
 PGHOST=localhost
 PGPORT=5432
-DATABASE_URL=postgresql://atomgame:Создайте_сложный_пароль@localhost:5432/atomgame
+DATABASE_URL=postgresql://atomgame:ВашСложныйПароль123@localhost:5432/atomgame
 
 # Безопасность
-SESSION_SECRET=Генерируйте_случайную_строку
+SESSION_SECRET=ОченьСекретныйКлюч123
 EOF
 ```
 
-Замените `Создайте_сложный_пароль` и `Генерируйте_случайную_строку` своими значениями.
+❗ Замените:
+- `ВашСложныйПароль123` на пароль, который вы создали в шаге 3
+- `ОченьСекретныйКлюч123` на другую случайную строку для безопасности сессий
 
 ## Шаг 7: Миграция базы данных и сборка проекта
 
-Выполните миграцию базы данных и соберите проект:
-
 ```bash
-cd /var/www/atomgameblk
+# Перейдите в директорию проекта
+cd /var/www/atomgame
+
+# Применение схемы базы данных
 npm run db:push
+
+# Сборка проекта
 npm run build
 ```
 
-## Шаг 8: Настройка PM2
+## Шаг 8: Создание конфигурации Nginx
 
-Убедитесь, что файл ecosystem.config.js содержит правильные настройки:
+Создайте файл конфигурации Nginx:
 
-```js
+```bash
+sudo nano /etc/nginx/sites-available/atomgame
+```
+
+Скопируйте и вставьте следующую конфигурацию (замените ваш-домен.ру на ваше доменное имя):
+
+```
+server {
+    listen 80;
+    server_name ваш-домен.ру www.ваш-домен.ру;
+    
+    # Корневая директория с файлами
+    root /var/www/atomgame/dist;
+    
+    # Файлы логов
+    access_log /var/log/nginx/atomgame.access.log;
+    error_log /var/log/nginx/atomgame.error.log;
+    
+    # Включение сжатия
+    gzip on;
+    gzip_types text/plain application/javascript application/x-javascript text/javascript text/xml text/css;
+    
+    # Проксирование API запросов
+    location /api {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+    
+    # Для остальных запросов (фронтенд SPA)
+    location / {
+        try_files $uri $uri/ /index.html;
+        add_header Cache-Control "public, max-age=3600";
+    }
+    
+    # Кэширование статических файлов
+    location ~* \.(jpg|jpeg|png|gif|ico|css|js|svg)$ {
+        expires 7d;
+        add_header Cache-Control "public, max-age=604800";
+    }
+}
+```
+
+Сохраните файл (Ctrl+X, затем Y).
+
+Активируйте конфигурацию:
+
+```bash
+sudo ln -sf /etc/nginx/sites-available/atomgame /etc/nginx/sites-enabled/
+sudo nginx -t  # Проверка конфигурации
+sudo systemctl reload nginx  # Применение конфигурации
+```
+
+## Шаг 9: Настройка PM2 для запуска и автозапуска
+
+Создайте файл конфигурации PM2:
+
+```bash
+cat > /var/www/atomgame/ecosystem.config.js << EOF
 module.exports = {
   apps: [
     {
-      name: "atom-game-blk",
+      name: "atomgame",
       script: "dist/index.js",
       instances: 1,
       autorestart: true,
@@ -127,127 +209,91 @@ module.exports = {
         PORT: 3000,
         HOST: "0.0.0.0",
       },
-      exp_backoff_restart_delay: 100,
       max_memory_restart: "500M",
-      time: true,
-      merge_logs: true,
-      error_file: "logs/pm2_error.log",
-      out_file: "logs/pm2_output.log",
+      error_file: "logs/error.log",
+      out_file: "logs/output.log",
       log_date_format: "YYYY-MM-DD HH:mm Z",
     },
   ],
 };
+EOF
 ```
 
 Создайте директорию для логов:
 
 ```bash
-mkdir -p /var/www/atomgameblk/logs
+mkdir -p /var/www/atomgame/logs
 ```
 
-Запустите приложение с помощью PM2:
+Запустите приложение:
 
 ```bash
-cd /var/www/atomgameblk
+cd /var/www/atomgame
 pm2 start ecosystem.config.js
+
+# Настройка автозапуска
 pm2 startup
+# Выполните команду, которую выведет предыдущая команда
 pm2 save
 ```
 
-## Шаг 9: Настройка Nginx
-
-Скопируйте конфигурационный файл nginx:
+## Шаг 10: Настройка HTTPS (SSL)
 
 ```bash
-sudo cp /var/www/atomgameblk/nginx.conf /etc/nginx/sites-available/atomgameblk
-```
-
-Отредактируйте файл, изменив доменное имя на ваше:
-
-```bash
-sudo nano /etc/nginx/sites-available/atomgameblk
-```
-
-Замените `your-domain.com` в конфигурации на ваше доменное имя.
-
-Активируйте конфигурацию и перезапустите Nginx:
-
-```bash
-sudo ln -sf /etc/nginx/sites-available/atomgameblk /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx
-```
-
-## Шаг 10: Настройка SSL (опционально, но рекомендуется)
-
-Установите Certbot:
-
-```bash
+# Установка Certbot
 sudo apt install -y certbot python3-certbot-nginx
+
+# Получение сертификата
+sudo certbot --nginx -d ваш-домен.ру -d www.ваш-домен.ру
+
+# Следуйте инструкциям на экране
 ```
 
-Получите SSL-сертификат:
+## Шаг 11: Проверка
 
+Откройте в браузере ваш домен (https://ваш-домен.ру) и убедитесь, что сайт работает корректно.
+
+## Полезные команды для управления
+
+### Перезапуск приложения
 ```bash
-sudo certbot --nginx -d ваш-домен.com -d www.ваш-домен.com
+pm2 restart atomgame
 ```
 
-Следуйте инструкциям Certbot для завершения установки.
-
-## Шаг 11: Проверка развертывания
-
-Откройте в браузере ваш домен и убедитесь, что приложение работает правильно.
-
-## Обновление приложения
-
-Для обновления приложения вы можете использовать следующий процесс:
-
-1. Остановите приложение: `pm2 stop atom-game-blk`
-2. Обновите код (с git или копированием файлов)
-3. Установите новые зависимости: `npm install`
-4. Внесите изменения в базу данных (если нужно): `npm run db:push`
-5. Пересоберите проект: `npm run build`
-6. Перезапустите приложение: `pm2 restart atom-game-blk`
-
-## Резервное копирование
-
-Регулярно создавайте резервные копии базы данных:
-
+### Просмотр логов
 ```bash
-# Создайте директорию для резервных копий
+pm2 logs atomgame
+```
+
+### Обновление приложения
+```bash
+cd /var/www/atomgame
+git pull  # если используете Git
+# или загрузите новые файлы
+
+npm install  # установка новых зависимостей
+npm run db:push  # обновление базы данных
+npm run build  # пересборка проекта
+pm2 restart atomgame  # перезапуск
+```
+
+### Резервное копирование базы данных
+```bash
 mkdir -p /var/backups/atomgame
-
-# Создайте резервную копию базы данных
 pg_dump -U atomgame atomgame > /var/backups/atomgame/backup_$(date +"%Y%m%d").sql
 ```
 
-Вы можете настроить автоматическое резервное копирование с помощью cron.
+## Решение проблем
 
-## Устранение неполадок
+Если сайт не работает:
 
-### Проверка логов приложения
+1. Проверьте логи приложения: `pm2 logs atomgame`
+2. Проверьте логи Nginx: `sudo tail -f /var/log/nginx/atomgame.error.log`
+3. Проверьте статус сервисов:
+   ```bash
+   sudo systemctl status nginx
+   sudo systemctl status postgresql
+   pm2 status
+   ```
 
-```bash
-pm2 logs atom-game-blk
-```
-
-### Проверка логов Nginx
-
-```bash
-sudo tail -f /var/log/nginx/atomgameblk.error.log
-```
-
-### Перезапуск сервисов
-
-```bash
-# Перезапуск приложения
-pm2 restart atom-game-blk
-
-# Перезапуск Nginx
-sudo systemctl restart nginx
-
-# Перезапуск PostgreSQL
-sudo systemctl restart postgresql
-```
-
-Если у вас возникнут другие вопросы по развертыванию, пожалуйста, обращайтесь!
+Если возникнут вопросы по установке, сообщите мне!

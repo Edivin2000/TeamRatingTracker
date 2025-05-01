@@ -1,73 +1,112 @@
 #!/bin/bash
 
-# Скрипт для создания резервных копий ATOM-GAME рейтинговой системы
-# Автор: Atom-Game Team
-# Дата: 01.05.2025
+# Скрипт резервного копирования ATOM-GAME
+# Создано: ATOM-GAME Team, Май 2025
 
-# Настройки
-BACKUP_DIR="/var/backups/atomgame"
-PROJECT_DIR="/var/www/atomgameblk"
-PGUSER="atomgame"
-PGPASSWORD="Atom&Game#2025!"
-PGDATABASE="atomgame"
-TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-LOG_FILE="$BACKUP_DIR/backup_$TIMESTAMP.log"
+set -e  # Остановка скрипта при ошибках
 
-# Создаем директорию для резервных копий, если она не существует
-mkdir -p $BACKUP_DIR
+# Цвета для вывода
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # Сброс цвета
 
-# Начинаем логирование
-echo "=== Начало резервного копирования: $(date) ===" | tee -a $LOG_FILE
-
-# Функция для логирования
+# Функция для вывода с цветами
 log() {
-  echo "$(date +"%Y-%m-%d %H:%M:%S") - $1" | tee -a $LOG_FILE
+  echo -e "${GREEN}[РЕЗЕРВНОЕ КОПИРОВАНИЕ]${NC} $1"
 }
 
-# Создаем резервную копию базы данных
-log "Создание резервной копии базы данных..."
-export PGPASSWORD=$PGPASSWORD
-pg_dump -U $PGUSER $PGDATABASE -F c -f "$BACKUP_DIR/db_$TIMESTAMP.dump"
-if [ $? -eq 0 ]; then
-  log "Резервная копия базы данных успешно создана: db_$TIMESTAMP.dump"
-else
-  log "ОШИБКА: Не удалось создать резервную копию базы данных!"
+error() {
+  echo -e "${RED}[ОШИБКА]${NC} $1"
   exit 1
+}
+
+warning() {
+  echo -e "${YELLOW}[ВНИМАНИЕ]${NC} $1"
+}
+
+# Параметры
+BACKUP_DIR="$(pwd)/backups"
+MAX_BACKUPS=10  # Максимальное количество хранимых резервных копий
+BACKUP_PREFIX="backup_"
+
+# Проверка наличия директории проекта
+if [ ! -d "$(pwd)" ]; then
+  error "Директория проекта не найдена!"
 fi
 
-# Создаем резервную копию всего проекта
-log "Создание резервной копии файлов проекта..."
-if [ -d "$PROJECT_DIR" ]; then
-  tar -czf "$BACKUP_DIR/files_$TIMESTAMP.tar.gz" -C $(dirname $PROJECT_DIR) $(basename $PROJECT_DIR)
-  if [ $? -eq 0 ]; then
-    log "Резервная копия файлов проекта успешно создана: files_$TIMESTAMP.tar.gz"
-  else
-    log "ОШИБКА: Не удалось создать резервную копию файлов проекта!"
-  fi
+# Создание директории для резервных копий
+if [ ! -d "$BACKUP_DIR" ]; then
+  mkdir -p "$BACKUP_DIR"
+  log "Создана директория для резервных копий: $BACKUP_DIR"
+fi
+
+# Определение параметров базы данных из .env файла
+if [ ! -f .env ]; then
+  error "Файл .env не найден! Невозможно определить параметры базы данных."
+fi
+
+source <(grep -v '^#' .env | sed 's/^/export /')
+
+if [ -z "$PGUSER" ] || [ -z "$PGPASSWORD" ] || [ -z "$PGDATABASE" ]; then
+  error "Отсутствуют необходимые параметры базы данных в файле .env"
+fi
+
+# Формирование имени файла резервной копии
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+BACKUP_FILE="$BACKUP_DIR/${BACKUP_PREFIX}${TIMESTAMP}.sql"
+
+# Выполнение резервного копирования
+log "Начало создания резервной копии базы данных..."
+PGPASSWORD=$PGPASSWORD pg_dump -U $PGUSER -h ${PGHOST:-localhost} -p ${PGPORT:-5432} $PGDATABASE > "$BACKUP_FILE"
+
+# Проверка результата
+if [ $? -eq 0 ] && [ -f "$BACKUP_FILE" ]; then
+  # Сжатие резервной копии
+  gzip "$BACKUP_FILE"
+  BACKUP_FILE="${BACKUP_FILE}.gz"
+  
+  log "Резервная копия успешно создана: $BACKUP_FILE"
+  log "Размер файла: $(du -h $BACKUP_FILE | cut -f1)"
 else
-  log "ОШИБКА: Директория проекта $PROJECT_DIR не существует!"
+  error "Ошибка при создании резервной копии!"
 fi
 
-# Удаляем старые резервные копии (оставляем только последние 7 дней)
-log "Удаление устаревших резервных копий..."
-find $BACKUP_DIR -name "db_*.dump" -type f -mtime +7 -delete
-find $BACKUP_DIR -name "files_*.tar.gz" -type f -mtime +7 -delete
-log "Устаревшие резервные копии удалены."
+# Удаление старых резервных копий (оставляем только MAX_BACKUPS последних копий)
+BACKUP_COUNT=$(ls -1 $BACKUP_DIR/${BACKUP_PREFIX}*.gz 2>/dev/null | wc -l)
+if [ $BACKUP_COUNT -gt $MAX_BACKUPS ]; then
+  log "Удаление старых резервных копий (сохраняем только $MAX_BACKUPS последних)..."
+  ls -tr $BACKUP_DIR/${BACKUP_PREFIX}*.gz | head -n $(($BACKUP_COUNT - $MAX_BACKUPS)) | xargs rm -f
+  log "Старые резервные копии удалены."
+fi
 
-# Показываем информацию о созданных резервных копиях
-DB_SIZE=$(du -h "$BACKUP_DIR/db_$TIMESTAMP.dump" | cut -f1)
-FILES_SIZE=$(du -h "$BACKUP_DIR/files_$TIMESTAMP.tar.gz" | cut -f1)
-TOTAL_BACKUPS=$(find $BACKUP_DIR -name "db_*.dump" | wc -l)
+# Вывод списка текущих резервных копий
+echo ""
+echo "Текущие резервные копии:"
+ls -lht $BACKUP_DIR/${BACKUP_PREFIX}*.gz | awk '{print $9, "("$5")"}' | column -t
 
-echo "=== Резервное копирование завершено: $(date) ===" | tee -a $LOG_FILE
-echo "" | tee -a $LOG_FILE
-echo "Сводка резервного копирования:" | tee -a $LOG_FILE
-echo "- Дата создания: $(date)" | tee -a $LOG_FILE
-echo "- Размер копии БД: $DB_SIZE" | tee -a $LOG_FILE
-echo "- Размер копии файлов: $FILES_SIZE" | tee -a $LOG_FILE
-echo "- Всего резервных копий: $TOTAL_BACKUPS" | tee -a $LOG_FILE
-echo "- Хранение: $BACKUP_DIR" | tee -a $LOG_FILE
-echo "" | tee -a $LOG_FILE
-echo "Для восстановления из резервной копии используйте команды:" | tee -a $LOG_FILE
-echo "- БД: pg_restore -U $PGUSER -d $PGDATABASE $BACKUP_DIR/db_$TIMESTAMP.dump" | tee -a $LOG_FILE
-echo "- Файлы: tar -xzf $BACKUP_DIR/files_$TIMESTAMP.tar.gz -C /" | tee -a $LOG_FILE
+echo ""
+echo -e "${GREEN}Резервное копирование успешно завершено!${NC}"
+echo -e "Для восстановления базы данных используйте команду:"
+echo -e "${YELLOW}gunzip -c $BACKUP_FILE | PGPASSWORD=$PGPASSWORD psql -U $PGUSER -h ${PGHOST:-localhost} -p ${PGPORT:-5432} $PGDATABASE${NC}"
+echo ""
+
+# Если скрипт запущен с параметром --cron, не выводим дополнительную информацию
+if [ "$1" != "--cron" ]; then
+  # Настройка автоматического резервного копирования
+  echo -e "${YELLOW}Хотите настроить автоматическое ежедневное резервное копирование?${NC} (y/n)"
+  read -p "> " SETUP_CRON
+  
+  if [ "$SETUP_CRON" = "y" ] || [ "$SETUP_CRON" = "Y" ]; then
+    # Добавление задания в crontab
+    CRON_JOB="0 3 * * * $(pwd)/backup.sh --cron >/dev/null 2>&1"
+    
+    # Проверка наличия задания в crontab
+    if crontab -l 2>/dev/null | grep -q "$(pwd)/backup.sh"; then
+      warning "Задание уже существует в crontab. Пропускаем..."
+    else
+      (crontab -l 2>/dev/null; echo "$CRON_JOB") | crontab -
+      log "Автоматическое резервное копирование настроено на 3:00 ежедневно."
+    fi
+  fi
+fi

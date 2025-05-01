@@ -1,177 +1,151 @@
 #!/bin/bash
 
-# Скрипт для обновления ATOM-GAME рейтинговой системы
-# Автор: Atom-Game Team
-# Дата: 01.05.2025
+# Скрипт обновления ATOM-GAME
+# Создано: ATOM-GAME Team, Май 2025
 
-set -e
+set -e  # Остановка скрипта при ошибках
 
-# Настройки
-PROJECT_DIR="/var/www/atomgameblk"
-BACKUP_SCRIPT="/var/www/atomgameblk/backup.sh"
-LOG_FILE="/var/log/atomgame-update.log"
-SERVICE_NAME="atom-game"
+# Цвета для вывода
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # Сброс цвета
 
-# Функция для логирования
+# Функция для вывода с цветами
 log() {
-  echo "$(date +"%Y-%m-%d %H:%M:%S") - $1" | tee -a $LOG_FILE
+  echo -e "${GREEN}[ОБНОВЛЕНИЕ]${NC} $1"
 }
 
-# Начинаем логирование
-log "=== Начало обновления ATOM-GAME платформы ==="
-
-# Проверяем наличие директории проекта
-if [ ! -d "$PROJECT_DIR" ]; then
-  log "ОШИБКА: Директория проекта $PROJECT_DIR не существует!"
+error() {
+  echo -e "${RED}[ОШИБКА]${NC} $1"
   exit 1
+}
+
+warning() {
+  echo -e "${YELLOW}[ВНИМАНИЕ]${NC} $1"
+}
+
+# Проверка наличия директории проекта
+if [ ! -d "$(pwd)" ]; then
+  error "Директория проекта не найдена!"
 fi
 
-# Сначала делаем резервную копию
-log "Создание резервной копии перед обновлением..."
-if [ -f "$BACKUP_SCRIPT" ]; then
-  bash $BACKUP_SCRIPT
-  log "Резервная копия успешно создана."
+clear
+echo -e "${GREEN}==========================================${NC}"
+echo -e "${GREEN}   Обновление ATOM-GAME рейтинговой системы   ${NC}"
+echo -e "${GREEN}==========================================${NC}"
+echo ""
+log "Начало обновления..."
+
+# Создание резервной копии базы данных
+log "Создание резервной копии базы данных..."
+mkdir -p backups
+
+# Определение параметров базы данных из .env файла
+if [ -f .env ]; then
+  source <(grep -v '^#' .env | sed 's/^/export /')
+  BACKUP_FILE="backups/backup_$(date +"%Y%m%d_%H%M%S").sql"
+  PGPASSWORD=$PGPASSWORD pg_dump -U $PGUSER -h $PGHOST -p $PGPORT $PGDATABASE > $BACKUP_FILE
+  log "Резервная копия создана: $BACKUP_FILE"
 else
-  log "ВНИМАНИЕ: Скрипт резервного копирования не найден. Создание резервной копии пропущено."
+  warning "Файл .env не найден. Резервное копирование пропущено."
 fi
 
-# Переходим в директорию проекта
-cd $PROJECT_DIR
-log "Переход в директорию проекта: $PROJECT_DIR"
+# Остановка приложения
+log "Остановка приложения..."
+pm2 stop atomgame
 
-# Получаем текущую версию
-CURRENT_VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "unknown")
-log "Текущая версия: $CURRENT_VERSION"
+# Запрос метода обновления
+echo "Выберите способ обновления файлов проекта:"
+echo "1. У меня есть ZIP-архив с обновлением"
+echo "2. Обновить из Git-репозитория"
+echo "3. Я уже обновил файлы в директории $(pwd)"
+read -p "Выберите вариант (1-3): " UPDATE_METHOD
 
-# Сохраняем текущее состояние .env файла
-if [ -f ".env" ]; then
-  cp .env .env.backup
-  log "Резервная копия .env файла создана."
-fi
+case $UPDATE_METHOD in
+  1)
+    read -p "Введите путь к ZIP-архиву с обновлением: " ZIP_PATH
+    log "Распаковка архива..."
+    
+    # Сохранение важных файлов
+    if [ -f .env ]; then
+      cp .env .env.backup
+      log ".env файл сохранен в .env.backup"
+    fi
+    
+    # Распаковка архива
+    unzip -o $ZIP_PATH -d .
+    
+    # Восстановление важных файлов
+    if [ -f .env.backup ]; then
+      cp .env.backup .env
+      log ".env файл восстановлен"
+    fi
+    ;;
+    
+  2)
+    if [ -d .git ]; then
+      log "Обновление из Git-репозитория..."
+      
+      # Сохранение важных файлов
+      if [ -f .env ]; then
+        cp .env .env.backup
+      fi
+      
+      # Получение обновлений
+      git stash -u
+      git pull
+      
+      # Восстановление важных файлов
+      if [ -f .env.backup ]; then
+        cp .env.backup .env
+      fi
+    else
+      error "Директория .git не найдена. Невозможно обновить из Git."
+    fi
+    ;;
+    
+  3)
+    log "Используются уже обновленные файлы в $(pwd)"
+    ;;
+    
+  *)
+    error "Неверный выбор. Обновление прервано."
+    ;;
+esac
 
-# Получаем последние изменения из репозитория
-log "Получение обновлений из репозитория..."
-git fetch
-GIT_STATUS=$?
-
-if [ $GIT_STATUS -ne 0 ]; then
-  log "ОШИБКА: Не удалось получить обновления из репозитория."
-  exit 1
-fi
-
-# Проверяем, есть ли обновления
-UPSTREAM=$(git rev-parse @{u})
-LOCAL=$(git rev-parse @)
-
-if [ "$UPSTREAM" = "$LOCAL" ]; then
-  log "Система уже обновлена до последней версии."
-  log "=== Обновление завершено без изменений ==="
-  exit 0
-fi
-
-# Резервируем пользовательские файлы, если они есть
-log "Сохранение пользовательских файлов..."
-USER_FILES=(".env" "uploads/" "custom-configs/")
-for file in "${USER_FILES[@]}"; do
-  if [ -e "$file" ]; then
-    cp -r "$file" "/tmp/atomgame-$(basename $file)-backup"
-    log "Файл/директория $file сохранен в /tmp/atomgame-$(basename $file)-backup"
-  fi
-done
-
-# Обновляем код из репозитория
-log "Применение обновлений..."
-git pull
-GIT_PULL_STATUS=$?
-
-if [ $GIT_PULL_STATUS -ne 0 ]; then
-  log "ОШИБКА: Не удалось применить обновления."
-  
-  # Восстанавливаем .env файл
-  if [ -f ".env.backup" ]; then
-    mv .env.backup .env
-    log "Файл .env восстановлен из резервной копии."
-  fi
-  
-  exit 1
-fi
-
-# Получаем новую версию
-NEW_VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "unknown")
-log "Новая версия: $NEW_VERSION"
-
-# Восстанавливаем пользовательские файлы
-log "Восстановление пользовательских файлов..."
-for file in "${USER_FILES[@]}"; do
-  backup_path="/tmp/atomgame-$(basename $file)-backup"
-  if [ -e "$backup_path" ]; then
-    cp -r "$backup_path" "$file"
-    log "Файл/директория $file восстановлен."
-    rm -rf "$backup_path"
-  fi
-done
-
-# Устанавливаем зависимости
-log "Установка NPM зависимостей..."
+# Установка зависимостей
+log "Обновление зависимостей проекта..."
 npm install
-NPM_STATUS=$?
 
-if [ $NPM_STATUS -ne 0 ]; then
-  log "ОШИБКА: Не удалось установить NPM зависимости."
-  exit 1
-fi
-
-# Запускаем миграцию базы данных
-log "Применение миграций базы данных..."
+# Миграция базы данных
+log "Применение изменений базы данных..."
 npm run db:push
-DB_STATUS=$?
 
-if [ $DB_STATUS -ne 0 ]; then
-  log "ОШИБКА: Не удалось применить миграции базы данных."
-  exit 1
-fi
-
-# Сборка приложения
-log "Сборка приложения..."
+# Сборка проекта
+log "Пересборка проекта..."
 npm run build
-BUILD_STATUS=$?
 
-if [ $BUILD_STATUS -ne 0 ]; then
-  log "ОШИБКА: Не удалось собрать приложение."
-  exit 1
+# Запуск приложения
+log "Запуск приложения..."
+pm2 restart atomgame
+
+# Перезагрузка конфигурации Nginx
+log "Перезагрузка Nginx..."
+if command -v nginx &> /dev/null; then
+  nginx -t && systemctl reload nginx
 fi
 
-# Перезапускаем приложение
-log "Перезапуск приложения..."
-if command -v pm2 &> /dev/null; then
-  pm2 reload $SERVICE_NAME
-  log "Приложение перезапущено через PM2."
-else
-  log "ВНИМАНИЕ: PM2 не установлен. Ручной перезапуск может потребоваться."
-fi
-
-# Очищаем кеш
-log "Очистка кеша..."
-if [ -d "./dist/cache" ]; then
-  rm -rf ./dist/cache/*
-  log "Кеш очищен."
-fi
-
-# Обновление завершено
-log "=== Обновление успешно завершено ==="
-log "Обновлено с версии $CURRENT_VERSION до $NEW_VERSION"
-log "Дата и время: $(date)"
-
-# Выводим сообщение об успешном обновлении
+# Завершение обновления
 echo ""
-echo "====================================================="
-echo "        ATOM-GAME обновлен до версии $NEW_VERSION"
-echo "====================================================="
+echo -e "${GREEN}==========================================${NC}"
+echo -e "${GREEN}   Обновление успешно завершено!   ${NC}"
+echo -e "${GREEN}==========================================${NC}"
 echo ""
-echo "Для проверки работоспособности откройте сайт:"
-echo "https://atomgameblk.ru"
+echo -e "Проверьте работу сайта: ${YELLOW}https://ваш-домен.ру${NC}"
 echo ""
-echo "При обнаружении проблем восстановите из резервной копии:"
-echo "- Используйте файлы, созданные в процессе обновления"
-echo "  или запустите скрипт восстановления из бэкапа"
-echo "====================================================="
+echo -e "${YELLOW}Полезные команды:${NC}"
+echo "- Просмотр логов: pm2 logs atomgame"
+echo "- Просмотр ошибок: tail -100 logs/error.log"
+echo "- Сброс к предыдущей версии: Восстановите резервную копию базы данных: $BACKUP_FILE"
+echo ""
