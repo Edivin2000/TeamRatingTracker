@@ -52,7 +52,7 @@ export default function AuthPage() {
       <div className="w-full md:w-1/2 p-8 flex items-center justify-center bg-white">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold mb-2">Рейтинг Команд</h1>
+            <h1 className="text-3xl font-bold mb-2">ATOM﮳GAME 2025</h1>
             <p className="text-gray-500">Требуется авторизация администратора</p>
           </div>
           
@@ -107,30 +107,34 @@ export default function AuthPage() {
         <div className="max-w-lg mx-auto space-y-8">
           <div className="text-center">
             <Trophy className="h-16 w-16 mx-auto mb-4" />
-            <h2 className="text-4xl font-bold mb-4">Система Рейтинга Команд</h2>
+            <h2 className="text-4xl font-bold mb-4">ATOM﮳GAME БАЛАКОВО 2025</h2>
             <p className="text-xl opacity-90">
-              Управляйте очками команд и следите за рейтингами с помощью мощной панели администратора.
+              Управляйте регистрацией, рейтингами команд и информацией о турнире с призовым фондом 150 000 рублей!
             </p>
           </div>
           
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 space-y-4">
-            <h3 className="text-xl font-semibold">Ключевые возможности:</h3>
+            <h3 className="text-xl font-semibold">Возможности панели управления:</h3>
             <ul className="space-y-2">
               <li className="flex items-center space-x-2">
                 <span className="h-5 w-5 bg-white/20 rounded-full flex items-center justify-center text-sm">✓</span>
-                <span>Добавление и управление командами</span>
+                <span>Управление регистрацией на сезон 2025</span>
               </li>
               <li className="flex items-center space-x-2">
                 <span className="h-5 w-5 bg-white/20 rounded-full flex items-center justify-center text-sm">✓</span>
-                <span>Обновление очков команд</span>
+                <span>Добавление и редактирование команд-участников</span>
               </li>
               <li className="flex items-center space-x-2">
                 <span className="h-5 w-5 bg-white/20 rounded-full flex items-center justify-center text-sm">✓</span>
-                <span>Загрузка логотипов команд</span>
+                <span>Управление отображением баннеров и таймеров</span>
               </li>
               <li className="flex items-center space-x-2">
                 <span className="h-5 w-5 bg-white/20 rounded-full flex items-center justify-center text-sm">✓</span>
-                <span>Просмотр красивой таблицы лидеров с выделенными лучшими командами</span>
+                <span>Добавление партнеров и спонсоров турнира</span>
+              </li>
+              <li className="flex items-center space-x-2">
+                <span className="h-5 w-5 bg-white/20 rounded-full flex items-center justify-center text-sm">✓</span>
+                <span>Контроль над рейтингом команд и турнирной таблицей</span>
               </li>
             </ul>
           </div>
