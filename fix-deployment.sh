@@ -51,6 +51,33 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
+# Функция для проверки доступности порта
+is_port_free() {
+  ! netstat -tuln | grep ":$1 " > /dev/null
+}
+
+# Поиск свободного порта
+log "Проверка доступности портов..."
+# Установка и проверка инструментов для работы с сетью
+if ! command -v netstat &> /dev/null; then
+  log "Установка net-tools..."
+  apt-get install -y net-tools
+fi
+
+# Ищем свободный порт в диапазоне 3000-9000
+for port in $(seq 3000 9000); do
+  if is_port_free $port; then
+    APP_PORT=$port
+    success "Найден свободный порт: $APP_PORT"
+    break
+  fi
+done
+
+if [ $APP_PORT -eq 5000 ] && ! is_port_free 5000; then
+  error "Не удалось найти свободный порт. Проверьте запущенные сервисы."
+  exit 1
+fi
+
 # Исправление проблемы с базой данных
 log "Исправление проблемы с базой данных PostgreSQL..."
 if sudo -u postgres psql -lqt | cut -d \| -f 1 | grep -qw $DB_NAME; then
@@ -83,7 +110,7 @@ log "Создание конфигурационного файла .env..."
 cat > $PROJECT_DIR/.env << EOF
 # Основные настройки
 NODE_ENV=production
-PORT=5000
+PORT=$APP_PORT
 
 # База данных PostgreSQL
 PGUSER=$DB_USER
@@ -96,7 +123,7 @@ DATABASE_URL=postgresql://$DB_USER:$(echo $DB_PASSWORD | sed 's/&/%26/g; s/#/%23
 # Безопасность
 SESSION_SECRET=$(openssl rand -hex 32)
 EOF
-success "Файл .env создан с правильными настройками"
+success "Файл .env создан с правильными настройками (порт: $APP_PORT)"
 
 # Проверка соединения с БД
 log "Проверка соединения с базой данных..."
