@@ -1,0 +1,98 @@
+
+Для остановки сервера выполните: kill $(cat /var/www/atomgameblk/server.pid)
+root@vm3218560:/var/www/atomgameblk# # Выполните эти команды на сервере
+sudo bash -c "cat > /root/run-simple.sh << 'EOF'
+#!/bin/bash
+
+# Переменные
+DB_NAME=atomgame
+DB_USER=atomgame
+DB_PASSWORD='Atom&Game#2025!'
+PROJECT_DIR=/var/www/atomgameblk
+
+# Остановка существующих процессов
+pkill -f 'node simple-server.js' || true
+
+# Обновление сервера
+cat > $PROJECT_DIR/simplest-server.js << 'SERVCODE'
+const express = require('express');
+const { Pool } = require('pg');
+const app = express();
+const port = 5000;
+
+// База данных
+const pool = new Pool({
+  user: 'atomgame',
+  password: 'Atom&Game#2025!',
+  database: 'atomgame',
+  host: 'localhost',
+  port: 5432
+});
+
+// Разрешить JSON и статические файлы
+app.use(express.json());
+sudo /root/run-simple.shsimple.shbles -A INPUT -p tcp --dport 5000 -j ACCEPTe'); BY \"order\"');
+-bash: !/bin/bash: event not found
+запущен: line 106: warning: here-document at line 1 delimited by end-of-file (wanted `EOF')
+
+added 80 packages in 4s
+
+14 packages are looking for funding
+  run `npm fund` for details
+/root/run-simple.sh: 106: Syntax error: end of file unexpected (expecting "fi")
+root@vm3218560:/var/www/atomgameblk# # Выполните эти команды на сервере
+sudo bash -c "cat > /root/run-simple.sh << 'EOF'
+#!/bin/bash
+
+# Переменные
+DB_NAME=atomgame
+DB_USER=atomgame
+DB_PASSWORD='Atom&Game#2025!'
+PROJECT_DIR=/var/www/atomgameblk
+
+# Остановка существующих процессов
+pkill -f 'node simple-server.js' || true
+
+# Обновление сервера
+cat > $PROJECT_DIR/simplest-server.js << 'SERVCODE'
+const express = require('express');
+const { Pool } = require('pg');
+const app = express();
+const port = 5000;
+
+// База данных
+const pool = new Pool({
+  user: 'atomgame',
+  password: 'Atom&Game#2025!',
+  database: 'atomgame',
+  host: 'localhost',
+  port: 5432
+});
+
+// Разрешить JSON и статические файлы
+app.use(express.json());
+sudo /root/run-simple.shsimple.shbles -A INPUT -p tcp --dport 5000 -j ACCEPTe'); BY \"order\"');
+-bash: !/bin/bash: event not found
+запущен: line 106: warning: here-document at line 1 delimited by end-of-file (wanted `EOF')
+
+up to date, audited 81 packages in 1s
+
+14 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+/root/run-simple.sh: 106: Syntax error: end of file unexpected (expecting "fi")
+root@vm3218560:/var/www/atomgameblk# sudo ps aux | grep node
+root        1453  0.0  0.9 333844 66672 ?        Sl   Apr06   8:28 node app/main.js
+root     1786768  0.0  0.0   9624  2176 pts/4    S+   20:08   0:00 grep --color=auto node
+root@vm3218560:/var/www/atomgameblk# sudo tail -f /var/log/atom-simple.log
+Error: Cannot find module '/root/simplest-server.js'
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1212:15)
+    at Module._load (node:internal/modules/cjs/loader:1043:27)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:164:12)
+    at node:internal/main/run_main_module:28:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+
+Node.js v20.19.1

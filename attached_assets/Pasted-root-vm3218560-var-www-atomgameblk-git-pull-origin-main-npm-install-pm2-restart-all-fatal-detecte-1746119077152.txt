@@ -1,0 +1,73 @@
+root@vm3218560:/var/www/atomgameblk# git pull origin main
+npm install
+pm2 restart all
+fatal: detected dubious ownership in repository at '/var/www/atomgameblk'
+To add an exception for this directory, call:
+
+        git config --global --add safe.directory /var/www/atomgameblk
+
+up to date, audited 559 packages in 3s
+
+71 packages are looking for funding
+  run `npm fund` for details
+
+7 moderate severity vulnerabilities
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+Use --update-env to update environment variables
+[PM2][WARN] No process found
+root@vm3218560:/var/www/atomgameblk# git config --global --add safe.directory /var/www/atomgameblk
+root@vm3218560:/var/www/atomgameblk# git config --global --add safe.directory /var/www/atomgameblk
+root@vm3218560:/var/www/atomgameblk# sudo bash manual-run.sh
+bash: manual-run.sh: No such file or directory
+root@vm3218560:/var/www/atomgameblk# ps aux | grep simple-server.js
+root     1786449  0.0  0.0   9628  2176 pts/4    S+   20:04   0:00 grep --color=auto simple-server.js
+root@vm3218560:/var/www/atomgameblk# kill $(cat /var/www/atomgameblk/server.pid)
+cat: /var/www/atomgameblk/server.pid: No such file or directory
+kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
+root@vm3218560:/var/www/atomgameblk# git pull origin main                                          
+npm install
+pm2 restart all
+remote: Enumerating objects: 12, done.
+remote: Counting objects: 100% (12/12), done.
+remote: Compressing objects: 100% (6/6), done.
+remote: Total 10 (delta 4), reused 10 (delta 4), pack-reused 0 (from 0)
+Unpacking objects: 100% (10/10), 9.51 KiB | 1.36 MiB/s, done.
+From https://github.com/Edivin2000/TeamRatingTracker
+ * branch            main       -> FETCH_HEAD
+   3a4e1c5..b307c92  main       -> origin/main
+Updating c0bba0c..b307c92
+error: Your local changes to the following files would be overwritten by merge:
+        fix-all.sh
+        package-lock.json
+        package.json
+        run-basic-server.sh
+        server/db.ts
+Please commit your changes or stash them before you merge.
+Aborting
+
+up to date, audited 559 packages in 3s
+
+71 packages are looking for funding
+  run `npm fund` for details
+
+7 moderate severity vulnerabilities
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+Use --update-env to update environment variables
+[PM2][WARN] No process found
+root@vm3218560:/var/www/atomgameblk# sudo bash manual-run.sh
+bash: manual-run.sh: No such file or directory
+root@vm3218560:/var/www/atomgameblk# 
