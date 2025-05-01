@@ -156,34 +156,82 @@ else
   warn "Приложение может быть не запущено. Проверьте логи: pm2 logs atom-game"
 fi
 
+# Обновление конфигурации PM2
+log "Обновление конфигурации PM2..."
+cat > $PROJECT_DIR/ecosystem.config.cjs << EOF
+module.exports = {
+  apps: [{
+    name: 'atom-game',
+    script: 'dist/index.js',
+    instances: 'max',
+    exec_mode: 'cluster',
+    env: {
+      NODE_ENV: 'production',
+      PORT: '$APP_PORT',
+      PGUSER: '$DB_USER',
+      PGPASSWORD: '$DB_PASSWORD',
+      PGDATABASE: '$DB_NAME',
+      PGHOST: 'localhost',
+      PGPORT: '5432',
+      DATABASE_URL: 'postgresql://$DB_USER:$(echo $DB_PASSWORD | sed 's/&/%26/g; s/#/%23/g')@localhost:5432/$DB_NAME',
+      SESSION_SECRET: '$(openssl rand -hex 32)'
+    },
+    max_memory_restart: '500M'
+  }]
+};
+EOF
+success "Файл конфигурации PM2 обновлен (порт: $APP_PORT)"
+
 # Настройка Nginx
 log "Настройка Nginx..."
 cat > /etc/nginx/sites-available/$DOMAIN << EOF
 server {
     listen 80;
-    server_name $DOMAIN www.$DOMAIN;
+    server_name $DOMAIN www.$DOMAIN $SERVER_IP;
 
     location / {
-        proxy_pass http://localhost:5000;
+        proxy_pass http://localhost:$APP_PORT;
         proxy_http_version 1.1;
         proxy_set_header Upgrade \$http_upgrade;
         proxy_set_header Connection 'upgrade';
         proxy_set_header Host \$host;
         proxy_cache_bypass \$http_upgrade;
+        proxy_read_timeout 300;
+        proxy_connect_timeout 300;
     }
 }
 EOF
 
+# Удаление дефолтного конфига, если он существует
+rm -f /etc/nginx/sites-enabled/default
+
 ln -sf /etc/nginx/sites-available/$DOMAIN /etc/nginx/sites-enabled/
 nginx -t && systemctl restart nginx
-success "Nginx настроен"
+success "Nginx настроен (порт: $APP_PORT)"
+
+# Настройка брандмауэра для доступа к приложению
+log "Настройка брандмауэра..."
+if command -v ufw &> /dev/null; then
+  ufw allow 80/tcp
+  ufw allow 443/tcp
+  success "Брандмауэр настроен для HTTP и HTTPS"
+elif command -v firewall-cmd &> /dev/null; then
+  firewall-cmd --permanent --add-service=http
+  firewall-cmd --permanent --add-service=https
+  firewall-cmd --reload
+  success "Брандмауэр настроен для HTTP и HTTPS"
+else
+  warn "Не удалось определить тип брандмауэра. Убедитесь, что порты 80 и 443 открыты."
+fi
 
 # Вывод информации об успешной установке
 echo "=================================================================="
 echo "        ИСПРАВЛЕНИЕ ATOM-GAME ЗАВЕРШЕНО УСПЕШНО!"
 echo "=================================================================="
 echo ""
-echo "Ваше приложение доступно по адресу: http://$DOMAIN"
+echo "Ваше приложение доступно по адресам:"
+echo "- http://$DOMAIN"
+echo "- http://$SERVER_IP"
 echo ""
 echo "ИНФОРМАЦИЯ ДЛЯ ВХОДА В АДМИН-ПАНЕЛЬ:"
 echo "Логин: admin"
@@ -196,10 +244,14 @@ echo "  - Пользователь: $DB_USER"
 echo "  - Пароль: $DB_PASSWORD"
 echo ""
 echo "- Путь к файлам приложения: $PROJECT_DIR"
+echo "- Порт приложения: $APP_PORT"
 echo ""
 echo "КОМАНДЫ УПРАВЛЕНИЯ ПРИЛОЖЕНИЕМ:"
 echo "- Перезапуск: pm2 restart atom-game"
 echo "- Просмотр логов: pm2 logs atom-game"
 echo "- Просмотр статуса: pm2 status"
+echo ""
+echo "НАСТРОЙКА SSL (HTTPS):"
+echo "sudo certbot --nginx -d $DOMAIN -d www.$DOMAIN"
 echo ""
 echo "=================================================================="
