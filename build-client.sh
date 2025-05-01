@@ -14,6 +14,7 @@ echo -e "${BOLD}${GREEN}========================================================
 
 # Конфигурационные параметры
 APP_PATH="/var/www/atomgame"
+REPO_PATH="$HOME/TeamRatingTracker"
 
 # Проверка root прав
 if [ "$EUID" -ne 0 ]; then
@@ -22,8 +23,41 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
-# Переходим в директорию приложения
-cd ${APP_PATH}
+# Проверка наличия директории клиента в разных местах
+if [ -d "${APP_PATH}/client" ]; then
+  echo -e "${GREEN}Найдена директория client в ${APP_PATH}${NC}"
+  cd ${APP_PATH}
+elif [ -d "${REPO_PATH}/client" ]; then
+  echo -e "${GREEN}Найдена директория client в ${REPO_PATH}${NC}"
+  
+  # Копируем клиентские файлы в директорию приложения
+  echo -e "${YELLOW}Копирование клиентских файлов в ${APP_PATH}...${NC}"
+  mkdir -p ${APP_PATH}/client
+  cp -r ${REPO_PATH}/client/* ${APP_PATH}/client/
+  
+  cd ${APP_PATH}
+else
+  echo -e "${RED}Директория client не найдена ни в ${APP_PATH}, ни в ${REPO_PATH}!${NC}"
+  echo -e "${YELLOW}Попытка прямого поиска...${NC}"
+  
+  # Ищем директорию client напрямую
+  CLIENT_DIR=$(find / -type d -name "client" -path "*/TeamRatingTracker/client" 2>/dev/null | head -n 1)
+  
+  if [ -n "$CLIENT_DIR" ]; then
+    echo -e "${GREEN}Найдена директория client: ${CLIENT_DIR}${NC}"
+    
+    # Копируем клиентские файлы в директорию приложения
+    echo -e "${YELLOW}Копирование клиентских файлов в ${APP_PATH}...${NC}"
+    mkdir -p ${APP_PATH}/client
+    cp -r ${CLIENT_DIR}/* ${APP_PATH}/client/
+    
+    cd ${APP_PATH}
+  else
+    echo -e "${RED}Не удалось найти директорию client нигде в системе.${NC}"
+    echo -e "${RED}Попытка собрать из существующих файлов...${NC}"
+    cd ${APP_PATH}
+  fi
+fi
 
 # Проверяем наличие директории client
 if [ ! -d "client" ]; then
