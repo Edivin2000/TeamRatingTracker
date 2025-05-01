@@ -48,6 +48,10 @@ export interface IStorage {
   updateTimer(id: number, timer: InsertTimer): Promise<Timer>;
   deleteTimer(id: number): Promise<void>;
   
+  // Site Settings methods
+  getSiteSettings(): Promise<SiteSettings | undefined>;
+  updateSiteSettings(settings: InsertSiteSettings): Promise<SiteSettings>;
+  
   // Session store
   sessionStore: any;
 }
@@ -58,10 +62,13 @@ export class MemStorage implements IStorage {
   private teams: Map<number, Team>;
   private partners: Map<number, Partner>;
   private ads: Map<number, Ad>;
+  private timers: Map<number, Timer>;
+  private siteSettings: SiteSettings | undefined;
   private userIdCounter: number;
   private teamIdCounter: number;
   private partnerIdCounter: number;
   private adIdCounter: number;
+  private timerIdCounter: number;
   sessionStore: any;
 
   constructor() {
@@ -69,14 +76,34 @@ export class MemStorage implements IStorage {
     this.teams = new Map();
     this.partners = new Map();
     this.ads = new Map();
+    this.timers = new Map();
     this.userIdCounter = 1;
     this.teamIdCounter = 1;
     this.partnerIdCounter = 1;
     this.adIdCounter = 1;
+    this.timerIdCounter = 1;
     
     this.sessionStore = new MemoryStore({
       checkPeriod: 86400000, // prune expired entries every 24h
     });
+    
+    // Инициализация настроек сайта по умолчанию
+    this.siteSettings = {
+      id: 1,
+      primaryColor: "#0f172a",
+      secondaryColor: "#1e293b",
+      accentColor: "#3b82f6",
+      headerBgColor: "#0f172a",
+      fontPrimary: "Inter",
+      borderRadius: "0.5rem",
+      buttonStyle: "default",
+      tableBgColor: "#1e293b",
+      cardBgColor: "#1e293b",
+      podiumStyle: "default",
+      bgPattern: "none",
+      logoPosition: "center",
+      updated: new Date().toISOString()
+    };
     
     // Create a default admin user with new secure password
     this.createUser({
@@ -309,6 +336,20 @@ export class MemStorage implements IStorage {
   
   async deleteTimer(id: number): Promise<void> {
     throw new Error("Таймеры не поддерживаются в версии с хранением в памяти");
+  }
+  
+  // Site Settings methods
+  async getSiteSettings(): Promise<SiteSettings | undefined> {
+    return this.siteSettings;
+  }
+
+  async updateSiteSettings(settings: InsertSiteSettings): Promise<SiteSettings> {
+    this.siteSettings = {
+      ...this.siteSettings!,
+      ...settings,
+      updated: new Date().toISOString()
+    };
+    return this.siteSettings;
   }
 }
 
@@ -628,6 +669,71 @@ export class DatabaseStorage implements IStorage {
     } catch (error) {
       console.error('Error deleting timer:', error);
       throw new Error(`Не удалось удалить таймер с ID ${id}`);
+    }
+  }
+  
+  // Site Settings methods
+  async getSiteSettings(): Promise<SiteSettings | undefined> {
+    try {
+      const settings = await db.select().from(siteSettings);
+      return settings[0];
+    } catch (error) {
+      console.error('Error getting site settings:', error);
+      
+      // Если таблица еще не создана, создадим настройки по умолчанию
+      const defaultSettings: InsertSiteSettings = {
+        primaryColor: "#0f172a",
+        secondaryColor: "#1e293b",
+        accentColor: "#3b82f6",
+        headerBgColor: "#0f172a",
+        fontPrimary: "Inter",
+        borderRadius: "0.5rem",
+        buttonStyle: "default",
+        tableBgColor: "#1e293b",
+        cardBgColor: "#1e293b",
+        podiumStyle: "default",
+        bgPattern: "none",
+        logoPosition: "center"
+      };
+      
+      // Попробуем создать настройки по умолчанию
+      try {
+        return await this.updateSiteSettings(defaultSettings);
+      } catch (insertError) {
+        console.error('Error creating default site settings:', insertError);
+        throw new Error('Не удалось получить или создать настройки сайта');
+      }
+    }
+  }
+
+  async updateSiteSettings(settings: InsertSiteSettings): Promise<SiteSettings> {
+    try {
+      const current = await this.getSiteSettings();
+      
+      if (current) {
+        // Обновление существующих настроек
+        const [updated] = await db
+          .update(siteSettings)
+          .set({ ...settings, updated: new Date().toISOString() })
+          .where(eq(siteSettings.id, current.id))
+          .returning();
+        
+        return updated;
+      } else {
+        // Создание новых настроек, если они еще не существуют
+        const [newSettings] = await db
+          .insert(siteSettings)
+          .values({ 
+            ...settings, 
+            updated: new Date().toISOString() 
+          })
+          .returning();
+        
+        return newSettings;
+      }
+    } catch (error) {
+      console.error('Error updating site settings:', error);
+      throw new Error('Не удалось обновить настройки сайта');
     }
   }
 }

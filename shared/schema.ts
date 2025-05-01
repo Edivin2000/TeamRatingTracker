@@ -119,5 +119,41 @@ export const insertTimerSchema = createInsertSchema(timers).pick({
 export type InsertTimer = z.infer<typeof insertTimerSchema>;
 export type Timer = typeof timers.$inferSelect;
 
+// Схема настроек сайта
+export const siteSettings = pgTable("site_settings", {
+  id: serial("id").primaryKey(),
+  primaryColor: varchar("primary_color", { length: 30 }).default("#0f172a").notNull(),
+  secondaryColor: varchar("secondary_color", { length: 30 }).default("#1e293b").notNull(),
+  accentColor: varchar("accent_color", { length: 30 }).default("#3b82f6").notNull(),
+  headerBgColor: varchar("header_bg_color", { length: 30 }).default("#0f172a").notNull(),
+  fontPrimary: varchar("font_primary", { length: 30 }).default("Inter").notNull(),
+  borderRadius: varchar("border_radius", { length: 10 }).default("0.5rem").notNull(),
+  buttonStyle: varchar("button_style", { length: 30 }).default("default").notNull(),
+  tableBgColor: varchar("table_bg_color", { length: 30 }).default("#1e293b").notNull(),
+  cardBgColor: varchar("card_bg_color", { length: 30 }).default("#1e293b").notNull(),
+  podiumStyle: varchar("podium_style", { length: 30 }).default("default").notNull(),
+  bgPattern: varchar("bg_pattern", { length: 30 }).default("none").notNull(),
+  logoPosition: varchar("logo_position", { length: 30 }).default("center").notNull(),
+  updated: text("updated").default(new Date().toISOString()),
+});
+
+export const insertSiteSettingsSchema = createInsertSchema(siteSettings).pick({
+  primaryColor: true,
+  secondaryColor: true,
+  accentColor: true,
+  headerBgColor: true,
+  fontPrimary: true,
+  borderRadius: true,
+  buttonStyle: true,
+  tableBgColor: true,
+  cardBgColor: true,
+  podiumStyle: true,
+  bgPattern: true,
+  logoPosition: true,
+});
+
+export type InsertSiteSettings = z.infer<typeof insertSiteSettingsSchema>;
+export type SiteSettings = typeof siteSettings.$inferSelect;
+
 export type ScoreUpdate = z.infer<typeof scoreUpdateSchema>;
 export type LoginData = z.infer<typeof loginSchema>;
