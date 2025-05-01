@@ -1,0 +1,1440 @@
+==========================================
+   Отладка приложения ATOM-GAME   
+==========================================
+
+[ОТЛАДКА] Остановка всех процессов...
+[ОТЛАДКА] Проверка, что порт 5001 свободен...
+[ОТЛАДКА] Проверка подключения к базе данных...
+[ОТЛАДКА] Проверка пользователя и базы данных PostgreSQL...
+GRANT
+[ОТЛАДКА] Проверка соединения с базой данных от имени пользователя atomgame...
+[ОТЛАДКА] Создание .env файла с правильными переменными...
+[ОТЛАДКА] Проверка директории dist и файла index.js...
+[ОТЛАДКА] Переходим в директорию приложения /var/www/atomgame...
+[ОТЛАДКА] Проверка и установка node_modules...
+[ОТЛАДКА] Запуск приложения в режиме отладки...
+Для остановки нажмите Ctrl+C
+
+Debugger listening on ws://127.0.0.1:9229/7caaabb2-7ed9-450c-8dff-e41b39bcab3a
+For help, see: https://nodejs.org/en/docs/inspector
+ESM 1838231: Storing file:///var/www/atomgame/dist/index.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/dist/index.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/express/index.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:http (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/passport/lib/index.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/passport-local/lib/index.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/express-session/index.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/index.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-zod/index.mjs (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/zod/lib/index.mjs (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/memorystore/index.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/connect-pg-simple/index.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/@neondatabase/serverless/index.mjs (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/neon-serverless/index.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/ws/wrapper.mjs (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/index.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:fs (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:path (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/vite/dist/node/index.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/@vitejs/plugin-react/dist/index.mjs (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/@replit/vite-plugin-runtime-error-modal/dist/index.mjs (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/nanoid/index.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating CJSModule file:///var/www/atomgame/node_modules/express/index.js
+ESM 1838231: Translating BuiltinModule node:http
+MODULE 1838231: load built-in module node:http
+ESM 1838231: Loading BuiltinModule node:http
+ESM 1838231: Translating CJSModule file:///var/www/atomgame/node_modules/passport/lib/index.js
+ESM 1838231: Translating CJSModule file:///var/www/atomgame/node_modules/passport-local/lib/index.js
+ESM 1838231: Translating CJSModule file:///var/www/atomgame/node_modules/express-session/index.js
+ESM 1838231: Translating CJSModule file:///var/www/atomgame/node_modules/memorystore/index.js
+ESM 1838231: Translating CJSModule file:///var/www/atomgame/node_modules/connect-pg-simple/index.js
+ESM 1838231: Translating BuiltinModule node:fs
+MODULE 1838231: load built-in module node:fs
+ESM 1838231: Loading BuiltinModule node:fs
+ESM 1838231: Translating BuiltinModule node:path
+MODULE 1838231: load built-in module node:path
+ESM 1838231: Loading BuiltinModule node:path
+MODULE 1838231: RELATIVE: requested: ./lib/express from parent.id /var/www/atomgame/node_modules/express/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express"]
+MODULE 1838231: RELATIVE: requested: ./lib/memorystore.js from parent.id /var/www/atomgame/node_modules/memorystore/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/memorystore"]
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/index.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/alias.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/checks.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/index.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/db.js (implicit type) in ModuleLoadMapESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/dialect.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/foreign-keys.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/indexes.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/policies.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/primary-keys.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/index.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/roles.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/schema.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/sequence.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/session.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/subquery.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/table.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/unique-constraint.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/utils.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/utils/index.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/view-common.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/view.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-zod/index.mjs
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/zod/lib/index.mjs
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/ws/wrapper.mjs
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/ws/lib/stream.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/ws/lib/receiver.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/ws/lib/sender.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/ws/lib/websocket.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/ws/lib/websocket-server.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating CJSModule file:///var/www/atomgame/node_modules/ws/lib/stream.js
+ESM 1838231: Translating CJSModule file:///var/www/atomgame/node_modules/ws/lib/receiver.js
+ESM 1838231: Translating CJSModule file:///var/www/atomgame/node_modules/ws/lib/sender.js
+ESM 1838231: Translating CJSModule file:///var/www/atomgame/node_modules/ws/lib/websocket.js
+ESM 1838231: Translating CJSModule file:///var/www/atomgame/node_modules/ws/lib/websocket-server.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/@neondatabase/serverless/index.mjs
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/neon-serverless/index.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/neon-serverless/driver.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/neon-serverless/session.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/index.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/alias.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/column-builder.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/column.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/entity.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/errors.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/expressions.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/logger.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/operations.js (implicit type) in ModuleLoadMapESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/query-promise.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/relations.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/sql/index.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/subquery.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/table.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/utils.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/view-common.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/vite/dist/node/index.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/rollup/dist/es/parseAst.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/vite/dist/node/constants.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/vite/node_modules/esbuild/lib/main.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/vite/dist/node/runtime.js (implicit type) in ModuleLoadMapESM 1838231: Storing node:fs/promises (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:url (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:util (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:perf_hooks (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:module (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:crypto (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:tty (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:events (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:stream (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:string_decoder (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:child_process (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:https (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:net (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:os (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:dns (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:assert (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:v8 (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:worker_threads (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:buffer (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:querystring (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:readline (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:zlib (implicit type) in ModuleLoadMap
+ESM 1838231: Storing node:tls (implicit type) in ModuleLoadMap
+ESM 1838231: Translating CJSModule file:///var/www/atomgame/node_modules/vite/node_modules/esbuild/lib/main.js
+ESM 1838231: Translating BuiltinModule node:tty
+MODULE 1838231: load built-in module node:tty
+ESM 1838231: Loading BuiltinModule node:tty
+ESM 1838231: Translating BuiltinModule node:net
+MODULE 1838231: load built-in module node:net
+ESM 1838231: Loading BuiltinModule node:net
+ESM 1838231: Translating BuiltinModule node:os
+MODULE 1838231: load built-in module node:os
+ESM 1838231: Loading BuiltinModule node:os
+ESM 1838231: Translating BuiltinModule node:querystring
+MODULE 1838231: load built-in module node:querystring
+ESM 1838231: Loading BuiltinModule node:querystring
+ESM 1838231: Translating BuiltinModule node:zlib
+MODULE 1838231: load built-in module node:zlib
+ESM 1838231: Loading BuiltinModule node:zlib
+ESM 1838231: Translating BuiltinModule node:tls
+MODULE 1838231: load built-in module node:tls
+ESM 1838231: Loading BuiltinModule node:tls
+ESM 1838231: Translating BuiltinModule node:fs/promises
+MODULE 1838231: load built-in module node:fs/promises
+ESM 1838231: Loading BuiltinModule node:fs/promises
+ESM 1838231: Translating BuiltinModule node:url
+MODULE 1838231: load built-in module node:url
+ESM 1838231: Loading BuiltinModule node:url
+ESM 1838231: Translating BuiltinModule node:util
+MODULE 1838231: load built-in module node:util
+ESM 1838231: Loading BuiltinModule node:util
+ESM 1838231: Translating BuiltinModule node:perf_hooks
+MODULE 1838231: load built-in module node:perf_hooks
+ESM 1838231: Loading BuiltinModule node:perf_hooks
+ESM 1838231: Translating BuiltinModule node:module
+MODULE 1838231: load built-in module node:module
+ESM 1838231: Loading BuiltinModule node:module
+ESM 1838231: Translating BuiltinModule node:crypto
+MODULE 1838231: load built-in module node:crypto
+ESM 1838231: Loading BuiltinModule node:crypto
+ESM 1838231: Translating BuiltinModule node:events
+MODULE 1838231: load built-in module node:events
+ESM 1838231: Loading BuiltinModule node:events
+ESM 1838231: Translating BuiltinModule node:stream
+MODULE 1838231: load built-in module node:stream
+ESM 1838231: Loading BuiltinModule node:stream
+ESM 1838231: Translating BuiltinModule node:string_decoder
+MODULE 1838231: load built-in module node:string_decoder
+ESM 1838231: Loading BuiltinModule node:string_decoder
+ESM 1838231: Translating BuiltinModule node:child_process
+MODULE 1838231: load built-in module node:child_process
+ESM 1838231: Loading BuiltinModule node:child_process
+ESM 1838231: Translating BuiltinModule node:https
+MODULE 1838231: load built-in module node:https
+ESM 1838231: Loading BuiltinModule node:https
+ESM 1838231: Translating BuiltinModule node:dns
+MODULE 1838231: load built-in module node:dns
+ESM 1838231: Loading BuiltinModule node:dns
+ESM 1838231: Translating BuiltinModule node:assert
+MODULE 1838231: load built-in module node:assert
+ESM 1838231: Loading BuiltinModule node:assert
+ESM 1838231: Translating BuiltinModule node:v8
+MODULE 1838231: load built-in module node:v8
+ESM 1838231: Loading BuiltinModule node:v8
+ESM 1838231: Translating BuiltinModule node:worker_threads
+MODULE 1838231: load built-in module node:worker_threads
+ESM 1838231: Loading BuiltinModule node:worker_threads
+ESM 1838231: Translating BuiltinModule node:buffer
+MODULE 1838231: load built-in module node:buffer
+ESM 1838231: Loading BuiltinModule node:buffer
+ESM 1838231: Translating BuiltinModule node:readline
+MODULE 1838231: load built-in module node:readline
+ESM 1838231: Loading BuiltinModule node:readline
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/@vitejs/plugin-react/dist/index.mjs
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/@replit/vite-plugin-runtime-error-modal/dist/index.mjs
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/@jridgewell/trace-mapping/dist/trace-mapping.mjs (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/nanoid/index.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/nanoid/url-alphabet/index.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/alias.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/checks.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/index.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/bigint.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/bigserial.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/boolean.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/char.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/cidr.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/common.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/custom.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/date.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/double-precision.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/enum.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/inet.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/int.common.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/integer.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/interval.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/json.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/jsonb.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/line.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/macaddr.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/macaddr8.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/numeric.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/point.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/postgis_extension/geometry.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/real.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/serial.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/smallint.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/smallserial.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/text.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/time.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/timestamp.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/uuid.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/varchar.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/vector_extension/bit.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/vector_extension/halfvec.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/vector_extension/sparsevec.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/vector_extension/vector.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/db.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/selection-proxy.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/sql/sql.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/count.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/query.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/raw.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/refresh-materialized-view.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/dialect.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/casing.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/view-base.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/foreign-keys.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/table.utils.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/indexes.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/policies.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/primary-keys.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/index.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/delete.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/insert.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/query-builder.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/select.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/select.types.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/update.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/roles.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/schema.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/sequence.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/session.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/tracing.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/subquery.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/table.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/all.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/unique-constraint.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/utils.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/utils/index.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/utils/array.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/view-common.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/view.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/neon-serverless/driver.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/neon-serverless/session.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/alias.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/column-builder.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/column.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/entity.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/errors.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/expressions.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/sql/expressions/index.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/logger.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/operations.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/query-promise.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/relations.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/sql/index.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/sql/functions/index.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/subquery.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/table.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/utils.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/view-common.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/rollup/dist/es/parseAst.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/rollup/dist/native.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/rollup/dist/es/shared/parseAst.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating CJSModule file:///var/www/atomgame/node_modules/rollup/dist/native.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/vite/dist/node/constants.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/vite/dist/node/runtime.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/@jridgewell/trace-mapping/dist/trace-mapping.mjs
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/@jridgewell/sourcemap-codec/dist/sourcemap-codec.mjs (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/@jridgewell/resolve-uri/dist/resolve-uri.mjs (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/nanoid/url-alphabet/index.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/bigint.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/bigserial.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/boolean.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/char.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/cidr.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/common.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/tracing-utils.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/custom.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/date.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/date.common.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/double-precision.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/enum.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/inet.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/int.common.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/integer.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/interval.jsESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/json.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/jsonb.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/line.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/macaddr.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/macaddr8.jsESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/numeric.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/point.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/postgis_extension/geometry.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/postgis_extension/utils.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/real.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/serial.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/smallint.jsESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/smallserial.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/text.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/time.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/timestamp.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/uuid.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/varchar.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/vector_extension/bit.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/vector_extension/halfvec.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/vector_extension/sparsevec.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/vector_extension/vector.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/selection-proxy.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/sql/sql.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/count.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/raw.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/refresh-materialized-view.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/casing.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/view-base.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/table.utils.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/delete.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/query.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/insert.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/query-builder.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/select.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/query-builders/query-builder.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/select.types.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/query-builders/update.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/tracing.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/version.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/all.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/utils/array.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/sql/expressions/index.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/sql/expressions/conditions.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/sql/expressions/select.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/sql/functions/index.js
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/sql/functions/aggregate.js (implicit type) in ModuleLoadMap
+ESM 1838231: Storing file:///var/www/atomgame/node_modules/drizzle-orm/sql/functions/vector.js (implicit type) in ModuleLoadMap
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/rollup/dist/es/shared/parseAst.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/@jridgewell/sourcemap-codec/dist/sourcemap-codec.mjs
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/@jridgewell/resolve-uri/dist/resolve-uri.mjs
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/date.common.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/tracing-utils.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/query-builders/query-builder.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/pg-core/columns/postgis_extension/utils.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/version.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/sql/expressions/conditions.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/sql/functions/aggregate.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/sql/functions/vector.js
+ESM 1838231: Translating StandardModule file:///var/www/atomgame/node_modules/drizzle-orm/sql/expressions/select.js
+ESM 1838231: Loading CJSModule file:///var/www/atomgame/node_modules/express/index.js
+MODULE 1838231: looking for "/var/www/atomgame/node_modules/express/index.js" in ["/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express/index.js" for module "/var/www/atomgame/node_modules/express/index.js"
+MODULE 1838231: Module._load REQUEST ./lib/express parent: /var/www/atomgame/node_modules/express/index.js
+MODULE 1838231: RELATIVE: requested: ./lib/express from parent.id /var/www/atomgame/node_modules/express/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express/lib/express.js" for module "/var/www/atomgame/node_modules/express/lib/express.js"
+MODULE 1838231: Module._load REQUEST body-parser parent: /var/www/atomgame/node_modules/express/lib/express.js
+MODULE 1838231: looking for "body-parser" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/body-parser/index.js" for module "/var/www/atomgame/node_modules/body-parser/index.js"
+MODULE 1838231: Module._load REQUEST depd parent: /var/www/atomgame/node_modules/body-parser/index.js
+MODULE 1838231: looking for "depd" in ["/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/depd/index.js" for module "/var/www/atomgame/node_modules/depd/index.js"
+MODULE 1838231: Module._load REQUEST path parent: /var/www/atomgame/node_modules/depd/index.js
+MODULE 1838231: load built-in module path
+MODULE 1838231: Module._load REQUEST events parent: /var/www/atomgame/node_modules/express/lib/express.js
+MODULE 1838231: load built-in module events
+MODULE 1838231: Module._load REQUEST merge-descriptors parent: /var/www/atomgame/node_modules/express/lib/express.js
+MODULE 1838231: looking for "merge-descriptors" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/merge-descriptors/index.js" for module "/var/www/atomgame/node_modules/merge-descriptors/index.js"
+MODULE 1838231: Module._load REQUEST ./application parent: /var/www/atomgame/node_modules/express/lib/express.js
+MODULE 1838231: RELATIVE: requested: ./application from parent.id /var/www/atomgame/node_modules/express/lib/express.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express/lib/application.js" for module "/var/www/atomgame/node_modules/express/lib/application.js"
+MODULE 1838231: Module._load REQUEST finalhandler parent: /var/www/atomgame/node_modules/express/lib/application.js
+MODULE 1838231: looking for "finalhandler" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/finalhandler/index.js" for module "/var/www/atomgame/node_modules/finalhandler/index.js"
+MODULE 1838231: Module._load REQUEST debug parent: /var/www/atomgame/node_modules/finalhandler/index.js
+MODULE 1838231: looking for "debug" in ["/var/www/atomgame/node_modules/finalhandler/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/finalhandler/node_modules/debug/src/index.js" for module "/var/www/atomgame/node_modules/finalhandler/node_modules/debug/src/index.js"
+MODULE 1838231: Module._load REQUEST ./node.js parent: /var/www/atomgame/node_modules/finalhandler/node_modules/debug/src/index.js
+MODULE 1838231: RELATIVE: requested: ./node.js from parent.id /var/www/atomgame/node_modules/finalhandler/node_modules/debug/src/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/finalhandler/node_modules/debug/src"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/finalhandler/node_modules/debug/src/node.js" for module "/var/www/atomgame/node_modules/finalhandler/node_modules/debug/src/node.js"
+MODULE 1838231: Module._load REQUEST tty parent: /var/www/atomgame/node_modules/finalhandler/node_modules/debug/src/node.js
+MODULE 1838231: load built-in module tty
+MODULE 1838231: Module._load REQUEST util parent: /var/www/atomgame/node_modules/finalhandler/node_modules/debug/src/node.js
+MODULE 1838231: load built-in module util
+MODULE 1838231: Module._load REQUEST ./debug parent: /var/www/atomgame/node_modules/finalhandler/node_modules/debug/src/node.js
+MODULE 1838231: RELATIVE: requested: ./debug from parent.id /var/www/atomgame/node_modules/finalhandler/node_modules/debug/src/node.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/finalhandler/node_modules/debug/src"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/finalhandler/node_modules/debug/src/debug.js" for module "/var/www/atomgame/node_modules/finalhandler/node_modules/debug/src/debug.js"
+MODULE 1838231: Module._load REQUEST ms parent: /var/www/atomgame/node_modules/finalhandler/node_modules/debug/src/debug.js
+MODULE 1838231: looking for "ms" in ["/var/www/atomgame/node_modules/finalhandler/node_modules/debug/src/node_modules","/var/www/atomgame/node_modules/finalhandler/node_modules/debug/node_modules","/var/www/atomgame/node_modules/finalhandler/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/finalhandler/node_modules/ms/index.js" for module "/var/www/atomgame/node_modules/finalhandler/node_modules/ms/index.js"
+MODULE 1838231: Module._load REQUEST encodeurl parent: /var/www/atomgame/node_modules/finalhandler/index.js
+MODULE 1838231: looking for "encodeurl" in ["/var/www/atomgame/node_modules/finalhandler/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/encodeurl/index.js" for module "/var/www/atomgame/node_modules/encodeurl/index.js"
+MODULE 1838231: Module._load REQUEST escape-html parent: /var/www/atomgame/node_modules/finalhandler/index.js
+MODULE 1838231: looking for "escape-html" in ["/var/www/atomgame/node_modules/finalhandler/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/escape-html/index.js" for module "/var/www/atomgame/node_modules/escape-html/index.js"
+MODULE 1838231: Module._load REQUEST on-finished parent: /var/www/atomgame/node_modules/finalhandler/index.js
+MODULE 1838231: looking for "on-finished" in ["/var/www/atomgame/node_modules/finalhandler/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/on-finished/index.js" for module "/var/www/atomgame/node_modules/on-finished/index.js"
+MODULE 1838231: Module._load REQUEST async_hooks parent: /var/www/atomgame/node_modules/on-finished/index.js
+MODULE 1838231: load built-in module async_hooks
+MODULE 1838231: Module._load REQUEST ee-first parent: /var/www/atomgame/node_modules/on-finished/index.js
+MODULE 1838231: looking for "ee-first" in ["/var/www/atomgame/node_modules/on-finished/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/ee-first/index.js" for module "/var/www/atomgame/node_modules/ee-first/index.js"
+MODULE 1838231: Module._load REQUEST parseurl parent: /var/www/atomgame/node_modules/finalhandler/index.js
+MODULE 1838231: looking for "parseurl" in ["/var/www/atomgame/node_modules/finalhandler/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/parseurl/index.js" for module "/var/www/atomgame/node_modules/parseurl/index.js"
+MODULE 1838231: Module._load REQUEST url parent: /var/www/atomgame/node_modules/parseurl/index.js
+MODULE 1838231: load built-in module url
+MODULE 1838231: Module._load REQUEST statuses parent: /var/www/atomgame/node_modules/finalhandler/index.js
+MODULE 1838231: looking for "statuses" in ["/var/www/atomgame/node_modules/finalhandler/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/statuses/index.js" for module "/var/www/atomgame/node_modules/statuses/index.js"
+MODULE 1838231: Module._load REQUEST ./codes.json parent: /var/www/atomgame/node_modules/statuses/index.js
+MODULE 1838231: RELATIVE: requested: ./codes.json from parent.id /var/www/atomgame/node_modules/statuses/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/statuses"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/statuses/codes.json" for module "/var/www/atomgame/node_modules/statuses/codes.json"
+MODULE 1838231: Module._load REQUEST unpipe parent: /var/www/atomgame/node_modules/finalhandler/index.js
+MODULE 1838231: looking for "unpipe" in ["/var/www/atomgame/node_modules/finalhandler/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/unpipe/index.js" for module "/var/www/atomgame/node_modules/unpipe/index.js"
+MODULE 1838231: Module._load REQUEST ./router parent: /var/www/atomgame/node_modules/express/lib/application.js
+MODULE 1838231: RELATIVE: requested: ./router from parent.id /var/www/atomgame/node_modules/express/lib/application.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express/lib/router/index.js" for module "/var/www/atomgame/node_modules/express/lib/router/index.js"
+MODULE 1838231: Module._load REQUEST ./route parent: /var/www/atomgame/node_modules/express/lib/router/index.js
+MODULE 1838231: RELATIVE: requested: ./route from parent.id /var/www/atomgame/node_modules/express/lib/router/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express/lib/router"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express/lib/router/route.js" for module "/var/www/atomgame/node_modules/express/lib/router/route.js"
+MODULE 1838231: Module._load REQUEST debug parent: /var/www/atomgame/node_modules/express/lib/router/route.js
+MODULE 1838231: looking for "debug" in ["/var/www/atomgame/node_modules/express/lib/router/node_modules","/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express/node_modules/debug/src/index.js" for module "/var/www/atomgame/node_modules/express/node_modules/debug/src/index.js"
+MODULE 1838231: Module._load REQUEST ./node.js parent: /var/www/atomgame/node_modules/express/node_modules/debug/src/index.js
+MODULE 1838231: RELATIVE: requested: ./node.js from parent.id /var/www/atomgame/node_modules/express/node_modules/debug/src/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express/node_modules/debug/src"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express/node_modules/debug/src/node.js" for module "/var/www/atomgame/node_modules/express/node_modules/debug/src/node.js"
+MODULE 1838231: Module._load REQUEST tty parent: /var/www/atomgame/node_modules/express/node_modules/debug/src/node.js
+MODULE 1838231: load built-in module tty
+MODULE 1838231: Module._load REQUEST util parent: /var/www/atomgame/node_modules/express/node_modules/debug/src/node.js
+MODULE 1838231: load built-in module util
+MODULE 1838231: Module._load REQUEST ./debug parent: /var/www/atomgame/node_modules/express/node_modules/debug/src/node.js
+MODULE 1838231: RELATIVE: requested: ./debug from parent.id /var/www/atomgame/node_modules/express/node_modules/debug/src/node.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express/node_modules/debug/src"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express/node_modules/debug/src/debug.js" for module "/var/www/atomgame/node_modules/express/node_modules/debug/src/debug.js"
+MODULE 1838231: Module._load REQUEST ms parent: /var/www/atomgame/node_modules/express/node_modules/debug/src/debug.js
+MODULE 1838231: looking for "ms" in ["/var/www/atomgame/node_modules/express/node_modules/debug/src/node_modules","/var/www/atomgame/node_modules/express/node_modules/debug/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express/node_modules/ms/index.js" for module "/var/www/atomgame/node_modules/express/node_modules/ms/index.js"
+MODULE 1838231: Module._load REQUEST array-flatten parent: /var/www/atomgame/node_modules/express/lib/router/route.jsMODULE 1838231: looking for "array-flatten" in ["/var/www/atomgame/node_modules/express/lib/router/node_modules","/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/array-flatten/array-flatten.js" for module "/var/www/atomgame/node_modules/array-flatten/array-flatten.js"
+MODULE 1838231: Module._load REQUEST ./layer parent: /var/www/atomgame/node_modules/express/lib/router/route.js
+MODULE 1838231: RELATIVE: requested: ./layer from parent.id /var/www/atomgame/node_modules/express/lib/router/route.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express/lib/router"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express/lib/router/layer.js" for module "/var/www/atomgame/node_modules/express/lib/router/layer.js"
+MODULE 1838231: Module._load REQUEST path-to-regexp parent: /var/www/atomgame/node_modules/express/lib/router/layer.js
+MODULE 1838231: looking for "path-to-regexp" in ["/var/www/atomgame/node_modules/express/lib/router/node_modules","/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/path-to-regexp/index.js" for module "/var/www/atomgame/node_modules/path-to-regexp/index.js"
+MODULE 1838231: Module._load REQUEST debug parent: /var/www/atomgame/node_modules/express/lib/router/layer.js
+MODULE 1838231: Module._load REQUEST methods parent: /var/www/atomgame/node_modules/express/lib/router/route.js
+MODULE 1838231: looking for "methods" in ["/var/www/atomgame/node_modules/express/lib/router/node_modules","/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/methods/index.js" for module "/var/www/atomgame/node_modules/methods/index.js"
+MODULE 1838231: Module._load REQUEST http parent: /var/www/atomgame/node_modules/methods/index.js
+MODULE 1838231: load built-in module http
+MODULE 1838231: Module._load REQUEST ./layer parent: /var/www/atomgame/node_modules/express/lib/router/index.js
+MODULE 1838231: Module._load REQUEST methods parent: /var/www/atomgame/node_modules/express/lib/router/index.js
+MODULE 1838231: Module._load REQUEST utils-merge parent: /var/www/atomgame/node_modules/express/lib/router/index.js
+MODULE 1838231: looking for "utils-merge" in ["/var/www/atomgame/node_modules/express/lib/router/node_modules","/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/utils-merge/index.js" for module "/var/www/atomgame/node_modules/utils-merge/index.js"
+MODULE 1838231: Module._load REQUEST debug parent: /var/www/atomgame/node_modules/express/lib/router/index.js
+MODULE 1838231: Module._load REQUEST depd parent: /var/www/atomgame/node_modules/express/lib/router/index.js
+MODULE 1838231: looking for "depd" in ["/var/www/atomgame/node_modules/express/lib/router/node_modules","/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST array-flatten parent: /var/www/atomgame/node_modules/express/lib/router/index.jsMODULE 1838231: Module._load REQUEST parseurl parent: /var/www/atomgame/node_modules/express/lib/router/index.js
+MODULE 1838231: looking for "parseurl" in ["/var/www/atomgame/node_modules/express/lib/router/node_modules","/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST setprototypeof parent: /var/www/atomgame/node_modules/express/lib/router/index.js
+MODULE 1838231: looking for "setprototypeof" in ["/var/www/atomgame/node_modules/express/lib/router/node_modules","/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/setprototypeof/index.js" for module "/var/www/atomgame/node_modules/setprototypeof/index.js"
+MODULE 1838231: Module._load REQUEST methods parent: /var/www/atomgame/node_modules/express/lib/application.js
+MODULE 1838231: looking for "methods" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST ./middleware/init parent: /var/www/atomgame/node_modules/express/lib/application.js
+MODULE 1838231: RELATIVE: requested: ./middleware/init from parent.id /var/www/atomgame/node_modules/express/lib/application.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express/lib/middleware/init.js" for module "/var/www/atomgame/node_modules/express/lib/middleware/init.js"
+MODULE 1838231: Module._load REQUEST setprototypeof parent: /var/www/atomgame/node_modules/express/lib/middleware/init.js
+MODULE 1838231: looking for "setprototypeof" in ["/var/www/atomgame/node_modules/express/lib/middleware/node_modules","/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST ./middleware/query parent: /var/www/atomgame/node_modules/express/lib/application.js
+MODULE 1838231: RELATIVE: requested: ./middleware/query from parent.id /var/www/atomgame/node_modules/express/lib/application.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express/lib/middleware/query.js" for module "/var/www/atomgame/node_modules/express/lib/middleware/query.js"
+MODULE 1838231: Module._load REQUEST utils-merge parent: /var/www/atomgame/node_modules/express/lib/middleware/query.js
+MODULE 1838231: looking for "utils-merge" in ["/var/www/atomgame/node_modules/express/lib/middleware/node_modules","/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST parseurl parent: /var/www/atomgame/node_modules/express/lib/middleware/query.js
+MODULE 1838231: looking for "parseurl" in ["/var/www/atomgame/node_modules/express/lib/middleware/node_modules","/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST qs parent: /var/www/atomgame/node_modules/express/lib/middleware/query.js
+MODULE 1838231: looking for "qs" in ["/var/www/atomgame/node_modules/express/lib/middleware/node_modules","/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/qs/lib/index.js" for module "/var/www/atomgame/node_modules/qs/lib/index.js"
+MODULE 1838231: Module._load REQUEST ./stringify parent: /var/www/atomgame/node_modules/qs/lib/index.js
+MODULE 1838231: RELATIVE: requested: ./stringify from parent.id /var/www/atomgame/node_modules/qs/lib/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/qs/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/qs/lib/stringify.js" for module "/var/www/atomgame/node_modules/qs/lib/stringify.js"
+MODULE 1838231: Module._load REQUEST side-channel parent: /var/www/atomgame/node_modules/qs/lib/stringify.js
+MODULE 1838231: looking for "side-channel" in ["/var/www/atomgame/node_modules/qs/lib/node_modules","/var/www/atomgame/node_modules/qs/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/side-channel/index.js" for module "/var/www/atomgame/node_modules/side-channel/index.js"
+MODULE 1838231: Module._load REQUEST get-intrinsic parent: /var/www/atomgame/node_modules/side-channel/index.js
+MODULE 1838231: looking for "get-intrinsic" in ["/var/www/atomgame/node_modules/side-channel/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/get-intrinsic/index.js" for module "/var/www/atomgame/node_modules/get-intrinsic/index.js"
+MODULE 1838231: Module._load REQUEST es-errors parent: /var/www/atomgame/node_modules/get-intrinsic/index.js
+MODULE 1838231: looking for "es-errors" in ["/var/www/atomgame/node_modules/get-intrinsic/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/es-errors/index.js" for module "/var/www/atomgame/node_modules/es-errors/index.js"
+MODULE 1838231: Module._load REQUEST es-errors/eval parent: /var/www/atomgame/node_modules/get-intrinsic/index.js
+MODULE 1838231: looking for "es-errors/eval" in ["/var/www/atomgame/node_modules/get-intrinsic/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/es-errors/eval.js" for module "/var/www/atomgame/node_modules/es-errors/eval.js"
+MODULE 1838231: Module._load REQUEST es-errors/range parent: /var/www/atomgame/node_modules/get-intrinsic/index.js
+MODULE 1838231: looking for "es-errors/range" in ["/var/www/atomgame/node_modules/get-intrinsic/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/es-errors/range.js" for module "/var/www/atomgame/node_modules/es-errors/range.js"
+MODULE 1838231: Module._load REQUEST es-errors/ref parent: /var/www/atomgame/node_modules/get-intrinsic/index.js
+MODULE 1838231: looking for "es-errors/ref" in ["/var/www/atomgame/node_modules/get-intrinsic/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/es-errors/ref.js" for module "/var/www/atomgame/node_modules/es-errors/ref.js"
+MODULE 1838231: Module._load REQUEST es-errors/syntax parent: /var/www/atomgame/node_modules/get-intrinsic/index.js
+MODULE 1838231: looking for "es-errors/syntax" in ["/var/www/atomgame/node_modules/get-intrinsic/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/es-errors/syntax.js" for module "/var/www/atomgame/node_modules/es-errors/syntax.js"
+MODULE 1838231: Module._load REQUEST es-errors/type parent: /var/www/atomgame/node_modules/get-intrinsic/index.js
+MODULE 1838231: looking for "es-errors/type" in ["/var/www/atomgame/node_modules/get-intrinsic/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/es-errors/type.js" for module "/var/www/atomgame/node_modules/es-errors/type.js"
+MODULE 1838231: Module._load REQUEST es-errors/uri parent: /var/www/atomgame/node_modules/get-intrinsic/index.js
+MODULE 1838231: looking for "es-errors/uri" in ["/var/www/atomgame/node_modules/get-intrinsic/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/es-errors/uri.js" for module "/var/www/atomgame/node_modules/es-errors/uri.js"
+MODULE 1838231: Module._load REQUEST has-symbols parent: /var/www/atomgame/node_modules/get-intrinsic/index.js
+MODULE 1838231: looking for "has-symbols" in ["/var/www/atomgame/node_modules/get-intrinsic/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/has-symbols/index.js" for module "/var/www/atomgame/node_modules/has-symbols/index.js"
+MODULE 1838231: Module._load REQUEST ./shams parent: /var/www/atomgame/node_modules/has-symbols/index.js
+MODULE 1838231: RELATIVE: requested: ./shams from parent.id /var/www/atomgame/node_modules/has-symbols/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/has-symbols"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/has-symbols/shams.js" for module "/var/www/atomgame/node_modules/has-symbols/shams.js"
+MODULE 1838231: Module._load REQUEST has-proto parent: /var/www/atomgame/node_modules/get-intrinsic/index.js
+MODULE 1838231: looking for "has-proto" in ["/var/www/atomgame/node_modules/get-intrinsic/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/has-proto/index.js" for module "/var/www/atomgame/node_modules/has-proto/index.js"
+MODULE 1838231: Module._load REQUEST function-bind parent: /var/www/atomgame/node_modules/get-intrinsic/index.js
+MODULE 1838231: looking for "function-bind" in ["/var/www/atomgame/node_modules/get-intrinsic/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/function-bind/index.js" for module "/var/www/atomgame/node_modules/function-bind/index.js"
+MODULE 1838231: Module._load REQUEST ./implementation parent: /var/www/atomgame/node_modules/function-bind/index.js
+MODULE 1838231: RELATIVE: requested: ./implementation from parent.id /var/www/atomgame/node_modules/function-bind/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/function-bind"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/function-bind/implementation.js" for module "/var/www/atomgame/node_modules/function-bind/implementation.js"
+MODULE 1838231: Module._load REQUEST hasown parent: /var/www/atomgame/node_modules/get-intrinsic/index.js
+MODULE 1838231: looking for "hasown" in ["/var/www/atomgame/node_modules/get-intrinsic/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/hasown/index.js" for module "/var/www/atomgame/node_modules/hasown/index.js"
+MODULE 1838231: Module._load REQUEST function-bind parent: /var/www/atomgame/node_modules/hasown/index.js
+MODULE 1838231: looking for "function-bind" in ["/var/www/atomgame/node_modules/hasown/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST call-bind/callBound parent: /var/www/atomgame/node_modules/side-channel/index.jsMODULE 1838231: looking for "call-bind/callBound" in ["/var/www/atomgame/node_modules/side-channel/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/call-bind/callBound.js" for module "/var/www/atomgame/node_modules/call-bind/callBound.js"
+MODULE 1838231: Module._load REQUEST get-intrinsic parent: /var/www/atomgame/node_modules/call-bind/callBound.js
+MODULE 1838231: looking for "get-intrinsic" in ["/var/www/atomgame/node_modules/call-bind/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST ./ parent: /var/www/atomgame/node_modules/call-bind/callBound.js
+MODULE 1838231: RELATIVE: requested: ./ from parent.id /var/www/atomgame/node_modules/call-bind/callBound.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/call-bind"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/call-bind/index.js" for module "/var/www/atomgame/node_modules/call-bind/index.js"
+MODULE 1838231: Module._load REQUEST function-bind parent: /var/www/atomgame/node_modules/call-bind/index.js
+MODULE 1838231: looking for "function-bind" in ["/var/www/atomgame/node_modules/call-bind/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST get-intrinsic parent: /var/www/atomgame/node_modules/call-bind/index.js
+MODULE 1838231: looking for "get-intrinsic" in ["/var/www/atomgame/node_modules/call-bind/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST set-function-length parent: /var/www/atomgame/node_modules/call-bind/index.js
+MODULE 1838231: looking for "set-function-length" in ["/var/www/atomgame/node_modules/call-bind/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/set-function-length/index.js" for module "/var/www/atomgame/node_modules/set-function-length/index.js"
+MODULE 1838231: Module._load REQUEST get-intrinsic parent: /var/www/atomgame/node_modules/set-function-length/index.js
+MODULE 1838231: looking for "get-intrinsic" in ["/var/www/atomgame/node_modules/set-function-length/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST define-data-property parent: /var/www/atomgame/node_modules/set-function-length/index.js
+MODULE 1838231: looking for "define-data-property" in ["/var/www/atomgame/node_modules/set-function-length/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/define-data-property/index.js" for module "/var/www/atomgame/node_modules/define-data-property/index.js"
+MODULE 1838231: Module._load REQUEST es-define-property parent: /var/www/atomgame/node_modules/define-data-property/index.js
+MODULE 1838231: looking for "es-define-property" in ["/var/www/atomgame/node_modules/define-data-property/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/es-define-property/index.js" for module "/var/www/atomgame/node_modules/es-define-property/index.js"
+MODULE 1838231: Module._load REQUEST get-intrinsic parent: /var/www/atomgame/node_modules/es-define-property/index.jsMODULE 1838231: looking for "get-intrinsic" in ["/var/www/atomgame/node_modules/es-define-property/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST es-errors/syntax parent: /var/www/atomgame/node_modules/define-data-property/index.js
+MODULE 1838231: looking for "es-errors/syntax" in ["/var/www/atomgame/node_modules/define-data-property/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST es-errors/type parent: /var/www/atomgame/node_modules/define-data-property/index.js
+MODULE 1838231: looking for "es-errors/type" in ["/var/www/atomgame/node_modules/define-data-property/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST gopd parent: /var/www/atomgame/node_modules/define-data-property/index.js
+MODULE 1838231: looking for "gopd" in ["/var/www/atomgame/node_modules/define-data-property/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/gopd/index.js" for module "/var/www/atomgame/node_modules/gopd/index.js"
+MODULE 1838231: Module._load REQUEST get-intrinsic parent: /var/www/atomgame/node_modules/gopd/index.js
+MODULE 1838231: looking for "get-intrinsic" in ["/var/www/atomgame/node_modules/gopd/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST has-property-descriptors parent: /var/www/atomgame/node_modules/set-function-length/index.js
+MODULE 1838231: looking for "has-property-descriptors" in ["/var/www/atomgame/node_modules/set-function-length/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/has-property-descriptors/index.js" for module "/var/www/atomgame/node_modules/has-property-descriptors/index.js"
+MODULE 1838231: Module._load REQUEST es-define-property parent: /var/www/atomgame/node_modules/has-property-descriptors/index.js
+MODULE 1838231: looking for "es-define-property" in ["/var/www/atomgame/node_modules/has-property-descriptors/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST gopd parent: /var/www/atomgame/node_modules/set-function-length/index.js
+MODULE 1838231: looking for "gopd" in ["/var/www/atomgame/node_modules/set-function-length/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST es-errors/type parent: /var/www/atomgame/node_modules/set-function-length/index.js
+MODULE 1838231: looking for "es-errors/type" in ["/var/www/atomgame/node_modules/set-function-length/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST es-errors/type parent: /var/www/atomgame/node_modules/call-bind/index.js
+MODULE 1838231: looking for "es-errors/type" in ["/var/www/atomgame/node_modules/call-bind/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST es-define-property parent: /var/www/atomgame/node_modules/call-bind/index.js
+MODULE 1838231: looking for "es-define-property" in ["/var/www/atomgame/node_modules/call-bind/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST object-inspect parent: /var/www/atomgame/node_modules/side-channel/index.js
+MODULE 1838231: looking for "object-inspect" in ["/var/www/atomgame/node_modules/side-channel/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/object-inspect/index.js" for module "/var/www/atomgame/node_modules/object-inspect/index.js"
+MODULE 1838231: Module._load REQUEST ./util.inspect parent: /var/www/atomgame/node_modules/object-inspect/index.js
+MODULE 1838231: RELATIVE: requested: ./util.inspect from parent.id /var/www/atomgame/node_modules/object-inspect/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/object-inspect"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/object-inspect/util.inspect.js" for module "/var/www/atomgame/node_modules/object-inspect/util.inspect.js"
+MODULE 1838231: Module._load REQUEST util parent: /var/www/atomgame/node_modules/object-inspect/util.inspect.js
+MODULE 1838231: load built-in module util
+MODULE 1838231: Module._load REQUEST es-errors/type parent: /var/www/atomgame/node_modules/side-channel/index.js
+MODULE 1838231: looking for "es-errors/type" in ["/var/www/atomgame/node_modules/side-channel/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST ./utils parent: /var/www/atomgame/node_modules/qs/lib/stringify.js
+MODULE 1838231: RELATIVE: requested: ./utils from parent.id /var/www/atomgame/node_modules/qs/lib/stringify.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/qs/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/qs/lib/utils.js" for module "/var/www/atomgame/node_modules/qs/lib/utils.js"
+MODULE 1838231: Module._load REQUEST ./formats parent: /var/www/atomgame/node_modules/qs/lib/utils.js
+MODULE 1838231: RELATIVE: requested: ./formats from parent.id /var/www/atomgame/node_modules/qs/lib/utils.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/qs/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/qs/lib/formats.js" for module "/var/www/atomgame/node_modules/qs/lib/formats.js"
+MODULE 1838231: Module._load REQUEST ./formats parent: /var/www/atomgame/node_modules/qs/lib/stringify.js
+MODULE 1838231: Module._load REQUEST ./parse parent: /var/www/atomgame/node_modules/qs/lib/index.js
+MODULE 1838231: RELATIVE: requested: ./parse from parent.id /var/www/atomgame/node_modules/qs/lib/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/qs/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/qs/lib/parse.js" for module "/var/www/atomgame/node_modules/qs/lib/parse.js"
+MODULE 1838231: Module._load REQUEST ./utils parent: /var/www/atomgame/node_modules/qs/lib/parse.js
+MODULE 1838231: Module._load REQUEST ./formats parent: /var/www/atomgame/node_modules/qs/lib/index.js
+MODULE 1838231: Module._load REQUEST debug parent: /var/www/atomgame/node_modules/express/lib/application.js
+MODULE 1838231: looking for "debug" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST ./view parent: /var/www/atomgame/node_modules/express/lib/application.js
+MODULE 1838231: RELATIVE: requested: ./view from parent.id /var/www/atomgame/node_modules/express/lib/application.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express/lib/view.js" for module "/var/www/atomgame/node_modules/express/lib/view.js"
+MODULE 1838231: Module._load REQUEST debug parent: /var/www/atomgame/node_modules/express/lib/view.js
+MODULE 1838231: looking for "debug" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST path parent: /var/www/atomgame/node_modules/express/lib/view.js
+MODULE 1838231: load built-in module path
+MODULE 1838231: Module._load REQUEST fs parent: /var/www/atomgame/node_modules/express/lib/view.js
+MODULE 1838231: load built-in module fs
+MODULE 1838231: Module._load REQUEST http parent: /var/www/atomgame/node_modules/express/lib/application.js
+MODULE 1838231: load built-in module http
+MODULE 1838231: Module._load REQUEST ./utils parent: /var/www/atomgame/node_modules/express/lib/application.js
+MODULE 1838231: RELATIVE: requested: ./utils from parent.id /var/www/atomgame/node_modules/express/lib/application.jsMODULE 1838231: looking for ["/var/www/atomgame/node_modules/express/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express/lib/utils.js" for module "/var/www/atomgame/node_modules/express/lib/utils.js"
+MODULE 1838231: Module._load REQUEST safe-buffer parent: /var/www/atomgame/node_modules/express/lib/utils.js
+MODULE 1838231: looking for "safe-buffer" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/safe-buffer/index.js" for module "/var/www/atomgame/node_modules/safe-buffer/index.js"
+MODULE 1838231: Module._load REQUEST buffer parent: /var/www/atomgame/node_modules/safe-buffer/index.js
+MODULE 1838231: load built-in module buffer
+MODULE 1838231: Module._load REQUEST content-disposition parent: /var/www/atomgame/node_modules/express/lib/utils.js
+MODULE 1838231: looking for "content-disposition" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/content-disposition/index.js" for module "/var/www/atomgame/node_modules/content-disposition/index.js"
+MODULE 1838231: Module._load REQUEST path parent: /var/www/atomgame/node_modules/content-disposition/index.js
+MODULE 1838231: load built-in module path
+MODULE 1838231: Module._load REQUEST safe-buffer parent: /var/www/atomgame/node_modules/content-disposition/index.js
+MODULE 1838231: looking for "safe-buffer" in ["/var/www/atomgame/node_modules/content-disposition/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST content-type parent: /var/www/atomgame/node_modules/express/lib/utils.js
+MODULE 1838231: looking for "content-type" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/content-type/index.js" for module "/var/www/atomgame/node_modules/content-type/index.js"
+MODULE 1838231: Module._load REQUEST depd parent: /var/www/atomgame/node_modules/express/lib/utils.js
+MODULE 1838231: looking for "depd" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST array-flatten parent: /var/www/atomgame/node_modules/express/lib/utils.js
+MODULE 1838231: looking for "array-flatten" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST send parent: /var/www/atomgame/node_modules/express/lib/utils.js
+MODULE 1838231: looking for "send" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/send/index.js" for module "/var/www/atomgame/node_modules/send/index.js"
+MODULE 1838231: Module._load REQUEST http-errors parent: /var/www/atomgame/node_modules/send/index.js
+MODULE 1838231: looking for "http-errors" in ["/var/www/atomgame/node_modules/send/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/http-errors/index.js" for module "/var/www/atomgame/node_modules/http-errors/index.js"
+MODULE 1838231: Module._load REQUEST depd parent: /var/www/atomgame/node_modules/http-errors/index.js
+MODULE 1838231: looking for "depd" in ["/var/www/atomgame/node_modules/http-errors/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST setprototypeof parent: /var/www/atomgame/node_modules/http-errors/index.js
+MODULE 1838231: looking for "setprototypeof" in ["/var/www/atomgame/node_modules/http-errors/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST statuses parent: /var/www/atomgame/node_modules/http-errors/index.js
+MODULE 1838231: looking for "statuses" in ["/var/www/atomgame/node_modules/http-errors/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST inherits parent: /var/www/atomgame/node_modules/http-errors/index.js
+MODULE 1838231: looking for "inherits" in ["/var/www/atomgame/node_modules/http-errors/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/inherits/inherits.js" for module "/var/www/atomgame/node_modules/inherits/inherits.js"
+MODULE 1838231: Module._load REQUEST util parent: /var/www/atomgame/node_modules/inherits/inherits.js
+MODULE 1838231: load built-in module util
+MODULE 1838231: Module._load REQUEST toidentifier parent: /var/www/atomgame/node_modules/http-errors/index.js
+MODULE 1838231: looking for "toidentifier" in ["/var/www/atomgame/node_modules/http-errors/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/toidentifier/index.js" for module "/var/www/atomgame/node_modules/toidentifier/index.js"
+MODULE 1838231: Module._load REQUEST debug parent: /var/www/atomgame/node_modules/send/index.js
+MODULE 1838231: looking for "debug" in ["/var/www/atomgame/node_modules/send/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/send/node_modules/debug/src/index.js" for module "/var/www/atomgame/node_modules/send/node_modules/debug/src/index.js"
+MODULE 1838231: Module._load REQUEST ./node.js parent: /var/www/atomgame/node_modules/send/node_modules/debug/src/index.js
+MODULE 1838231: RELATIVE: requested: ./node.js from parent.id /var/www/atomgame/node_modules/send/node_modules/debug/src/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/send/node_modules/debug/src"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/send/node_modules/debug/src/node.js" for module "/var/www/atomgame/node_modules/send/node_modules/debug/src/node.js"
+MODULE 1838231: Module._load REQUEST tty parent: /var/www/atomgame/node_modules/send/node_modules/debug/src/node.js
+MODULE 1838231: load built-in module tty
+MODULE 1838231: Module._load REQUEST util parent: /var/www/atomgame/node_modules/send/node_modules/debug/src/node.js
+MODULE 1838231: load built-in module util
+MODULE 1838231: Module._load REQUEST ./debug parent: /var/www/atomgame/node_modules/send/node_modules/debug/src/node.js
+MODULE 1838231: RELATIVE: requested: ./debug from parent.id /var/www/atomgame/node_modules/send/node_modules/debug/src/node.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/send/node_modules/debug/src"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/send/node_modules/debug/src/debug.js" for module "/var/www/atomgame/node_modules/send/node_modules/debug/src/debug.js"
+MODULE 1838231: Module._load REQUEST ms parent: /var/www/atomgame/node_modules/send/node_modules/debug/src/debug.js
+MODULE 1838231: looking for "ms" in ["/var/www/atomgame/node_modules/send/node_modules/debug/src/node_modules","/var/www/atomgame/node_modules/send/node_modules/debug/node_modules","/var/www/atomgame/node_modules/send/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/send/node_modules/debug/node_modules/ms/index.js" for module "/var/www/atomgame/node_modules/send/node_modules/debug/node_modules/ms/index.js"
+MODULE 1838231: Module._load REQUEST depd parent: /var/www/atomgame/node_modules/send/index.js
+MODULE 1838231: looking for "depd" in ["/var/www/atomgame/node_modules/send/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST destroy parent: /var/www/atomgame/node_modules/send/index.js
+MODULE 1838231: looking for "destroy" in ["/var/www/atomgame/node_modules/send/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/destroy/index.js" for module "/var/www/atomgame/node_modules/destroy/index.js"
+MODULE 1838231: Module._load REQUEST events parent: /var/www/atomgame/node_modules/destroy/index.js
+MODULE 1838231: load built-in module events
+MODULE 1838231: Module._load REQUEST fs parent: /var/www/atomgame/node_modules/destroy/index.js
+MODULE 1838231: load built-in module fs
+MODULE 1838231: Module._load REQUEST stream parent: /var/www/atomgame/node_modules/destroy/index.js
+MODULE 1838231: load built-in module stream
+MODULE 1838231: Module._load REQUEST zlib parent: /var/www/atomgame/node_modules/destroy/index.js
+MODULE 1838231: load built-in module zlib
+MODULE 1838231: Module._load REQUEST encodeurl parent: /var/www/atomgame/node_modules/send/index.js
+MODULE 1838231: looking for "encodeurl" in ["/var/www/atomgame/node_modules/send/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/send/node_modules/encodeurl/index.js" for module "/var/www/atomgame/node_modules/send/node_modules/encodeurl/index.js"
+MODULE 1838231: Module._load REQUEST escape-html parent: /var/www/atomgame/node_modules/send/index.js
+MODULE 1838231: looking for "escape-html" in ["/var/www/atomgame/node_modules/send/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST etag parent: /var/www/atomgame/node_modules/send/index.js
+MODULE 1838231: looking for "etag" in ["/var/www/atomgame/node_modules/send/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/etag/index.js" for module "/var/www/atomgame/node_modules/etag/index.js"
+MODULE 1838231: Module._load REQUEST crypto parent: /var/www/atomgame/node_modules/etag/index.js
+MODULE 1838231: load built-in module crypto
+MODULE 1838231: Module._load REQUEST fs parent: /var/www/atomgame/node_modules/etag/index.js
+MODULE 1838231: load built-in module fs
+MODULE 1838231: Module._load REQUEST fresh parent: /var/www/atomgame/node_modules/send/index.js
+MODULE 1838231: looking for "fresh" in ["/var/www/atomgame/node_modules/send/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/fresh/index.js" for module "/var/www/atomgame/node_modules/fresh/index.js"
+MODULE 1838231: Module._load REQUEST fs parent: /var/www/atomgame/node_modules/send/index.js
+MODULE 1838231: load built-in module fs
+MODULE 1838231: Module._load REQUEST mime parent: /var/www/atomgame/node_modules/send/index.js
+MODULE 1838231: looking for "mime" in ["/var/www/atomgame/node_modules/send/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/mime/mime.js" for module "/var/www/atomgame/node_modules/mime/mime.js"
+MODULE 1838231: Module._load REQUEST path parent: /var/www/atomgame/node_modules/mime/mime.js
+MODULE 1838231: load built-in module path
+MODULE 1838231: Module._load REQUEST fs parent: /var/www/atomgame/node_modules/mime/mime.js
+MODULE 1838231: load built-in module fs
+MODULE 1838231: Module._load REQUEST ./types.json parent: /var/www/atomgame/node_modules/mime/mime.js
+MODULE 1838231: RELATIVE: requested: ./types.json from parent.id /var/www/atomgame/node_modules/mime/mime.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/mime"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/mime/types.json" for module "/var/www/atomgame/node_modules/mime/types.json"
+MODULE 1838231: Module._load REQUEST ms parent: /var/www/atomgame/node_modules/send/index.js
+MODULE 1838231: looking for "ms" in ["/var/www/atomgame/node_modules/send/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/ms/index.js" for module "/var/www/atomgame/node_modules/ms/index.js"
+MODULE 1838231: Module._load REQUEST on-finished parent: /var/www/atomgame/node_modules/send/index.js
+MODULE 1838231: looking for "on-finished" in ["/var/www/atomgame/node_modules/send/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST range-parser parent: /var/www/atomgame/node_modules/send/index.js
+MODULE 1838231: looking for "range-parser" in ["/var/www/atomgame/node_modules/send/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/range-parser/index.js" for module "/var/www/atomgame/node_modules/range-parser/index.js"
+MODULE 1838231: Module._load REQUEST path parent: /var/www/atomgame/node_modules/send/index.js
+MODULE 1838231: load built-in module path
+MODULE 1838231: Module._load REQUEST statuses parent: /var/www/atomgame/node_modules/send/index.js
+MODULE 1838231: looking for "statuses" in ["/var/www/atomgame/node_modules/send/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST stream parent: /var/www/atomgame/node_modules/send/index.js
+MODULE 1838231: load built-in module stream
+MODULE 1838231: Module._load REQUEST util parent: /var/www/atomgame/node_modules/send/index.js
+MODULE 1838231: load built-in module util
+MODULE 1838231: Module._load REQUEST etag parent: /var/www/atomgame/node_modules/express/lib/utils.js
+MODULE 1838231: looking for "etag" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST proxy-addr parent: /var/www/atomgame/node_modules/express/lib/utils.js
+MODULE 1838231: looking for "proxy-addr" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/proxy-addr/index.js" for module "/var/www/atomgame/node_modules/proxy-addr/index.js"
+MODULE 1838231: Module._load REQUEST forwarded parent: /var/www/atomgame/node_modules/proxy-addr/index.js
+MODULE 1838231: looking for "forwarded" in ["/var/www/atomgame/node_modules/proxy-addr/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/forwarded/index.js" for module "/var/www/atomgame/node_modules/forwarded/index.js"
+MODULE 1838231: Module._load REQUEST ipaddr.js parent: /var/www/atomgame/node_modules/proxy-addr/index.js
+MODULE 1838231: looking for "ipaddr.js" in ["/var/www/atomgame/node_modules/proxy-addr/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/ipaddr.js/lib/ipaddr.js" for module "/var/www/atomgame/node_modules/ipaddr.js/lib/ipaddr.js"
+MODULE 1838231: Module._load REQUEST qs parent: /var/www/atomgame/node_modules/express/lib/utils.js
+MODULE 1838231: looking for "qs" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST querystring parent: /var/www/atomgame/node_modules/express/lib/utils.js
+MODULE 1838231: load built-in module querystring
+MODULE 1838231: Module._load REQUEST ./utils parent: /var/www/atomgame/node_modules/express/lib/application.js
+MODULE 1838231: Module._load REQUEST ./utils parent: /var/www/atomgame/node_modules/express/lib/application.js
+MODULE 1838231: Module._load REQUEST depd parent: /var/www/atomgame/node_modules/express/lib/application.js
+MODULE 1838231: looking for "depd" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST array-flatten parent: /var/www/atomgame/node_modules/express/lib/application.js
+MODULE 1838231: looking for "array-flatten" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST utils-merge parent: /var/www/atomgame/node_modules/express/lib/application.js
+MODULE 1838231: looking for "utils-merge" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST path parent: /var/www/atomgame/node_modules/express/lib/application.js
+MODULE 1838231: load built-in module path
+MODULE 1838231: Module._load REQUEST setprototypeof parent: /var/www/atomgame/node_modules/express/lib/application.jsMODULE 1838231: looking for "setprototypeof" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST ./router/route parent: /var/www/atomgame/node_modules/express/lib/express.js
+MODULE 1838231: RELATIVE: requested: ./router/route from parent.id /var/www/atomgame/node_modules/express/lib/express.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express/lib"]
+MODULE 1838231: Module._load REQUEST ./router parent: /var/www/atomgame/node_modules/express/lib/express.js
+MODULE 1838231: Module._load REQUEST ./request parent: /var/www/atomgame/node_modules/express/lib/express.js
+MODULE 1838231: RELATIVE: requested: ./request from parent.id /var/www/atomgame/node_modules/express/lib/express.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express/lib/request.js" for module "/var/www/atomgame/node_modules/express/lib/request.js"
+MODULE 1838231: Module._load REQUEST accepts parent: /var/www/atomgame/node_modules/express/lib/request.js
+MODULE 1838231: looking for "accepts" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/accepts/index.js" for module "/var/www/atomgame/node_modules/accepts/index.js"
+MODULE 1838231: Module._load REQUEST negotiator parent: /var/www/atomgame/node_modules/accepts/index.js
+MODULE 1838231: looking for "negotiator" in ["/var/www/atomgame/node_modules/accepts/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/negotiator/index.js" for module "/var/www/atomgame/node_modules/negotiator/index.js"
+MODULE 1838231: Module._load REQUEST ./lib/charset parent: /var/www/atomgame/node_modules/negotiator/index.js
+MODULE 1838231: RELATIVE: requested: ./lib/charset from parent.id /var/www/atomgame/node_modules/negotiator/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/negotiator"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/negotiator/lib/charset.js" for module "/var/www/atomgame/node_modules/negotiator/lib/charset.js"
+MODULE 1838231: Module._load REQUEST ./lib/encoding parent: /var/www/atomgame/node_modules/negotiator/index.js
+MODULE 1838231: RELATIVE: requested: ./lib/encoding from parent.id /var/www/atomgame/node_modules/negotiator/index.jsMODULE 1838231: looking for ["/var/www/atomgame/node_modules/negotiator"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/negotiator/lib/encoding.js" for module "/var/www/atomgame/node_modules/negotiator/lib/encoding.js"
+MODULE 1838231: Module._load REQUEST ./lib/language parent: /var/www/atomgame/node_modules/negotiator/index.js
+MODULE 1838231: RELATIVE: requested: ./lib/language from parent.id /var/www/atomgame/node_modules/negotiator/index.jsMODULE 1838231: looking for ["/var/www/atomgame/node_modules/negotiator"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/negotiator/lib/language.js" for module "/var/www/atomgame/node_modules/negotiator/lib/language.js"
+MODULE 1838231: Module._load REQUEST ./lib/mediaType parent: /var/www/atomgame/node_modules/negotiator/index.js
+MODULE 1838231: RELATIVE: requested: ./lib/mediaType from parent.id /var/www/atomgame/node_modules/negotiator/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/negotiator"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/negotiator/lib/mediaType.js" for module "/var/www/atomgame/node_modules/negotiator/lib/mediaType.js"
+MODULE 1838231: Module._load REQUEST mime-types parent: /var/www/atomgame/node_modules/accepts/index.js
+MODULE 1838231: looking for "mime-types" in ["/var/www/atomgame/node_modules/accepts/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/mime-types/index.js" for module "/var/www/atomgame/node_modules/mime-types/index.js"
+MODULE 1838231: Module._load REQUEST mime-db parent: /var/www/atomgame/node_modules/mime-types/index.js
+MODULE 1838231: looking for "mime-db" in ["/var/www/atomgame/node_modules/mime-types/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/mime-db/index.js" for module "/var/www/atomgame/node_modules/mime-db/index.js"
+MODULE 1838231: Module._load REQUEST ./db.json parent: /var/www/atomgame/node_modules/mime-db/index.js
+MODULE 1838231: RELATIVE: requested: ./db.json from parent.id /var/www/atomgame/node_modules/mime-db/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/mime-db"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/mime-db/db.json" for module "/var/www/atomgame/node_modules/mime-db/db.json"
+MODULE 1838231: Module._load REQUEST path parent: /var/www/atomgame/node_modules/mime-types/index.js
+MODULE 1838231: load built-in module path
+MODULE 1838231: Module._load REQUEST depd parent: /var/www/atomgame/node_modules/express/lib/request.js
+MODULE 1838231: looking for "depd" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST net parent: /var/www/atomgame/node_modules/express/lib/request.js
+MODULE 1838231: load built-in module net
+MODULE 1838231: Module._load REQUEST type-is parent: /var/www/atomgame/node_modules/express/lib/request.js
+MODULE 1838231: looking for "type-is" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/type-is/index.js" for module "/var/www/atomgame/node_modules/type-is/index.js"
+MODULE 1838231: Module._load REQUEST media-typer parent: /var/www/atomgame/node_modules/type-is/index.js
+MODULE 1838231: looking for "media-typer" in ["/var/www/atomgame/node_modules/type-is/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/media-typer/index.js" for module "/var/www/atomgame/node_modules/media-typer/index.js"
+MODULE 1838231: Module._load REQUEST mime-types parent: /var/www/atomgame/node_modules/type-is/index.js
+MODULE 1838231: looking for "mime-types" in ["/var/www/atomgame/node_modules/type-is/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST http parent: /var/www/atomgame/node_modules/express/lib/request.js
+MODULE 1838231: load built-in module http
+MODULE 1838231: Module._load REQUEST fresh parent: /var/www/atomgame/node_modules/express/lib/request.js
+MODULE 1838231: looking for "fresh" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST range-parser parent: /var/www/atomgame/node_modules/express/lib/request.js
+MODULE 1838231: looking for "range-parser" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST parseurl parent: /var/www/atomgame/node_modules/express/lib/request.js
+MODULE 1838231: looking for "parseurl" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST proxy-addr parent: /var/www/atomgame/node_modules/express/lib/request.js
+MODULE 1838231: Module._load REQUEST ./response parent: /var/www/atomgame/node_modules/express/lib/express.js
+MODULE 1838231: RELATIVE: requested: ./response from parent.id /var/www/atomgame/node_modules/express/lib/express.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express/lib/response.js" for module "/var/www/atomgame/node_modules/express/lib/response.js"
+MODULE 1838231: Module._load REQUEST safe-buffer parent: /var/www/atomgame/node_modules/express/lib/response.js
+MODULE 1838231: Module._load REQUEST content-disposition parent: /var/www/atomgame/node_modules/express/lib/response.js
+MODULE 1838231: Module._load REQUEST http-errors parent: /var/www/atomgame/node_modules/express/lib/response.js
+MODULE 1838231: looking for "http-errors" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST depd parent: /var/www/atomgame/node_modules/express/lib/response.js
+MODULE 1838231: looking for "depd" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST encodeurl parent: /var/www/atomgame/node_modules/express/lib/response.js
+MODULE 1838231: looking for "encodeurl" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST escape-html parent: /var/www/atomgame/node_modules/express/lib/response.js
+MODULE 1838231: looking for "escape-html" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST http parent: /var/www/atomgame/node_modules/express/lib/response.js
+MODULE 1838231: load built-in module http
+MODULE 1838231: Module._load REQUEST ./utils parent: /var/www/atomgame/node_modules/express/lib/response.js
+MODULE 1838231: Module._load REQUEST on-finished parent: /var/www/atomgame/node_modules/express/lib/response.js
+MODULE 1838231: looking for "on-finished" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST path parent: /var/www/atomgame/node_modules/express/lib/response.js
+MODULE 1838231: load built-in module path
+MODULE 1838231: Module._load REQUEST statuses parent: /var/www/atomgame/node_modules/express/lib/response.js
+MODULE 1838231: looking for "statuses" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST utils-merge parent: /var/www/atomgame/node_modules/express/lib/response.js
+MODULE 1838231: looking for "utils-merge" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST cookie-signature parent: /var/www/atomgame/node_modules/express/lib/response.js
+MODULE 1838231: looking for "cookie-signature" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/cookie-signature/index.js" for module "/var/www/atomgame/node_modules/cookie-signature/index.js"
+MODULE 1838231: Module._load REQUEST crypto parent: /var/www/atomgame/node_modules/cookie-signature/index.js
+MODULE 1838231: load built-in module crypto
+MODULE 1838231: Module._load REQUEST ./utils parent: /var/www/atomgame/node_modules/express/lib/response.js
+MODULE 1838231: Module._load REQUEST ./utils parent: /var/www/atomgame/node_modules/express/lib/response.js
+MODULE 1838231: Module._load REQUEST ./utils parent: /var/www/atomgame/node_modules/express/lib/response.js
+MODULE 1838231: Module._load REQUEST cookie parent: /var/www/atomgame/node_modules/express/lib/response.js
+MODULE 1838231: looking for "cookie" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/cookie/index.js" for module "/var/www/atomgame/node_modules/cookie/index.js"
+MODULE 1838231: Module._load REQUEST send parent: /var/www/atomgame/node_modules/express/lib/response.js
+MODULE 1838231: Module._load REQUEST vary parent: /var/www/atomgame/node_modules/express/lib/response.js
+MODULE 1838231: looking for "vary" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/vary/index.js" for module "/var/www/atomgame/node_modules/vary/index.js"
+MODULE 1838231: Module._load REQUEST ./lib/types/json parent: /var/www/atomgame/node_modules/body-parser/index.js
+MODULE 1838231: RELATIVE: requested: ./lib/types/json from parent.id /var/www/atomgame/node_modules/body-parser/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/body-parser"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/body-parser/lib/types/json.js" for module "/var/www/atomgame/node_modules/body-parser/lib/types/json.js"
+MODULE 1838231: Module._load REQUEST bytes parent: /var/www/atomgame/node_modules/body-parser/lib/types/json.js
+MODULE 1838231: looking for "bytes" in ["/var/www/atomgame/node_modules/body-parser/lib/types/node_modules","/var/www/atomgame/node_modules/body-parser/lib/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/bytes/index.js" for module "/var/www/atomgame/node_modules/bytes/index.js"
+MODULE 1838231: Module._load REQUEST content-type parent: /var/www/atomgame/node_modules/body-parser/lib/types/json.js
+MODULE 1838231: looking for "content-type" in ["/var/www/atomgame/node_modules/body-parser/lib/types/node_modules","/var/www/atomgame/node_modules/body-parser/lib/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST http-errors parent: /var/www/atomgame/node_modules/body-parser/lib/types/json.jsMODULE 1838231: looking for "http-errors" in ["/var/www/atomgame/node_modules/body-parser/lib/types/node_modules","/var/www/atomgame/node_modules/body-parser/lib/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST debug parent: /var/www/atomgame/node_modules/body-parser/lib/types/json.js
+MODULE 1838231: looking for "debug" in ["/var/www/atomgame/node_modules/body-parser/lib/types/node_modules","/var/www/atomgame/node_modules/body-parser/lib/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/body-parser/node_modules/debug/src/index.js" for module "/var/www/atomgame/node_modules/body-parser/node_modules/debug/src/index.js"
+MODULE 1838231: Module._load REQUEST ./node.js parent: /var/www/atomgame/node_modules/body-parser/node_modules/debug/src/index.js
+MODULE 1838231: RELATIVE: requested: ./node.js from parent.id /var/www/atomgame/node_modules/body-parser/node_modules/debug/src/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/body-parser/node_modules/debug/src"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/body-parser/node_modules/debug/src/node.js" for module "/var/www/atomgame/node_modules/body-parser/node_modules/debug/src/node.js"
+MODULE 1838231: Module._load REQUEST tty parent: /var/www/atomgame/node_modules/body-parser/node_modules/debug/src/node.js
+MODULE 1838231: load built-in module tty
+MODULE 1838231: Module._load REQUEST util parent: /var/www/atomgame/node_modules/body-parser/node_modules/debug/src/node.js
+MODULE 1838231: load built-in module util
+MODULE 1838231: Module._load REQUEST ./debug parent: /var/www/atomgame/node_modules/body-parser/node_modules/debug/src/node.js
+MODULE 1838231: RELATIVE: requested: ./debug from parent.id /var/www/atomgame/node_modules/body-parser/node_modules/debug/src/node.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/body-parser/node_modules/debug/src"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/body-parser/node_modules/debug/src/debug.js" for module "/var/www/atomgame/node_modules/body-parser/node_modules/debug/src/debug.js"
+MODULE 1838231: Module._load REQUEST ms parent: /var/www/atomgame/node_modules/body-parser/node_modules/debug/src/debug.js
+MODULE 1838231: looking for "ms" in ["/var/www/atomgame/node_modules/body-parser/node_modules/debug/src/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules/debug/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/body-parser/node_modules/ms/index.js" for module "/var/www/atomgame/node_modules/body-parser/node_modules/ms/index.js"
+MODULE 1838231: Module._load REQUEST ../read parent: /var/www/atomgame/node_modules/body-parser/lib/types/json.js
+MODULE 1838231: RELATIVE: requested: ../read from parent.id /var/www/atomgame/node_modules/body-parser/lib/types/json.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/body-parser/lib/types"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/body-parser/lib/read.js" for module "/var/www/atomgame/node_modules/body-parser/lib/read.js"
+MODULE 1838231: Module._load REQUEST http-errors parent: /var/www/atomgame/node_modules/body-parser/lib/read.js
+MODULE 1838231: looking for "http-errors" in ["/var/www/atomgame/node_modules/body-parser/lib/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST destroy parent: /var/www/atomgame/node_modules/body-parser/lib/read.js
+MODULE 1838231: looking for "destroy" in ["/var/www/atomgame/node_modules/body-parser/lib/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST raw-body parent: /var/www/atomgame/node_modules/body-parser/lib/read.js
+MODULE 1838231: looking for "raw-body" in ["/var/www/atomgame/node_modules/body-parser/lib/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/raw-body/index.js" for module "/var/www/atomgame/node_modules/raw-body/index.js"
+MODULE 1838231: Module._load REQUEST async_hooks parent: /var/www/atomgame/node_modules/raw-body/index.js
+MODULE 1838231: load built-in module async_hooks
+MODULE 1838231: Module._load REQUEST bytes parent: /var/www/atomgame/node_modules/raw-body/index.js
+MODULE 1838231: looking for "bytes" in ["/var/www/atomgame/node_modules/raw-body/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST http-errors parent: /var/www/atomgame/node_modules/raw-body/index.js
+MODULE 1838231: looking for "http-errors" in ["/var/www/atomgame/node_modules/raw-body/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST iconv-lite parent: /var/www/atomgame/node_modules/raw-body/index.js
+MODULE 1838231: looking for "iconv-lite" in ["/var/www/atomgame/node_modules/raw-body/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/iconv-lite/lib/index.js" for module "/var/www/atomgame/node_modules/iconv-lite/lib/index.js"
+MODULE 1838231: Module._load REQUEST safer-buffer parent: /var/www/atomgame/node_modules/iconv-lite/lib/index.js
+MODULE 1838231: looking for "safer-buffer" in ["/var/www/atomgame/node_modules/iconv-lite/lib/node_modules","/var/www/atomgame/node_modules/iconv-lite/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/safer-buffer/safer.js" for module "/var/www/atomgame/node_modules/safer-buffer/safer.js"
+MODULE 1838231: Module._load REQUEST buffer parent: /var/www/atomgame/node_modules/safer-buffer/safer.js
+MODULE 1838231: load built-in module buffer
+MODULE 1838231: Module._load REQUEST ./bom-handling parent: /var/www/atomgame/node_modules/iconv-lite/lib/index.js
+MODULE 1838231: RELATIVE: requested: ./bom-handling from parent.id /var/www/atomgame/node_modules/iconv-lite/lib/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/iconv-lite/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/iconv-lite/lib/bom-handling.js" for module "/var/www/atomgame/node_modules/iconv-lite/lib/bom-handling.js"
+MODULE 1838231: Module._load REQUEST ./streams parent: /var/www/atomgame/node_modules/iconv-lite/lib/index.js
+MODULE 1838231: RELATIVE: requested: ./streams from parent.id /var/www/atomgame/node_modules/iconv-lite/lib/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/iconv-lite/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/iconv-lite/lib/streams.js" for module "/var/www/atomgame/node_modules/iconv-lite/lib/streams.js"
+MODULE 1838231: Module._load REQUEST buffer parent: /var/www/atomgame/node_modules/iconv-lite/lib/streams.js
+MODULE 1838231: load built-in module buffer
+MODULE 1838231: Module._load REQUEST stream parent: /var/www/atomgame/node_modules/iconv-lite/lib/streams.js
+MODULE 1838231: load built-in module stream
+MODULE 1838231: Module._load REQUEST ./extend-node parent: /var/www/atomgame/node_modules/iconv-lite/lib/index.js
+MODULE 1838231: RELATIVE: requested: ./extend-node from parent.id /var/www/atomgame/node_modules/iconv-lite/lib/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/iconv-lite/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/iconv-lite/lib/extend-node.js" for module "/var/www/atomgame/node_modules/iconv-lite/lib/extend-node.js"
+MODULE 1838231: Module._load REQUEST buffer parent: /var/www/atomgame/node_modules/iconv-lite/lib/extend-node.js
+MODULE 1838231: load built-in module buffer
+MODULE 1838231: Module._load REQUEST unpipe parent: /var/www/atomgame/node_modules/raw-body/index.js
+MODULE 1838231: looking for "unpipe" in ["/var/www/atomgame/node_modules/raw-body/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST iconv-lite parent: /var/www/atomgame/node_modules/body-parser/lib/read.js
+MODULE 1838231: looking for "iconv-lite" in ["/var/www/atomgame/node_modules/body-parser/lib/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST on-finished parent: /var/www/atomgame/node_modules/body-parser/lib/read.js
+MODULE 1838231: looking for "on-finished" in ["/var/www/atomgame/node_modules/body-parser/lib/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST unpipe parent: /var/www/atomgame/node_modules/body-parser/lib/read.js
+MODULE 1838231: looking for "unpipe" in ["/var/www/atomgame/node_modules/body-parser/lib/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST zlib parent: /var/www/atomgame/node_modules/body-parser/lib/read.js
+MODULE 1838231: load built-in module zlib
+MODULE 1838231: Module._load REQUEST type-is parent: /var/www/atomgame/node_modules/body-parser/lib/types/json.js
+MODULE 1838231: looking for "type-is" in ["/var/www/atomgame/node_modules/body-parser/lib/types/node_modules","/var/www/atomgame/node_modules/body-parser/lib/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST ./middleware/query parent: /var/www/atomgame/node_modules/express/lib/express.jsMODULE 1838231: Module._load REQUEST ./lib/types/raw parent: /var/www/atomgame/node_modules/body-parser/index.js
+MODULE 1838231: RELATIVE: requested: ./lib/types/raw from parent.id /var/www/atomgame/node_modules/body-parser/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/body-parser"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/body-parser/lib/types/raw.js" for module "/var/www/atomgame/node_modules/body-parser/lib/types/raw.js"
+MODULE 1838231: Module._load REQUEST bytes parent: /var/www/atomgame/node_modules/body-parser/lib/types/raw.js
+MODULE 1838231: Module._load REQUEST debug parent: /var/www/atomgame/node_modules/body-parser/lib/types/raw.js
+MODULE 1838231: Module._load REQUEST ../read parent: /var/www/atomgame/node_modules/body-parser/lib/types/raw.js
+MODULE 1838231: Module._load REQUEST type-is parent: /var/www/atomgame/node_modules/body-parser/lib/types/raw.js
+MODULE 1838231: looking for "type-is" in ["/var/www/atomgame/node_modules/body-parser/lib/types/node_modules","/var/www/atomgame/node_modules/body-parser/lib/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST serve-static parent: /var/www/atomgame/node_modules/express/lib/express.js
+MODULE 1838231: looking for "serve-static" in ["/var/www/atomgame/node_modules/express/lib/node_modules","/var/www/atomgame/node_modules/express/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/serve-static/index.js" for module "/var/www/atomgame/node_modules/serve-static/index.js"
+MODULE 1838231: Module._load REQUEST encodeurl parent: /var/www/atomgame/node_modules/serve-static/index.js
+MODULE 1838231: looking for "encodeurl" in ["/var/www/atomgame/node_modules/serve-static/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST escape-html parent: /var/www/atomgame/node_modules/serve-static/index.js
+MODULE 1838231: looking for "escape-html" in ["/var/www/atomgame/node_modules/serve-static/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST parseurl parent: /var/www/atomgame/node_modules/serve-static/index.js
+MODULE 1838231: looking for "parseurl" in ["/var/www/atomgame/node_modules/serve-static/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST path parent: /var/www/atomgame/node_modules/serve-static/index.js
+MODULE 1838231: load built-in module path
+MODULE 1838231: Module._load REQUEST send parent: /var/www/atomgame/node_modules/serve-static/index.js
+MODULE 1838231: looking for "send" in ["/var/www/atomgame/node_modules/serve-static/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST url parent: /var/www/atomgame/node_modules/serve-static/index.js
+MODULE 1838231: load built-in module url
+MODULE 1838231: Module._load REQUEST ./lib/types/text parent: /var/www/atomgame/node_modules/body-parser/index.js
+MODULE 1838231: RELATIVE: requested: ./lib/types/text from parent.id /var/www/atomgame/node_modules/body-parser/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/body-parser"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/body-parser/lib/types/text.js" for module "/var/www/atomgame/node_modules/body-parser/lib/types/text.js"
+MODULE 1838231: Module._load REQUEST bytes parent: /var/www/atomgame/node_modules/body-parser/lib/types/text.js
+MODULE 1838231: Module._load REQUEST content-type parent: /var/www/atomgame/node_modules/body-parser/lib/types/text.js
+MODULE 1838231: looking for "content-type" in ["/var/www/atomgame/node_modules/body-parser/lib/types/node_modules","/var/www/atomgame/node_modules/body-parser/lib/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST debug parent: /var/www/atomgame/node_modules/body-parser/lib/types/text.js
+MODULE 1838231: Module._load REQUEST ../read parent: /var/www/atomgame/node_modules/body-parser/lib/types/text.js
+MODULE 1838231: Module._load REQUEST type-is parent: /var/www/atomgame/node_modules/body-parser/lib/types/text.js
+MODULE 1838231: looking for "type-is" in ["/var/www/atomgame/node_modules/body-parser/lib/types/node_modules","/var/www/atomgame/node_modules/body-parser/lib/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST ./lib/types/urlencoded parent: /var/www/atomgame/node_modules/body-parser/index.js
+MODULE 1838231: RELATIVE: requested: ./lib/types/urlencoded from parent.id /var/www/atomgame/node_modules/body-parser/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/body-parser"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/body-parser/lib/types/urlencoded.js" for module "/var/www/atomgame/node_modules/body-parser/lib/types/urlencoded.js"
+MODULE 1838231: Module._load REQUEST bytes parent: /var/www/atomgame/node_modules/body-parser/lib/types/urlencoded.jsMODULE 1838231: Module._load REQUEST content-type parent: /var/www/atomgame/node_modules/body-parser/lib/types/urlencoded.js
+MODULE 1838231: looking for "content-type" in ["/var/www/atomgame/node_modules/body-parser/lib/types/node_modules","/var/www/atomgame/node_modules/body-parser/lib/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST http-errors parent: /var/www/atomgame/node_modules/body-parser/lib/types/urlencoded.js
+MODULE 1838231: looking for "http-errors" in ["/var/www/atomgame/node_modules/body-parser/lib/types/node_modules","/var/www/atomgame/node_modules/body-parser/lib/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST debug parent: /var/www/atomgame/node_modules/body-parser/lib/types/urlencoded.jsMODULE 1838231: Module._load REQUEST depd parent: /var/www/atomgame/node_modules/body-parser/lib/types/urlencoded.js
+MODULE 1838231: looking for "depd" in ["/var/www/atomgame/node_modules/body-parser/lib/types/node_modules","/var/www/atomgame/node_modules/body-parser/lib/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST ../read parent: /var/www/atomgame/node_modules/body-parser/lib/types/urlencoded.js
+MODULE 1838231: Module._load REQUEST type-is parent: /var/www/atomgame/node_modules/body-parser/lib/types/urlencoded.js
+MODULE 1838231: looking for "type-is" in ["/var/www/atomgame/node_modules/body-parser/lib/types/node_modules","/var/www/atomgame/node_modules/body-parser/lib/node_modules","/var/www/atomgame/node_modules/body-parser/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+ESM 1838231: Loading CJSModule file:///var/www/atomgame/node_modules/passport/lib/index.js
+MODULE 1838231: looking for "/var/www/atomgame/node_modules/passport/lib/index.js" in ["/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/passport/lib/index.js" for module "/var/www/atomgame/node_modules/passport/lib/index.js"
+MODULE 1838231: Module._load REQUEST ./authenticator parent: /var/www/atomgame/node_modules/passport/lib/index.js
+MODULE 1838231: RELATIVE: requested: ./authenticator from parent.id /var/www/atomgame/node_modules/passport/lib/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/passport/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/passport/lib/authenticator.js" for module "/var/www/atomgame/node_modules/passport/lib/authenticator.js"
+MODULE 1838231: Module._load REQUEST ./strategies/session parent: /var/www/atomgame/node_modules/passport/lib/authenticator.js
+MODULE 1838231: RELATIVE: requested: ./strategies/session from parent.id /var/www/atomgame/node_modules/passport/lib/authenticator.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/passport/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/passport/lib/strategies/session.js" for module "/var/www/atomgame/node_modules/passport/lib/strategies/session.js"
+MODULE 1838231: Module._load REQUEST pause parent: /var/www/atomgame/node_modules/passport/lib/strategies/session.js
+MODULE 1838231: looking for "pause" in ["/var/www/atomgame/node_modules/passport/lib/strategies/node_modules","/var/www/atomgame/node_modules/passport/lib/node_modules","/var/www/atomgame/node_modules/passport/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/pause/index.js" for module "/var/www/atomgame/node_modules/pause/index.js"
+MODULE 1838231: Module._load REQUEST util parent: /var/www/atomgame/node_modules/passport/lib/strategies/session.js
+MODULE 1838231: load built-in module util
+MODULE 1838231: Module._load REQUEST passport-strategy parent: /var/www/atomgame/node_modules/passport/lib/strategies/session.js
+MODULE 1838231: looking for "passport-strategy" in ["/var/www/atomgame/node_modules/passport/lib/strategies/node_modules","/var/www/atomgame/node_modules/passport/lib/node_modules","/var/www/atomgame/node_modules/passport/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/passport-strategy/lib/index.js" for module "/var/www/atomgame/node_modules/passport-strategy/lib/index.js"
+MODULE 1838231: Module._load REQUEST ./strategy parent: /var/www/atomgame/node_modules/passport-strategy/lib/index.jsMODULE 1838231: RELATIVE: requested: ./strategy from parent.id /var/www/atomgame/node_modules/passport-strategy/lib/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/passport-strategy/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/passport-strategy/lib/strategy.js" for module "/var/www/atomgame/node_modules/passport-strategy/lib/strategy.js"
+MODULE 1838231: Module._load REQUEST ./sessionmanager parent: /var/www/atomgame/node_modules/passport/lib/authenticator.js
+MODULE 1838231: RELATIVE: requested: ./sessionmanager from parent.id /var/www/atomgame/node_modules/passport/lib/authenticator.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/passport/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/passport/lib/sessionmanager.js" for module "/var/www/atomgame/node_modules/passport/lib/sessionmanager.js"
+MODULE 1838231: Module._load REQUEST utils-merge parent: /var/www/atomgame/node_modules/passport/lib/sessionmanager.js
+MODULE 1838231: looking for "utils-merge" in ["/var/www/atomgame/node_modules/passport/lib/node_modules","/var/www/atomgame/node_modules/passport/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST ./strategies/session parent: /var/www/atomgame/node_modules/passport/lib/index.js
+MODULE 1838231: Module._load REQUEST ./framework/connect parent: /var/www/atomgame/node_modules/passport/lib/authenticator.js
+MODULE 1838231: RELATIVE: requested: ./framework/connect from parent.id /var/www/atomgame/node_modules/passport/lib/authenticator.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/passport/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/passport/lib/framework/connect.js" for module "/var/www/atomgame/node_modules/passport/lib/framework/connect.js"
+MODULE 1838231: Module._load REQUEST ../middleware/initialize parent: /var/www/atomgame/node_modules/passport/lib/framework/connect.js
+MODULE 1838231: RELATIVE: requested: ../middleware/initialize from parent.id /var/www/atomgame/node_modules/passport/lib/framework/connect.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/passport/lib/framework"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/passport/lib/middleware/initialize.js" for module "/var/www/atomgame/node_modules/passport/lib/middleware/initialize.js"
+MODULE 1838231: Module._load REQUEST ../http/request parent: /var/www/atomgame/node_modules/passport/lib/middleware/initialize.js
+MODULE 1838231: RELATIVE: requested: ../http/request from parent.id /var/www/atomgame/node_modules/passport/lib/middleware/initialize.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/passport/lib/middleware"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/passport/lib/http/request.js" for module "/var/www/atomgame/node_modules/passport/lib/http/request.js"
+MODULE 1838231: Module._load REQUEST ../middleware/authenticate parent: /var/www/atomgame/node_modules/passport/lib/framework/connect.js
+MODULE 1838231: RELATIVE: requested: ../middleware/authenticate from parent.id /var/www/atomgame/node_modules/passport/lib/framework/connect.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/passport/lib/framework"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/passport/lib/middleware/authenticate.js" for module "/var/www/atomgame/node_modules/passport/lib/middleware/authenticate.js"
+MODULE 1838231: Module._load REQUEST http parent: /var/www/atomgame/node_modules/passport/lib/middleware/authenticate.js
+MODULE 1838231: load built-in module http
+MODULE 1838231: Module._load REQUEST ../http/request parent: /var/www/atomgame/node_modules/passport/lib/middleware/authenticate.js
+MODULE 1838231: Module._load REQUEST ../errors/authenticationerror parent: /var/www/atomgame/node_modules/passport/lib/middleware/authenticate.js
+MODULE 1838231: RELATIVE: requested: ../errors/authenticationerror from parent.id /var/www/atomgame/node_modules/passport/lib/middleware/authenticate.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/passport/lib/middleware"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/passport/lib/errors/authenticationerror.js" for module "/var/www/atomgame/node_modules/passport/lib/errors/authenticationerror.js"
+MODULE 1838231: Module._load REQUEST passport-strategy parent: /var/www/atomgame/node_modules/passport/lib/index.js
+MODULE 1838231: looking for "passport-strategy" in ["/var/www/atomgame/node_modules/passport/lib/node_modules","/var/www/atomgame/node_modules/passport/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+ESM 1838231: Loading CJSModule file:///var/www/atomgame/node_modules/passport-local/lib/index.js
+MODULE 1838231: looking for "/var/www/atomgame/node_modules/passport-local/lib/index.js" in ["/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/passport-local/lib/index.js" for module "/var/www/atomgame/node_modules/passport-local/lib/index.js"
+MODULE 1838231: Module._load REQUEST ./strategy parent: /var/www/atomgame/node_modules/passport-local/lib/index.js
+MODULE 1838231: RELATIVE: requested: ./strategy from parent.id /var/www/atomgame/node_modules/passport-local/lib/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/passport-local/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/passport-local/lib/strategy.js" for module "/var/www/atomgame/node_modules/passport-local/lib/strategy.js"
+MODULE 1838231: Module._load REQUEST passport-strategy parent: /var/www/atomgame/node_modules/passport-local/lib/strategy.js
+MODULE 1838231: looking for "passport-strategy" in ["/var/www/atomgame/node_modules/passport-local/lib/node_modules","/var/www/atomgame/node_modules/passport-local/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST util parent: /var/www/atomgame/node_modules/passport-local/lib/strategy.js
+MODULE 1838231: load built-in module util
+MODULE 1838231: Module._load REQUEST ./utils parent: /var/www/atomgame/node_modules/passport-local/lib/strategy.js
+MODULE 1838231: RELATIVE: requested: ./utils from parent.id /var/www/atomgame/node_modules/passport-local/lib/strategy.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/passport-local/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/passport-local/lib/utils.js" for module "/var/www/atomgame/node_modules/passport-local/lib/utils.js"
+ESM 1838231: Loading CJSModule file:///var/www/atomgame/node_modules/express-session/index.js
+MODULE 1838231: looking for "/var/www/atomgame/node_modules/express-session/index.js" in ["/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express-session/index.js" for module "/var/www/atomgame/node_modules/express-session/index.js"
+MODULE 1838231: Module._load REQUEST safe-buffer parent: /var/www/atomgame/node_modules/express-session/index.js
+MODULE 1838231: looking for "safe-buffer" in ["/var/www/atomgame/node_modules/express-session/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST cookie parent: /var/www/atomgame/node_modules/express-session/index.js
+MODULE 1838231: looking for "cookie" in ["/var/www/atomgame/node_modules/express-session/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express-session/node_modules/cookie/index.js" for module "/var/www/atomgame/node_modules/express-session/node_modules/cookie/index.js"
+MODULE 1838231: Module._load REQUEST crypto parent: /var/www/atomgame/node_modules/express-session/index.js
+MODULE 1838231: load built-in module crypto
+MODULE 1838231: Module._load REQUEST debug parent: /var/www/atomgame/node_modules/express-session/index.js
+MODULE 1838231: looking for "debug" in ["/var/www/atomgame/node_modules/express-session/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express-session/node_modules/debug/src/index.js" for module "/var/www/atomgame/node_modules/express-session/node_modules/debug/src/index.js"
+MODULE 1838231: Module._load REQUEST ./node.js parent: /var/www/atomgame/node_modules/express-session/node_modules/debug/src/index.js
+MODULE 1838231: RELATIVE: requested: ./node.js from parent.id /var/www/atomgame/node_modules/express-session/node_modules/debug/src/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express-session/node_modules/debug/src"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express-session/node_modules/debug/src/node.js" for module "/var/www/atomgame/node_modules/express-session/node_modules/debug/src/node.js"
+MODULE 1838231: Module._load REQUEST tty parent: /var/www/atomgame/node_modules/express-session/node_modules/debug/src/node.js
+MODULE 1838231: load built-in module tty
+MODULE 1838231: Module._load REQUEST util parent: /var/www/atomgame/node_modules/express-session/node_modules/debug/src/node.js
+MODULE 1838231: load built-in module util
+MODULE 1838231: Module._load REQUEST ./debug parent: /var/www/atomgame/node_modules/express-session/node_modules/debug/src/node.js
+MODULE 1838231: RELATIVE: requested: ./debug from parent.id /var/www/atomgame/node_modules/express-session/node_modules/debug/src/node.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express-session/node_modules/debug/src"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express-session/node_modules/debug/src/debug.js" for module "/var/www/atomgame/node_modules/express-session/node_modules/debug/src/debug.js"
+MODULE 1838231: Module._load REQUEST ms parent: /var/www/atomgame/node_modules/express-session/node_modules/debug/src/debug.js
+MODULE 1838231: looking for "ms" in ["/var/www/atomgame/node_modules/express-session/node_modules/debug/src/node_modules","/var/www/atomgame/node_modules/express-session/node_modules/debug/node_modules","/var/www/atomgame/node_modules/express-session/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express-session/node_modules/ms/index.js" for module "/var/www/atomgame/node_modules/express-session/node_modules/ms/index.js"
+MODULE 1838231: Module._load REQUEST depd parent: /var/www/atomgame/node_modules/express-session/index.js
+MODULE 1838231: looking for "depd" in ["/var/www/atomgame/node_modules/express-session/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST on-headers parent: /var/www/atomgame/node_modules/express-session/index.js
+MODULE 1838231: looking for "on-headers" in ["/var/www/atomgame/node_modules/express-session/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/on-headers/index.js" for module "/var/www/atomgame/node_modules/on-headers/index.js"
+MODULE 1838231: Module._load REQUEST parseurl parent: /var/www/atomgame/node_modules/express-session/index.js
+MODULE 1838231: looking for "parseurl" in ["/var/www/atomgame/node_modules/express-session/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST cookie-signature parent: /var/www/atomgame/node_modules/express-session/index.jsMODULE 1838231: looking for "cookie-signature" in ["/var/www/atomgame/node_modules/express-session/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express-session/node_modules/cookie-signature/index.js" for module "/var/www/atomgame/node_modules/express-session/node_modules/cookie-signature/index.js"
+MODULE 1838231: Module._load REQUEST crypto parent: /var/www/atomgame/node_modules/express-session/node_modules/cookie-signature/index.js
+MODULE 1838231: load built-in module crypto
+MODULE 1838231: Module._load REQUEST uid-safe parent: /var/www/atomgame/node_modules/express-session/index.js
+MODULE 1838231: looking for "uid-safe" in ["/var/www/atomgame/node_modules/express-session/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/uid-safe/index.js" for module "/var/www/atomgame/node_modules/uid-safe/index.js"
+MODULE 1838231: Module._load REQUEST random-bytes parent: /var/www/atomgame/node_modules/uid-safe/index.js
+MODULE 1838231: looking for "random-bytes" in ["/var/www/atomgame/node_modules/uid-safe/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/random-bytes/index.js" for module "/var/www/atomgame/node_modules/random-bytes/index.js"
+MODULE 1838231: Module._load REQUEST crypto parent: /var/www/atomgame/node_modules/random-bytes/index.js
+MODULE 1838231: load built-in module crypto
+MODULE 1838231: Module._load REQUEST ./session/cookie parent: /var/www/atomgame/node_modules/express-session/index.jsMODULE 1838231: RELATIVE: requested: ./session/cookie from parent.id /var/www/atomgame/node_modules/express-session/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express-session"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express-session/session/cookie.js" for module "/var/www/atomgame/node_modules/express-session/session/cookie.js"
+MODULE 1838231: Module._load REQUEST cookie parent: /var/www/atomgame/node_modules/express-session/session/cookie.js
+MODULE 1838231: looking for "cookie" in ["/var/www/atomgame/node_modules/express-session/session/node_modules","/var/www/atomgame/node_modules/express-session/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST depd parent: /var/www/atomgame/node_modules/express-session/session/cookie.js
+MODULE 1838231: looking for "depd" in ["/var/www/atomgame/node_modules/express-session/session/node_modules","/var/www/atomgame/node_modules/express-session/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST ./session/memory parent: /var/www/atomgame/node_modules/express-session/index.jsMODULE 1838231: RELATIVE: requested: ./session/memory from parent.id /var/www/atomgame/node_modules/express-session/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express-session"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express-session/session/memory.js" for module "/var/www/atomgame/node_modules/express-session/session/memory.js"
+MODULE 1838231: Module._load REQUEST ./store parent: /var/www/atomgame/node_modules/express-session/session/memory.jsMODULE 1838231: RELATIVE: requested: ./store from parent.id /var/www/atomgame/node_modules/express-session/session/memory.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express-session/session"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express-session/session/store.js" for module "/var/www/atomgame/node_modules/express-session/session/store.js"
+MODULE 1838231: Module._load REQUEST ./cookie parent: /var/www/atomgame/node_modules/express-session/session/store.jsMODULE 1838231: RELATIVE: requested: ./cookie from parent.id /var/www/atomgame/node_modules/express-session/session/store.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express-session/session"]
+MODULE 1838231: Module._load REQUEST events parent: /var/www/atomgame/node_modules/express-session/session/store.js
+MODULE 1838231: load built-in module events
+MODULE 1838231: Module._load REQUEST ./session parent: /var/www/atomgame/node_modules/express-session/session/store.js
+MODULE 1838231: RELATIVE: requested: ./session from parent.id /var/www/atomgame/node_modules/express-session/session/store.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express-session/session"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/express-session/session/session.js" for module "/var/www/atomgame/node_modules/express-session/session/session.js"
+MODULE 1838231: Module._load REQUEST util parent: /var/www/atomgame/node_modules/express-session/session/store.js
+MODULE 1838231: load built-in module util
+MODULE 1838231: Module._load REQUEST util parent: /var/www/atomgame/node_modules/express-session/session/memory.js
+MODULE 1838231: load built-in module util
+MODULE 1838231: Module._load REQUEST ./session/session parent: /var/www/atomgame/node_modules/express-session/index.js
+MODULE 1838231: RELATIVE: requested: ./session/session from parent.id /var/www/atomgame/node_modules/express-session/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express-session"]
+MODULE 1838231: Module._load REQUEST ./session/store parent: /var/www/atomgame/node_modules/express-session/index.js
+MODULE 1838231: RELATIVE: requested: ./session/store from parent.id /var/www/atomgame/node_modules/express-session/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/express-session"]
+ESM 1838231: Loading CJSModule file:///var/www/atomgame/node_modules/memorystore/index.js
+MODULE 1838231: looking for "/var/www/atomgame/node_modules/memorystore/index.js" in ["/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/memorystore/index.js" for module "/var/www/atomgame/node_modules/memorystore/index.js"
+MODULE 1838231: Module._load REQUEST ./lib/memorystore.js parent: /var/www/atomgame/node_modules/memorystore/index.jsMODULE 1838231: RELATIVE: requested: ./lib/memorystore.js from parent.id /var/www/atomgame/node_modules/memorystore/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/memorystore"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/memorystore/lib/memorystore.js" for module "/var/www/atomgame/node_modules/memorystore/lib/memorystore.js"
+MODULE 1838231: Module._load REQUEST debug parent: /var/www/atomgame/node_modules/memorystore/lib/memorystore.js
+MODULE 1838231: looking for "debug" in ["/var/www/atomgame/node_modules/memorystore/lib/node_modules","/var/www/atomgame/node_modules/memorystore/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/debug/src/index.js" for module "/var/www/atomgame/node_modules/debug/src/index.js"
+MODULE 1838231: Module._load REQUEST ./node.js parent: /var/www/atomgame/node_modules/debug/src/index.js
+MODULE 1838231: RELATIVE: requested: ./node.js from parent.id /var/www/atomgame/node_modules/debug/src/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/debug/src"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/debug/src/node.js" for module "/var/www/atomgame/node_modules/debug/src/node.js"
+MODULE 1838231: Module._load REQUEST tty parent: /var/www/atomgame/node_modules/debug/src/node.js
+MODULE 1838231: load built-in module tty
+MODULE 1838231: Module._load REQUEST util parent: /var/www/atomgame/node_modules/debug/src/node.js
+MODULE 1838231: load built-in module util
+MODULE 1838231: Module._load REQUEST supports-color parent: /var/www/atomgame/node_modules/debug/src/node.js
+MODULE 1838231: looking for "supports-color" in ["/var/www/atomgame/node_modules/debug/src/node_modules","/var/www/atomgame/node_modules/debug/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST ./common parent: /var/www/atomgame/node_modules/debug/src/node.js
+MODULE 1838231: RELATIVE: requested: ./common from parent.id /var/www/atomgame/node_modules/debug/src/node.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/debug/src"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/debug/src/common.js" for module "/var/www/atomgame/node_modules/debug/src/common.js"
+MODULE 1838231: Module._load REQUEST ms parent: /var/www/atomgame/node_modules/debug/src/common.js
+MODULE 1838231: looking for "ms" in ["/var/www/atomgame/node_modules/debug/src/node_modules","/var/www/atomgame/node_modules/debug/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST lru-cache parent: /var/www/atomgame/node_modules/memorystore/lib/memorystore.js
+MODULE 1838231: looking for "lru-cache" in ["/var/www/atomgame/node_modules/memorystore/lib/node_modules","/var/www/atomgame/node_modules/memorystore/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/memorystore/node_modules/lru-cache/index.js" for module "/var/www/atomgame/node_modules/memorystore/node_modules/lru-cache/index.js"
+MODULE 1838231: Module._load REQUEST pseudomap parent: /var/www/atomgame/node_modules/memorystore/node_modules/lru-cache/index.js
+MODULE 1838231: looking for "pseudomap" in ["/var/www/atomgame/node_modules/memorystore/node_modules/lru-cache/node_modules","/var/www/atomgame/node_modules/memorystore/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/pseudomap/map.js" for module "/var/www/atomgame/node_modules/pseudomap/map.js"
+MODULE 1838231: Module._load REQUEST util parent: /var/www/atomgame/node_modules/memorystore/node_modules/lru-cache/index.js
+MODULE 1838231: load built-in module util
+MODULE 1838231: Module._load REQUEST yallist parent: /var/www/atomgame/node_modules/memorystore/node_modules/lru-cache/index.js
+MODULE 1838231: looking for "yallist" in ["/var/www/atomgame/node_modules/memorystore/node_modules/lru-cache/node_modules","/var/www/atomgame/node_modules/memorystore/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/memorystore/node_modules/yallist/yallist.js" for module "/var/www/atomgame/node_modules/memorystore/node_modules/yallist/yallist.js"
+MODULE 1838231: Module._load REQUEST util parent: /var/www/atomgame/node_modules/memorystore/lib/memorystore.js
+MODULE 1838231: load built-in module util
+ESM 1838231: Loading CJSModule file:///var/www/atomgame/node_modules/connect-pg-simple/index.js
+MODULE 1838231: looking for "/var/www/atomgame/node_modules/connect-pg-simple/index.js" in ["/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/connect-pg-simple/index.js" for module "/var/www/atomgame/node_modules/connect-pg-simple/index.js"
+ESM 1838231: Loading CJSModule file:///var/www/atomgame/node_modules/ws/lib/stream.js
+MODULE 1838231: looking for "/var/www/atomgame/node_modules/ws/lib/stream.js" in ["/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/ws/lib/stream.js" for module "/var/www/atomgame/node_modules/ws/lib/stream.js"
+MODULE 1838231: Module._load REQUEST stream parent: /var/www/atomgame/node_modules/ws/lib/stream.js
+MODULE 1838231: load built-in module stream
+ESM 1838231: Loading CJSModule file:///var/www/atomgame/node_modules/ws/lib/receiver.js
+MODULE 1838231: looking for "/var/www/atomgame/node_modules/ws/lib/receiver.js" in ["/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/ws/lib/receiver.js" for module "/var/www/atomgame/node_modules/ws/lib/receiver.js"
+MODULE 1838231: Module._load REQUEST stream parent: /var/www/atomgame/node_modules/ws/lib/receiver.js
+MODULE 1838231: load built-in module stream
+MODULE 1838231: Module._load REQUEST ./permessage-deflate parent: /var/www/atomgame/node_modules/ws/lib/receiver.js
+MODULE 1838231: RELATIVE: requested: ./permessage-deflate from parent.id /var/www/atomgame/node_modules/ws/lib/receiver.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/ws/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/ws/lib/permessage-deflate.js" for module "/var/www/atomgame/node_modules/ws/lib/permessage-deflate.js"
+MODULE 1838231: Module._load REQUEST zlib parent: /var/www/atomgame/node_modules/ws/lib/permessage-deflate.js
+MODULE 1838231: load built-in module zlib
+MODULE 1838231: Module._load REQUEST ./buffer-util parent: /var/www/atomgame/node_modules/ws/lib/permessage-deflate.js
+MODULE 1838231: RELATIVE: requested: ./buffer-util from parent.id /var/www/atomgame/node_modules/ws/lib/permessage-deflate.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/ws/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/ws/lib/buffer-util.js" for module "/var/www/atomgame/node_modules/ws/lib/buffer-util.js"
+MODULE 1838231: Module._load REQUEST ./constants parent: /var/www/atomgame/node_modules/ws/lib/buffer-util.js
+MODULE 1838231: RELATIVE: requested: ./constants from parent.id /var/www/atomgame/node_modules/ws/lib/buffer-util.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/ws/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/ws/lib/constants.js" for module "/var/www/atomgame/node_modules/ws/lib/constants.js"
+MODULE 1838231: Module._load REQUEST bufferutil parent: /var/www/atomgame/node_modules/ws/lib/buffer-util.js
+MODULE 1838231: looking for "bufferutil" in ["/var/www/atomgame/node_modules/ws/lib/node_modules","/var/www/atomgame/node_modules/ws/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/bufferutil/index.js" for module "/var/www/atomgame/node_modules/bufferutil/index.js"
+MODULE 1838231: Module._load REQUEST node-gyp-build parent: /var/www/atomgame/node_modules/bufferutil/index.js
+MODULE 1838231: looking for "node-gyp-build" in ["/var/www/atomgame/node_modules/bufferutil/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/node-gyp-build/index.js" for module "/var/www/atomgame/node_modules/node-gyp-build/index.js"
+MODULE 1838231: Module._load REQUEST ./node-gyp-build.js parent: /var/www/atomgame/node_modules/node-gyp-build/index.js
+MODULE 1838231: RELATIVE: requested: ./node-gyp-build.js from parent.id /var/www/atomgame/node_modules/node-gyp-build/index.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/node-gyp-build"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/node-gyp-build/node-gyp-build.js" for module "/var/www/atomgame/node_modules/node-gyp-build/node-gyp-build.js"
+MODULE 1838231: Module._load REQUEST fs parent: /var/www/atomgame/node_modules/node-gyp-build/node-gyp-build.js
+MODULE 1838231: load built-in module fs
+MODULE 1838231: Module._load REQUEST path parent: /var/www/atomgame/node_modules/node-gyp-build/node-gyp-build.js
+MODULE 1838231: load built-in module path
+MODULE 1838231: Module._load REQUEST os parent: /var/www/atomgame/node_modules/node-gyp-build/node-gyp-build.js
+MODULE 1838231: load built-in module os
+MODULE 1838231: Module._load REQUEST /var/www/atomgame/node_modules/bufferutil/package.json parent: /var/www/atomgame/node_modules/node-gyp-build/node-gyp-build.js
+MODULE 1838231: looking for "/var/www/atomgame/node_modules/bufferutil/package.json" in ["/var/www/atomgame/node_modules/node-gyp-build/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/bufferutil/package.json" for module "/var/www/atomgame/node_modules/bufferutil/package.json"
+MODULE 1838231: Module._load REQUEST /var/www/atomgame/node_modules/bufferutil/prebuilds/linux-x64/node.napi.node parent: /var/www/atomgame/node_modules/node-gyp-build/node-gyp-build.js
+MODULE 1838231: looking for "/var/www/atomgame/node_modules/bufferutil/prebuilds/linux-x64/node.napi.node" in ["/var/www/atomgame/node_modules/node-gyp-build/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/bufferutil/prebuilds/linux-x64/node.napi.node" for module "/var/www/atomgame/node_modules/bufferutil/prebuilds/linux-x64/node.napi.node"
+MODULE 1838231: Module._load REQUEST ./limiter parent: /var/www/atomgame/node_modules/ws/lib/permessage-deflate.js
+MODULE 1838231: RELATIVE: requested: ./limiter from parent.id /var/www/atomgame/node_modules/ws/lib/permessage-deflate.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/ws/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/ws/lib/limiter.js" for module "/var/www/atomgame/node_modules/ws/lib/limiter.js"
+MODULE 1838231: Module._load REQUEST ./constants parent: /var/www/atomgame/node_modules/ws/lib/permessage-deflate.js
+MODULE 1838231: Module._load REQUEST ./constants parent: /var/www/atomgame/node_modules/ws/lib/receiver.js
+MODULE 1838231: Module._load REQUEST ./buffer-util parent: /var/www/atomgame/node_modules/ws/lib/receiver.js
+MODULE 1838231: Module._load REQUEST ./validation parent: /var/www/atomgame/node_modules/ws/lib/receiver.js
+MODULE 1838231: RELATIVE: requested: ./validation from parent.id /var/www/atomgame/node_modules/ws/lib/receiver.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/ws/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/ws/lib/validation.js" for module "/var/www/atomgame/node_modules/ws/lib/validation.js"
+MODULE 1838231: Module._load REQUEST buffer parent: /var/www/atomgame/node_modules/ws/lib/validation.js
+MODULE 1838231: load built-in module buffer
+MODULE 1838231: Module._load REQUEST ./constants parent: /var/www/atomgame/node_modules/ws/lib/validation.js
+ESM 1838231: Loading CJSModule file:///var/www/atomgame/node_modules/ws/lib/sender.js
+MODULE 1838231: looking for "/var/www/atomgame/node_modules/ws/lib/sender.js" in ["/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/ws/lib/sender.js" for module "/var/www/atomgame/node_modules/ws/lib/sender.js"
+MODULE 1838231: Module._load REQUEST stream parent: /var/www/atomgame/node_modules/ws/lib/sender.js
+MODULE 1838231: load built-in module stream
+MODULE 1838231: Module._load REQUEST crypto parent: /var/www/atomgame/node_modules/ws/lib/sender.js
+MODULE 1838231: load built-in module crypto
+MODULE 1838231: Module._load REQUEST ./permessage-deflate parent: /var/www/atomgame/node_modules/ws/lib/sender.js
+MODULE 1838231: Module._load REQUEST ./constants parent: /var/www/atomgame/node_modules/ws/lib/sender.js
+MODULE 1838231: Module._load REQUEST ./validation parent: /var/www/atomgame/node_modules/ws/lib/sender.js
+MODULE 1838231: Module._load REQUEST ./buffer-util parent: /var/www/atomgame/node_modules/ws/lib/sender.js
+ESM 1838231: Loading CJSModule file:///var/www/atomgame/node_modules/ws/lib/websocket.js
+MODULE 1838231: looking for "/var/www/atomgame/node_modules/ws/lib/websocket.js" in ["/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/ws/lib/websocket.js" for module "/var/www/atomgame/node_modules/ws/lib/websocket.js"
+MODULE 1838231: Module._load REQUEST events parent: /var/www/atomgame/node_modules/ws/lib/websocket.js
+MODULE 1838231: load built-in module events
+MODULE 1838231: Module._load REQUEST https parent: /var/www/atomgame/node_modules/ws/lib/websocket.js
+MODULE 1838231: load built-in module https
+MODULE 1838231: Module._load REQUEST http parent: /var/www/atomgame/node_modules/ws/lib/websocket.js
+MODULE 1838231: load built-in module http
+MODULE 1838231: Module._load REQUEST net parent: /var/www/atomgame/node_modules/ws/lib/websocket.js
+MODULE 1838231: load built-in module net
+MODULE 1838231: Module._load REQUEST tls parent: /var/www/atomgame/node_modules/ws/lib/websocket.js
+MODULE 1838231: load built-in module tls
+MODULE 1838231: Module._load REQUEST crypto parent: /var/www/atomgame/node_modules/ws/lib/websocket.js
+MODULE 1838231: load built-in module crypto
+MODULE 1838231: Module._load REQUEST stream parent: /var/www/atomgame/node_modules/ws/lib/websocket.js
+MODULE 1838231: load built-in module stream
+MODULE 1838231: Module._load REQUEST url parent: /var/www/atomgame/node_modules/ws/lib/websocket.js
+MODULE 1838231: load built-in module url
+MODULE 1838231: Module._load REQUEST ./permessage-deflate parent: /var/www/atomgame/node_modules/ws/lib/websocket.js
+MODULE 1838231: Module._load REQUEST ./receiver parent: /var/www/atomgame/node_modules/ws/lib/websocket.js
+MODULE 1838231: RELATIVE: requested: ./receiver from parent.id /var/www/atomgame/node_modules/ws/lib/websocket.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/ws/lib"]
+MODULE 1838231: Module._load REQUEST ./sender parent: /var/www/atomgame/node_modules/ws/lib/websocket.js
+MODULE 1838231: RELATIVE: requested: ./sender from parent.id /var/www/atomgame/node_modules/ws/lib/websocket.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/ws/lib"]
+MODULE 1838231: Module._load REQUEST ./validation parent: /var/www/atomgame/node_modules/ws/lib/websocket.js
+MODULE 1838231: Module._load REQUEST ./constants parent: /var/www/atomgame/node_modules/ws/lib/websocket.js
+MODULE 1838231: Module._load REQUEST ./event-target parent: /var/www/atomgame/node_modules/ws/lib/websocket.js
+MODULE 1838231: RELATIVE: requested: ./event-target from parent.id /var/www/atomgame/node_modules/ws/lib/websocket.jsMODULE 1838231: looking for ["/var/www/atomgame/node_modules/ws/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/ws/lib/event-target.js" for module "/var/www/atomgame/node_modules/ws/lib/event-target.js"
+MODULE 1838231: Module._load REQUEST ./constants parent: /var/www/atomgame/node_modules/ws/lib/event-target.js
+MODULE 1838231: Module._load REQUEST ./extension parent: /var/www/atomgame/node_modules/ws/lib/websocket.js
+MODULE 1838231: RELATIVE: requested: ./extension from parent.id /var/www/atomgame/node_modules/ws/lib/websocket.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/ws/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/ws/lib/extension.js" for module "/var/www/atomgame/node_modules/ws/lib/extension.js"
+MODULE 1838231: Module._load REQUEST ./validation parent: /var/www/atomgame/node_modules/ws/lib/extension.js
+MODULE 1838231: Module._load REQUEST ./buffer-util parent: /var/www/atomgame/node_modules/ws/lib/websocket.js
+ESM 1838231: Loading CJSModule file:///var/www/atomgame/node_modules/ws/lib/websocket-server.js
+MODULE 1838231: looking for "/var/www/atomgame/node_modules/ws/lib/websocket-server.js" in ["/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/ws/lib/websocket-server.js" for module "/var/www/atomgame/node_modules/ws/lib/websocket-server.js"
+MODULE 1838231: Module._load REQUEST events parent: /var/www/atomgame/node_modules/ws/lib/websocket-server.js
+MODULE 1838231: load built-in module events
+MODULE 1838231: Module._load REQUEST http parent: /var/www/atomgame/node_modules/ws/lib/websocket-server.js
+MODULE 1838231: load built-in module http
+MODULE 1838231: Module._load REQUEST stream parent: /var/www/atomgame/node_modules/ws/lib/websocket-server.js
+MODULE 1838231: load built-in module stream
+MODULE 1838231: Module._load REQUEST crypto parent: /var/www/atomgame/node_modules/ws/lib/websocket-server.js
+MODULE 1838231: load built-in module crypto
+MODULE 1838231: Module._load REQUEST ./extension parent: /var/www/atomgame/node_modules/ws/lib/websocket-server.js
+MODULE 1838231: Module._load REQUEST ./permessage-deflate parent: /var/www/atomgame/node_modules/ws/lib/websocket-server.js
+MODULE 1838231: Module._load REQUEST ./subprotocol parent: /var/www/atomgame/node_modules/ws/lib/websocket-server.js
+MODULE 1838231: RELATIVE: requested: ./subprotocol from parent.id /var/www/atomgame/node_modules/ws/lib/websocket-server.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/ws/lib"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/ws/lib/subprotocol.js" for module "/var/www/atomgame/node_modules/ws/lib/subprotocol.js"
+MODULE 1838231: Module._load REQUEST ./validation parent: /var/www/atomgame/node_modules/ws/lib/subprotocol.js
+MODULE 1838231: Module._load REQUEST ./websocket parent: /var/www/atomgame/node_modules/ws/lib/websocket-server.js
+MODULE 1838231: RELATIVE: requested: ./websocket from parent.id /var/www/atomgame/node_modules/ws/lib/websocket-server.js
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/ws/lib"]
+MODULE 1838231: Module._load REQUEST ./constants parent: /var/www/atomgame/node_modules/ws/lib/websocket-server.js
+ESM 1838231: Loading CJSModule file:///var/www/atomgame/node_modules/rollup/dist/native.js
+MODULE 1838231: looking for "/var/www/atomgame/node_modules/rollup/dist/native.js" in ["/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/rollup/dist/native.js" for module "/var/www/atomgame/node_modules/rollup/dist/native.js"
+MODULE 1838231: Module._load REQUEST node:fs parent: /var/www/atomgame/node_modules/rollup/dist/native.js
+MODULE 1838231: load built-in module node:fs
+MODULE 1838231: Module._load REQUEST node:path parent: /var/www/atomgame/node_modules/rollup/dist/native.js
+MODULE 1838231: load built-in module node:path
+MODULE 1838231: Module._load REQUEST node:process parent: /var/www/atomgame/node_modules/rollup/dist/native.js
+MODULE 1838231: load built-in module node:process
+MODULE 1838231: Module._load REQUEST @rollup/rollup-linux-x64-gnu parent: /var/www/atomgame/node_modules/rollup/dist/native.js
+MODULE 1838231: looking for "@rollup/rollup-linux-x64-gnu" in ["/var/www/atomgame/node_modules/rollup/dist/node_modules","/var/www/atomgame/node_modules/rollup/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/@rollup/rollup-linux-x64-gnu/rollup.linux-x64-gnu.node" for module "/var/www/atomgame/node_modules/@rollup/rollup-linux-x64-gnu/rollup.linux-x64-gnu.node"
+ESM 1838231: Loading CJSModule file:///var/www/atomgame/node_modules/vite/node_modules/esbuild/lib/main.js
+MODULE 1838231: looking for "/var/www/atomgame/node_modules/vite/node_modules/esbuild/lib/main.js" in ["/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: load "/var/www/atomgame/node_modules/vite/node_modules/esbuild/lib/main.js" for module "/var/www/atomgame/node_modules/vite/node_modules/esbuild/lib/main.js"
+MODULE 1838231: Module._load REQUEST fs parent: /var/www/atomgame/node_modules/vite/node_modules/esbuild/lib/main.js
+MODULE 1838231: load built-in module fs
+MODULE 1838231: Module._load REQUEST os parent: /var/www/atomgame/node_modules/vite/node_modules/esbuild/lib/main.js
+MODULE 1838231: load built-in module os
+MODULE 1838231: Module._load REQUEST path parent: /var/www/atomgame/node_modules/vite/node_modules/esbuild/lib/main.js
+MODULE 1838231: load built-in module path
+MODULE 1838231: Module._load REQUEST child_process parent: /var/www/atomgame/node_modules/vite/node_modules/esbuild/lib/main.js
+MODULE 1838231: load built-in module child_process
+MODULE 1838231: Module._load REQUEST crypto parent: /var/www/atomgame/node_modules/vite/node_modules/esbuild/lib/main.js
+MODULE 1838231: load built-in module crypto
+MODULE 1838231: Module._load REQUEST path parent: /var/www/atomgame/node_modules/vite/node_modules/esbuild/lib/main.js
+MODULE 1838231: load built-in module path
+MODULE 1838231: Module._load REQUEST fs parent: /var/www/atomgame/node_modules/vite/node_modules/esbuild/lib/main.js
+MODULE 1838231: load built-in module fs
+MODULE 1838231: Module._load REQUEST os parent: /var/www/atomgame/node_modules/vite/node_modules/esbuild/lib/main.js
+MODULE 1838231: load built-in module os
+MODULE 1838231: Module._load REQUEST tty parent: /var/www/atomgame/node_modules/vite/node_modules/esbuild/lib/main.jsMODULE 1838231: load built-in module tty
+MODULE 1838231: Module._load REQUEST worker_threads parent: /var/www/atomgame/node_modules/vite/node_modules/esbuild/lib/main.js
+MODULE 1838231: load built-in module worker_threads
+MODULE 1838231: Module._load REQUEST supports-color parent: /var/www/atomgame/node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js
+MODULE 1838231: looking for "supports-color" in ["/var/www/atomgame/node_modules/vite/dist/node/chunks/node_modules","/var/www/atomgame/node_modules/vite/dist/node/node_modules","/var/www/atomgame/node_modules/vite/dist/node_modules","/var/www/atomgame/node_modules/vite/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: looking for "rollup" in ["/var/www/atomgame/node_modules/vite/dist/node/chunks/node_modules","/var/www/atomgame/node_modules/vite/dist/node/node_modules","/var/www/atomgame/node_modules/vite/dist/node_modules","/var/www/atomgame/node_modules/vite/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST fsevents parent: /var/www/atomgame/node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js
+MODULE 1838231: looking for "fsevents" in ["/var/www/atomgame/node_modules/vite/dist/node/chunks/node_modules","/var/www/atomgame/node_modules/vite/dist/node/node_modules","/var/www/atomgame/node_modules/vite/dist/node_modules","/var/www/atomgame/node_modules/vite/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: Module._load REQUEST bufferutil parent: /var/www/atomgame/node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js
+MODULE 1838231: looking for "bufferutil" in ["/var/www/atomgame/node_modules/vite/dist/node/chunks/node_modules","/var/www/atomgame/node_modules/vite/dist/node/node_modules","/var/www/atomgame/node_modules/vite/dist/node_modules","/var/www/atomgame/node_modules/vite/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: looking for "react-refresh/package.json" in ["/var/www/atomgame/node_modules/@vitejs/plugin-react/dist/node_modules","/var/www/atomgame/node_modules/@vitejs/plugin-react/node_modules","/var/www/atomgame/node_modules/@vitejs/node_modules","/var/www/atomgame/node_modules","/var/www/node_modules","/var/node_modules","/node_modules","/root/.node_modules","/root/.node_libraries","/usr/lib/node"]
+MODULE 1838231: RELATIVE: requested: ./refreshUtils.js from parent.id /var/www/atomgame/node_modules/@vitejs/plugin-react/dist/index.mjs
+MODULE 1838231: looking for ["/var/www/atomgame/node_modules/@vitejs/plugin-react/dist"]
+TLS 1838231: client _init handle? true
+NET 1838231: pipe false undefined
+NET 1838231: connect: find host localhost
+NET 1838231: connect: dns options { family: undefined, hints: 32 }
+HTTP 1838231: outgoing message end.
+node:internal/errors:496
+    ErrorCaptureStackTrace(err);
+    ^
+
+TypeError [ERR_INVALID_ARG_TYPE]: The "paths[0]" argument must be of type string. Received undefined
+    at new NodeError (node:internal/errors:405:5)
+    at validateString (node:internal/validators:162:11)
+    at Object.resolve (node:path:1115:7)
+    at file:///var/www/atomgame/dist/index.js:910:17
+    at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+    at async loadESM (node:internal/process/esm_loader:34:7)
+    at async handleMainPromise (node:internal/modules/run_main:106:12) {
+  code: 'ERR_INVALID_ARG_TYPE'
+}
+
+Node.js v18.20.8
+root@vm3218560:/var/www/atomgame# 
