@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { Team, Partner, Ad } from "@shared/schema";
+import { Team, Partner, Ad, Timer } from "@shared/schema";
 import { useAuth } from "@/hooks/use-auth";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { clearRankingsHistory } from "@/lib/utils";
@@ -15,13 +15,16 @@ import {
   Edit,
   Trash2,
   BarChart, 
-  BriefcaseBusiness
+  BriefcaseBusiness,
+  Clock
 } from "lucide-react";
 import TeamForm from "@/components/team-form";
 import TeamScoreForm from "@/components/team-score-form";
 import PartnerForm from "@/components/partner-form";
 import AdBannerForm from "@/components/ad-banner-form";
+import TimerForm from "@/components/timer-form";
 import AdminTeamTable from "@/components/admin-team-table";
+import AdminTimerTable from "@/components/admin-timer-table";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -35,12 +38,14 @@ export default function AdminPage() {
   const [isScoreFormOpen, setIsScoreFormOpen] = useState(false);
   const [isPartnerFormOpen, setIsPartnerFormOpen] = useState(false);
   const [isAdFormOpen, setIsAdFormOpen] = useState(false);
+  const [isTimerFormOpen, setIsTimerFormOpen] = useState(false);
   
   // Состояния для редактирования
   const [editingTeam, setEditingTeam] = useState<Team | null>(null);
   const [editingScoreTeam, setEditingScoreTeam] = useState<Team | null>(null);
   const [editingPartner, setEditingPartner] = useState<Partner | null>(null);
   const [editingAd, setEditingAd] = useState<Ad | null>(null);
+  const [editingTimer, setEditingTimer] = useState<Timer | null>(null);
 
   // Запросы данных
   const { data: teams, isLoading: isTeamsLoading } = useQuery<Team[]>({
@@ -53,6 +58,10 @@ export default function AdminPage() {
 
   const { data: ads, isLoading: isAdsLoading } = useQuery<Ad[]>({
     queryKey: ["/api/ads"],
+  });
+  
+  const { data: timers, isLoading: isTimersLoading } = useQuery<Timer[]>({
+    queryKey: ["/api/admin/timers"],
   });
 
   // Мутации для удаления
@@ -115,6 +124,27 @@ export default function AdminPage() {
       });
     },
   });
+  
+  const deleteTimerMutation = useMutation({
+    mutationFn: async (timerId: number) => {
+      await apiRequest("DELETE", `/api/timers/${timerId}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/timers"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/timers"] });
+      toast({
+        title: "Таймер удален",
+        description: "Таймер был успешно удален.",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Не удалось удалить таймер",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
 
   // Обработчики
   const handleEditTeam = (team: Team) => {
@@ -136,6 +166,11 @@ export default function AdminPage() {
     setEditingAd(ad);
     setIsAdFormOpen(true);
   };
+  
+  const handleEditTimer = (timer: Timer) => {
+    setEditingTimer(timer);
+    setIsTimerFormOpen(true);
+  };
 
   const handleDeleteTeam = (teamId: number) => {
     if (window.confirm("Вы уверены, что хотите удалить эту команду?")) {
@@ -152,6 +187,12 @@ export default function AdminPage() {
   const handleDeleteAd = (adId: number) => {
     if (window.confirm("Вы уверены, что хотите удалить этот рекламный баннер?")) {
       deleteAdMutation.mutate(adId);
+    }
+  };
+  
+  const handleDeleteTimer = (timerId: number) => {
+    if (window.confirm("Вы уверены, что хотите удалить этот таймер?")) {
+      deleteTimerMutation.mutate(timerId);
     }
   };
 

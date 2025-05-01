@@ -7,6 +7,7 @@ import TeamPodium from "@/components/team-podium";
 import TeamTable from "@/components/team-table";
 import AdBanner from "@/components/ad-banner";
 import PartnersSection from "@/components/partners-section";
+import CountdownTimer from "@/components/countdown-timer";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import { logRankingChange } from "@/lib/utils";
@@ -150,6 +151,11 @@ export default function HomePage() {
       <Navbar />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
+        {/* Таймер обратного отсчета */}
+        <div className="mb-8">
+          <CountdownTimer />
+        </div>
+        
         {/* Заголовок страницы */}
         <div className="text-center mb-10">
           <h2 className="font-heading font-bold text-3xl sm:text-4xl text-dark mb-3">Рейтинг Команд</h2>
