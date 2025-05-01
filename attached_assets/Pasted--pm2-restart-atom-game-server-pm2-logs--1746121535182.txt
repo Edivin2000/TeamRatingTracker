@@ -1,0 +1,73 @@
+
+Полезные команды:
+* Перезапуск приложения: pm2 restart atom-game-server
+* Просмотр логов: pm2 logs atom-game-server
+* Статус приложения: pm2 status
+* Остановка приложения: pm2 stop atom-game-server
+root@vm3218560:/var/www/atomgame# pm2 logs atom-game-server
+[TAILING] Tailing last 15 lines for [atom-game-server] process (change the value with --lines option)
+^C
+root@vm3218560:/var/www/atomgame# ls -la /var/www/atomgame
+total 28
+drwxr-xr-x 2 root root 4096 May  1 20:42 .
+drwxr-xr-x 4 root root 4096 May  1 20:40 ..
+-rw-r--r-- 1 root root  396 May  1 20:41 ecosystem.config.js
+-rw-r--r-- 1 root root  439 May  1 20:40 .env
+-rwxr-xr-x 1 root root 1885 May  1 20:44 finish-setup.sh
+-rw-r--r-- 1 root root   87 May  1 20:44 package-lock.json
+-rwxr-xr-x 1 root root   58 May  1 20:41 renew-ssl.sh
+root@vm3218560:/var/www/atomgame# rm -rf /var/www/atomgame/*
+git clone https://github.com/Edivin2000/TeamRatingTracker.git /tmp/atom-temp
+cp -r /tmp/atom-temp/* /var/www/atomgame/
+Cloning into '/tmp/atom-temp'...
+remote: Enumerating objects: 768, done.
+remote: Counting objects: 100% (768/768), done.
+remote: Compressing objects: 100% (382/382), done.
+remote: Total 768 (delta 436), reused 707 (delta 375), pack-reused 0 (from 0)
+Receiving objects: 100% (768/768), 929.34 KiB | 3.94 MiB/s, done.
+Resolving deltas: 100% (436/436), done.
+root@vm3218560:/var/www/atomgame# ls -la /var/www/atomgame
+total 564
+drwxr-xr-x 7 root root   4096 May  1 20:45 .
+drwxr-xr-x 4 root root   4096 May  1 20:40 ..
+-rwxr-xr-x 1 root root  11723 May  1 20:45 atomgame-install.sh
+drwxr-xr-x 2 root root   4096 May  1 20:45 attached_assets
+-rwxr-xr-x 1 root root   3618 May  1 20:45 backup.sh
+-rw-r--r-- 1 root root   4474 May  1 20:45 basic-server.js
+-rw-r--r-- 1 root root   4496 May  1 20:45 basic-server.mjs
+drwxr-xr-x 3 root root   4096 May  1 20:45 client
+-rw-r--r-- 1 root root    459 May  1 20:45 components.json
+-rw-r--r-- 1 root root   5608 May  1 20:45 create-server.js
+-rwxr-xr-x 1 root root   5298 May  1 20:45 deploy.sh
+-rwxr-xr-x 1 root root   8628 May  1 20:45 deploy-to-server.sh
+-rw-r--r-- 1 root root    325 May  1 20:45 drizzle.config.ts
+-rw-r--r-- 1 root root    518 May  1 20:45 ecosystem.config.js
+-rw-r--r-- 1 root root    439 May  1 20:40 .env
+-rw-r--r-- 1 root root   6028 May  1 20:45 fix-everything.sh
+-rwxr-xr-x 1 root root  48070 May  1 20:45 fix-images-server.sh
+-rw-r--r-- 1 root root   3321 May  1 20:45 github-setup.md
+-rw-r--r-- 1 root root   9133 May  1 20:45 install.sh
+-rw-r--r-- 1 root root   1065 May  1 20:45 LICENSE
+-rwxr-xr-x 1 root root   7901 May  1 20:45 manual-run.sh
+-rw-r--r-- 1 root root   2003 May  1 20:45 nginx.conf
+-rw-r--r-- 1 root root   3536 May  1 20:45 package.json
+-rw-r--r-- 1 root root 321998 May  1 20:45 package-lock.json
+-rw-r--r-- 1 root root     80 May  1 20:45 postcss.config.js
+-rw-r--r-- 1 root root   1807 May  1 20:45 README.md
+-rwxr-xr-x 1 root root   7593 May  1 20:45 run-basic-server.sh
+drwxr-xr-x 2 root root   4096 May  1 20:45 server
+-rw-r--r-- 1 root root   4198 May  1 20:45 server.js
+drwxr-xr-x 2 root root   4096 May  1 20:45 shared
+-rw-r--r-- 1 root root   1499 May  1 20:45 simple-server.mjs
+-rwxr-xr-x 1 root root   2551 May  1 20:45 start-server.sh
+-rw-r--r-- 1 root root   2787 May  1 20:45 tailwind.config.ts
+-rw-r--r-- 1 root root    657 May  1 20:45 tsconfig.json
+-rwxr-xr-x 1 root root   6297 May  1 20:45 update.sh
+drwxr-xr-x 2 root root   4096 May  1 20:45 uploads
+-rw-r--r-- 1 root root    894 May  1 20:45 vite.config.ts
+root@vm3218560:/var/www/atomgame# cd /var/www/atomgame
+chmod +x finish-setup.sh
+sudo ./finish-setup.sh
+chmod: cannot access 'finish-setup.sh': No such file or directory
+sudo: ./finish-setup.sh: command not found
+root@vm3218560:/var/www/atomgame# 
