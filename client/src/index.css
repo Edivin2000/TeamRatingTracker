@@ -30,6 +30,16 @@
   --gold: 38 92% 50%;
   --silver: 220 13% 65%;
   --bronze: 30 60% 38%;
+  
+  /* Переменные для настроек дизайна сайта */
+  --primary-color: #0f172a;
+  --secondary-color: #1e293b;
+  --accent-color: #3b82f6;
+  --header-bg-color: #0f172a;
+  --table-bg-color: #1e293b;
+  --card-bg-color: #1e293b;
+  --font-primary: 'Inter', sans-serif;
+  --border-radius: 0.5rem;
 }
 
 .dark {
