@@ -1,0 +1,158 @@
+Лог будет доступен в текущем терминале.
+Для остановки сервера нажмите Ctrl+C
+-----------------------------------------------------
+Базовый сервер запущен на порту 5000
+URL: http://localhost:5000
+Соединение с базой данных успешно установлено: { now: 2025-05-01T15:29:54.358Z }
+^C
+root@vm3218560:/var/www/atomgameblk# cd /var/www/atomgameblk
+pm2 start ecosystem.config.cjs
+[PM2][ERROR] File ecosystem.config.cjs not found
+root@vm3218560:/var/www/atomgameblk# pm2 status
+┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
+│ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
+└────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
+root@vm3218560:/var/www/atomgameblk# ^C
+root@vm3218560:/var/www/atomgameblk# cd /var/www/atomgameblk
+sudo ./run-basic-server.sh
+Останавливаем PM2...
+[PM2][WARN] No process found
+Переходим в директорию проекта...
+Устанавливаем необходимые пакеты для базового сервера...
+
+up to date, audited 489 packages in 4s
+
+66 packages are looking for funding
+  run `npm fund` for details
+
+7 moderate severity vulnerabilities
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+Запускаем базовый сервер...
+Лог будет доступен в текущем терминале.
+Для остановки сервера нажмите Ctrl+C
+-----------------------------------------------------
+Базовый сервер запущен на порту 5000
+URL: http://localhost:5000
+Соединение с базой данных успешно установлено: { now: 2025-05-01T15:30:59.532Z }
+[2025-05-01T15:31:34.374Z] GET /
+Ошибка сервера: [Error: ENOENT: no such file or directory, stat '/var/www/atomgameblk/dist/index.html'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: '/var/www/atomgameblk/dist/index.html',
+  expose: false,
+  statusCode: 404,
+  status: 404
+}
+[2025-05-01T15:31:34.431Z] GET /favicon.ico
+Ошибка сервера: [Error: ENOENT: no such file or directory, stat '/var/www/atomgameblk/dist/index.html'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: '/var/www/atomgameblk/dist/index.html',
+  expose: false,
+  statusCode: 404,
+  status: 404
+}
+[2025-05-01T15:31:49.715Z] GET /
+Ошибка сервера: [Error: ENOENT: no such file or directory, stat '/var/www/atomgameblk/dist/index.html'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: '/var/www/atomgameblk/dist/index.html',
+  expose: false,
+  statusCode: 404,
+  status: 404
+}
+[2025-05-01T15:31:49.761Z] GET /favicon.ico
+Ошибка сервера: [Error: ENOENT: no such file or directory, stat '/var/www/atomgameblk/dist/index.html'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: '/var/www/atomgameblk/dist/index.html',
+  expose: false,
+  statusCode: 404,
+  status: 404
+}
+[2025-05-01T15:31:51.774Z] GET /favicon.ico
+Ошибка сервера: [Error: ENOENT: no such file or directory, stat '/var/www/atomgameblk/dist/index.html'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: '/var/www/atomgameblk/dist/index.html',
+  expose: false,
+  statusCode: 404,
+  status: 404
+}
+
+Run `npm audit` for details.
+Запускаем базовый сервер...
+Лог будет доступен в текущем терминале.
+Для остановки сервера нажмите Ctrl+C
+-----------------------------------------------------
+Базовый сервер запущен на порту 5000
+URL: http://localhost:5000
+Соединение с базой данных успешно установлено: { now: 2025-05-01T15:29:54.358Z }
+^C
+root@vm3218560:/var/www/atomgameblk# cd /var/www/atomgameblk
+pm2 start ecosystem.config.cjs
+[PM2][ERROR] File ecosystem.config.cjs not found
+root@vm3218560:/var/www/atomgameblk# pm2 status
+┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
+│ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
+└────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
+root@vm3218560:/var/www/atomgameblk# ^C
+root@vm3218560:/var/www/atomgameblk# cd /var/www/atomgameblk
+sudo ./run-basic-server.sh
+Останавливаем PM2...
+[PM2][WARN] No process found
+Переходим в директорию проекта...
+Устанавливаем необходимые пакеты для базового сервера...
+
+up to date, audited 489 packages in 4s
+
+66 packages are looking for funding
+  run `npm fund` for details
+
+7 moderate severity vulnerabilities
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+Запускаем базовый сервер...
+Лог будет доступен в текущем терминале.
+Для остановки сервера нажмите Ctrl+C
+-----------------------------------------------------
+Базовый сервер запущен на порту 5000
+URL: http://localhost:5000
+Соединение с базой данных успешно установлено: { now: 2025-05-01T15:30:59.532Z }
+[2025-05-01T15:31:34.374Z] GET /
+Ошибка сервера: [Error: ENOENT: no such file or directory, stat '/var/www/atomgameblk/dist/index.html'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: '/var/www/atomgameblk/dist/index.html',
+  expose: false,
+  statusCode: 404,
+  status: 404
+}
+[2025-05-01T15:31:34.431Z] GET /favicon.ico
+Ошибка сервера: [Error: ENOENT: no such file or directory, stat '/var/www/atomgameblk/dist/index.html'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: '/var/www/atomgameblk/dist/index.html',
+  expose: false,
+  statusCode: 404,
+  status: 404

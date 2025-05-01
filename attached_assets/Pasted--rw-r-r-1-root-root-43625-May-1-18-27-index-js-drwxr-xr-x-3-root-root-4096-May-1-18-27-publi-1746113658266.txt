@@ -1,0 +1,46 @@
+-rw-r--r--  1 root root 43625 May  1 18:27 index.js
+drwxr-xr-x  3 root root  4096 May  1 18:27 public
+total 16
+drwxr-xr-x 3 root root 4096 May  1 18:27 .
+drwxr-xr-x 3 root root 4096 May  1 18:20 ..
+drwxr-xr-x 2 root root 4096 May  1 18:27 assets
+-rw-r--r-- 1 root root  625 May  1 18:27 index.html
+root@vm3218560:/var/www/atomgameblk# cd /var/www/atomgameblk
+npm run build
+
+> rest-express@1.0.0 build
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+
+vite v5.4.14 building for production...
+transforming (3) src/main.tsxBrowserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 2682 modules transformed.
+../dist/public/index.html                                 0.63 kB │ gzip:   0.38 kB
+../dist/public/assets/atom-game-logo-blue-zWFb6GXJ.png  670.19 kB
+../dist/public/assets/index-wEV2E3VN.css                 78.47 kB │ gzip:  13.45 kB
+../dist/public/assets/index-DOrnqSzR.js                 625.44 kB │ gzip: 184.59 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 13.68s
+
+  dist/index.js  42.6kb
+
+⚡ Done in 13ms
+root@vm3218560:/var/www/atomgameblk# nano basic-server.mjs
+root@vm3218560:/var/www/atomgameblk# ls -la /var/www/atomgameblk/dist
+ls -la /var/www/atomgameblk/dist/public
+total 56
+drwxr-xr-x  3 root root  4096 May  1 18:20 .
+drwxr-xr-x 11 root root  4096 May  1 18:34 ..
+-rw-r--r--  1 root root 43625 May  1 18:33 index.js
+drwxr-xr-x  3 root root  4096 May  1 18:33 public
+total 16
+drwxr-xr-x 3 root root 4096 May  1 18:33 .
+drwxr-xr-x 3 root root 4096 May  1 18:20 ..
+drwxr-xr-x 2 root root 4096 May  1 18:33 assets
+-rw-r--r-- 1 root root  625 May  1 18:33 index.html
+root@vm3218560:/var/www/atomgameblk# 
