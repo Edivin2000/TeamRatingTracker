@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { 
   Card, 
@@ -10,7 +10,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/use-auth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,20 +19,11 @@ import { loginSchema } from "@shared/schema";
 
 export default function AuthPage() {
   const [location, navigate] = useLocation();
-  const { user, loginMutation, registerMutation } = useAuth();
-  const [tab, setTab] = useState<string>("login");
+  const { user, loginMutation } = useAuth();
   
-  // Создаем отдельные схемы
+  // Создаем схему для входа
   const loginFormSchema = loginSchema;
-  const registerFormSchema = loginSchema.extend({
-    confirmPassword: z.string().min(1, "Пожалуйста, подтвердите пароль"),
-  }).refine((data) => data.password === data.confirmPassword, {
-    message: "Пароли не совпадают",
-    path: ["confirmPassword"],
-  });
-
   type LoginFormData = z.infer<typeof loginFormSchema>;
-  type RegisterFormData = z.infer<typeof registerFormSchema>;
   
   // Настраиваем форму входа
   const loginForm = useForm<LoginFormData>({
@@ -44,28 +34,9 @@ export default function AuthPage() {
     },
   });
 
-  // Настраиваем форму регистрации  
-  const registerForm = useForm<RegisterFormData>({
-    resolver: zodResolver(registerFormSchema),
-    defaultValues: {
-      username: "",
-      password: "",
-      confirmPassword: "",
-    },
-  });
-
   // Обработка отправки формы входа
   const onLoginSubmit = (data: LoginFormData) => {
     loginMutation.mutate(data);
-  };
-
-  // Обработка отправки формы регистрации
-  const onRegisterSubmit = (data: RegisterFormData) => {
-    const { confirmPassword, ...userData } = data;
-    registerMutation.mutate({
-      ...userData,
-      isAdmin: 1, // Устанавливаем как админа
-    });
   };
 
   // Перенаправление, если уже авторизован
@@ -85,117 +56,49 @@ export default function AuthPage() {
             <p className="text-gray-500">Требуется авторизация администратора</p>
           </div>
           
-          <Tabs value={tab} onValueChange={setTab} defaultValue="login" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-8">
-              <TabsTrigger value="login">Вход</TabsTrigger>
-              <TabsTrigger value="register">Регистрация</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="login">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Вход</CardTitle>
-                  <CardDescription>
-                    Введите учетные данные для доступа к панели администратора.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="loginUsername">Имя пользователя</Label>
-                      <Input 
-                        id="loginUsername" 
-                        {...loginForm.register("username")} 
-                        placeholder="Введите имя пользователя"
-                      />
-                      {loginForm.formState.errors.username && (
-                        <p className="text-sm text-red-500">{loginForm.formState.errors.username.message}</p>
-                      )}
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="loginPassword">Пароль</Label>
-                      <Input 
-                        id="loginPassword" 
-                        type="password" 
-                        {...loginForm.register("password")} 
-                        placeholder="Введите пароль"
-                      />
-                      {loginForm.formState.errors.password && (
-                        <p className="text-sm text-red-500">{loginForm.formState.errors.password.message}</p>
-                      )}
-                    </div>
-                    
-                    <Button type="submit" className="w-full" disabled={loginMutation.isPending}>
-                      {loginMutation.isPending ? (
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      ) : null}
-                      Войти
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="register">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Создать аккаунт</CardTitle>
-                  <CardDescription>
-                    Зарегистрируйте новый аккаунт администратора для управления командами.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <form onSubmit={registerForm.handleSubmit(onRegisterSubmit)} className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="registerUsername">Имя пользователя</Label>
-                      <Input 
-                        id="registerUsername" 
-                        {...registerForm.register("username")} 
-                        placeholder="Выберите имя пользователя"
-                      />
-                      {registerForm.formState.errors.username && (
-                        <p className="text-sm text-red-500">{registerForm.formState.errors.username.message}</p>
-                      )}
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="registerPassword">Пароль</Label>
-                      <Input 
-                        id="registerPassword" 
-                        type="password" 
-                        {...registerForm.register("password")} 
-                        placeholder="Выберите пароль"
-                      />
-                      {registerForm.formState.errors.password && (
-                        <p className="text-sm text-red-500">{registerForm.formState.errors.password.message}</p>
-                      )}
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="confirmPassword">Подтверждение пароля</Label>
-                      <Input 
-                        id="confirmPassword" 
-                        type="password" 
-                        {...registerForm.register("confirmPassword")} 
-                        placeholder="Подтвердите пароль"
-                      />
-                      {registerForm.formState.errors.confirmPassword && (
-                        <p className="text-sm text-red-500">{registerForm.formState.errors.confirmPassword.message}</p>
-                      )}
-                    </div>
-                    
-                    <Button type="submit" className="w-full" disabled={registerMutation.isPending}>
-                      {registerMutation.isPending ? (
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      ) : null}
-                      Зарегистрироваться
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
+          <Card>
+            <CardHeader>
+              <CardTitle>Вход</CardTitle>
+              <CardDescription>
+                Введите учетные данные для доступа к панели администратора.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="loginUsername">Имя пользователя</Label>
+                  <Input 
+                    id="loginUsername" 
+                    {...loginForm.register("username")} 
+                    placeholder="Введите имя пользователя"
+                  />
+                  {loginForm.formState.errors.username && (
+                    <p className="text-sm text-red-500">{loginForm.formState.errors.username.message}</p>
+                  )}
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="loginPassword">Пароль</Label>
+                  <Input 
+                    id="loginPassword" 
+                    type="password" 
+                    {...loginForm.register("password")} 
+                    placeholder="Введите пароль"
+                  />
+                  {loginForm.formState.errors.password && (
+                    <p className="text-sm text-red-500">{loginForm.formState.errors.password.message}</p>
+                  )}
+                </div>
+                
+                <Button type="submit" className="w-full" disabled={loginMutation.isPending}>
+                  {loginMutation.isPending ? (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  ) : null}
+                  Войти
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
         </div>
       </div>
       
