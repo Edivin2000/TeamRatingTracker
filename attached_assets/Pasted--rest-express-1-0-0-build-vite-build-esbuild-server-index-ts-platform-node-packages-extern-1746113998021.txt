@@ -1,0 +1,78 @@
+> rest-express@1.0.0 build
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+
+vite v5.4.14 building for production...
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 2682 modules transformed.
+../dist/public/index.html                                 0.63 kB │ gzip:   0.38 kB
+../dist/public/assets/atom-game-logo-blue-zWFb6GXJ.png  670.19 kB
+../dist/public/assets/index-wEV2E3VN.css                 78.47 kB │ gzip:  13.45 kB
+../dist/public/assets/index-DOrnqSzR.js                 625.44 kB │ gzip: 184.59 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 13.40s
+
+  dist/index.js  42.6kb
+
+⚡ Done in 17ms
+Запускаем базовый сервер через PM2...
+[PM2] Starting /var/www/atomgameblk/basic-server.mjs in fork_mode (1 instance)
+[PM2] Done.
+┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
+│ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
+├────┼────────────────────┼──────────┼──────┼───────────┼──────────┼──────────┤
+│ 0  │ atom-game-basic    │ fork     │ 0    │ online    │ 0%       │ 19.4mb   │
+└────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
+[PM2] Saving current process list...
+[PM2] Successfully saved in /root/.pm2/dump.pm2
+Сервер успешно запущен через PM2!
+Сайт теперь доступен по адресу: http://193.109.78.85
+
+Полезные команды:
+  - pm2 status - посмотреть статус сервера
+  - pm2 logs atom-game-basic - посмотреть логи сервера
+  - pm2 restart atom-game-basic - перезапустить сервер
+root@vm3218560:/var/www/atomgameblk#  pm2 status
+┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
+│ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
+├────┼────────────────────┼──────────┼──────┼───────────┼──────────┼──────────┤
+│ 0  │ atom-game-basic    │ fork     │ 15   │ errored   │ 0%       │ 0b       │
+└────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
+root@vm3218560:/var/www/atomgameblk# pm2 logs atom-game-basic
+[TAILING] Tailing last 15 lines for [atom-game-basic] process (change the value with --lines option)
+/root/.pm2/logs/atom-game-basic-out.log last 15 lines:
+/root/.pm2/logs/atom-game-basic-error.log last 15 lines:
+0|atom-gam |   syscall: 'listen',
+0|atom-gam |   address: '0.0.0.0',
+0|atom-gam |   port: 5000
+0|atom-gam | }
+0|atom-gam | Error: listen EADDRINUSE: address already in use 0.0.0.0:5000
+0|atom-gam |     at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+0|atom-gam |     at listenInCluster (node:net:1965:12)
+0|atom-gam |     at doListen (node:net:2139:7)
+0|atom-gam |     at process.processTicksAndRejections (node:internal/process/task_queues:83:21) {
+0|atom-gam |   code: 'EADDRINUSE',
+0|atom-gam |   errno: -98,
+0|atom-gam |   syscall: 'listen',
+0|atom-gam |   address: '0.0.0.0',
+0|atom-gam |   port: 5000
+0|atom-gam | }
+
+pm2 restart atom-game-basic^X
+
+^C
+root@vm3218560:/var/www/atomgameblk# pm2 restart atom-game-basic
+Use --update-env to update environment variables
+[PM2] Applying action restartProcessId on app [atom-game-basic](ids: [ 0 ])
+[PM2] [atom-game-basic](0) ✓
+┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
+│ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
+├────┼────────────────────┼──────────┼──────┼───────────┼──────────┼──────────┤
+│ 0  │ atom-game-basic    │ fork     │ 15   │ online    │ 0%       │ 19.8mb   │
+└────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
+root@vm3218560:/var/www/atomgameblk# 
