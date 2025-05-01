@@ -1,22 +1,15 @@
 import { Pool, neonConfig } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-serverless';
+import ws from "ws";
 import * as schema from "@shared/schema";
-import ws from 'ws';
 
-// Configure WebSocket for Neon Database
 neonConfig.webSocketConstructor = ws;
 
-// Получение строки подключения из переменных окружения
-const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://atomgame:Atom%26Game%232025!@localhost:5432/atomgame';
-console.log('Connecting to database using URL:', DATABASE_URL);
+if (!process.env.DATABASE_URL) {
+  throw new Error(
+    "DATABASE_URL must be set. Did you forget to provision a database?",
+  );
+}
 
-// Создание пула соединений
-const pool = new Pool({ 
-  connectionString: DATABASE_URL,
-});
-
-// Создание экземпляра Drizzle ORM
-const db = drizzle({ client: pool, schema });
-console.log('Database connection pool created successfully');
-
-export { pool, db };
+export const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+export const db = drizzle({ client: pool, schema });

@@ -1,0 +1,49 @@
+────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
+root@vm3218560:~/TeamRatingTracker# sudo ./build-client.sh
+=========================================================
+       Сборка клиентской части ATOM-GAME                 
+=========================================================
+Файл client/package.json не найден!
+root@vm3218560:~/TeamRatingTracker# cd
+root@vm3218560:~# cd var 
+-bash: cd: var: No such file or directory
+root@vm3218560:~# cd /var/www/atomgameblk sudo ./install.sh
+-bash: cd: too many arguments
+root@vm3218560:~# 
+root@vm3218560:~# cd /var/www/atomgame~
+-bash: cd: /var/www/atomgame~: No such file or directory
+root@vm3218560:~# cd /var/www/atomgame 
+root@vm3218560:/var/www/atomgame# sudo ./build-client.sh
+sudo: ./build-client.sh: command not found
+root@vm3218560:/var/www/atomgame# git pull origin main
+npm install
+pm2 restart all
+fatal: not a git repository (or any of the parent directories): .git
+
+up to date, audited 489 packages in 3s
+
+66 packages are looking for funding
+  run `npm fund` for details
+
+7 moderate severity vulnerabilities
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+Use --update-env to update environment variables
+[PM2] Applying action restartProcessId on app [all](ids: [ 0 ])
+[PM2] [atom-game-server](0) ✓
+┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
+│ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
+├────┼────────────────────┼──────────┼──────┼───────────┼──────────┼──────────┤
+│ 0  │ atom-game-server   │ fork     │ 8    │ online    │ 0%       │ 19.9mb   │
+└────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
+root@vm3218560:/var/www/atomgame# sudo ./build-client.sh
+sudo: ./build-client.sh: command not found
+root@vm3218560:/var/www/atomgame# chmod +x build-client.sh
+chmod: cannot access 'build-client.sh': No such file or directory
+root@vm3218560:/var/www/atomgame# 
