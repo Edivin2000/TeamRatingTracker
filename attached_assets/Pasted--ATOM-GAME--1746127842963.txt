@@ -1,0 +1,249 @@
+==========================================
+   Автоматическая установка ATOM-GAME   
+==========================================
+
+[УСТАНОВКА] Начало установки...
+[УСТАНОВКА] Сервер будет настроен на IP: 193.109.78.85 и порт: 5001
+
+[УСТАНОВКА] Остановка существующих сервисов...
+[PM2][WARN] No process found
+[УСТАНОВКА] Удаление существующих файлов в /var/www/atomgame...
+[УСТАНОВКА] Создание директории для установки: /var/www/atomgame
+[УСТАНОВКА] Обновление системы и установка зависимостей...
+Hit:1 http://mirror.yandex.ru/ubuntu noble InRelease
+Hit:2 http://mirror.yandex.ru/ubuntu noble-updates InRelease
+Hit:3 http://mirror.yandex.ru/ubuntu noble-backports InRelease
+Hit:4 http://security.ubuntu.com/ubuntu noble-security InRelease
+Hit:5 https://dl.google.com/linux/chrome/deb stable InRelease
+Hit:6 https://deb.nodesource.com/node_18.x nodistro InRelease
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+7 packages can be upgraded. Run 'apt list --upgradable' to see them.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Calculating upgrade... Done
+The following packages were automatically installed and are no longer required:
+  linux-image-5.15.0-118-generic linux-modules-5.15.0-118-generic linux-modules-extra-5.15.0-118-generic
+  python3-attr python3-compose python3-docker python3-dockerpty python3-docopt python3-dotenv python3-json-pointer
+  python3-jsonschema python3-packaging python3-pyrsistent python3-texttable python3-websocket
+Use 'sudo apt autoremove' to remove them.
+sh: 0: getcwd() failed: No such file or directory
+Get another security update through Ubuntu Pro with 'esm-apps' enabled:
+  docker.io
+Learn more about Ubuntu Pro at https://ubuntu.com/pro
+The following upgrades have been deferred due to phasing:
+  grub-common grub-pc grub-pc-bin grub2-common ubuntu-advantage-tools ubuntu-pro-client ubuntu-pro-client-l10n
+sh: 0: getcwd() failed: No such file or directory
+0 upgraded, 0 newly installed, 0 to remove and 7 not upgraded.
+sh: 0: getcwd() failed: No such file or directory
+sh: 0: getcwd() failed: No such file or directory
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+curl is already the newest version (8.5.0-2ubuntu10.6).
+git is already the newest version (1:2.43.0-1ubuntu7.2).
+nginx is already the newest version (1.24.0-2ubuntu7.3).
+postgresql is already the newest version (16+257build1.1).
+postgresql-contrib is already the newest version (16+257build1.1).
+build-essential is already the newest version (12.10ubuntu1).
+unzip is already the newest version (6.0-28ubuntu4.1).
+gpg is already the newest version (2.4.4-2ubuntu17.2).
+gpg set to manually installed.
+The following packages were automatically installed and are no longer required:
+  linux-image-5.15.0-118-generic linux-modules-5.15.0-118-generic linux-modules-extra-5.15.0-118-generic
+  python3-attr python3-compose python3-docker python3-dockerpty python3-docopt python3-dotenv python3-json-pointer
+  python3-jsonschema python3-packaging python3-pyrsistent python3-texttable python3-websocket
+Use 'sudo apt autoremove' to remove them.
+sh: 0: getcwd() failed: No such file or directory
+sh: 0: getcwd() failed: No such file or directory
+0 upgraded, 0 newly installed, 0 to remove and 7 not upgraded.
+sh: 0: getcwd() failed: No such file or directory
+sh: 0: getcwd() failed: No such file or directory
+[УСТАНОВКА] Установка Node.js...
+[ВНИМАНИЕ] Найдена установка Node.js v20.19.1. Удаляем...
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Package 'npm' is not installed, so not removed
+The following packages were automatically installed and are no longer required:
+  linux-image-5.15.0-118-generic linux-modules-5.15.0-118-generic linux-modules-extra-5.15.0-118-generic
+  python3-attr python3-compose python3-docker python3-dockerpty python3-docopt python3-dotenv python3-json-pointer
+  python3-jsonschema python3-packaging python3-pyrsistent python3-texttable python3-websocket
+Use 'sudo apt autoremove' to remove them.
+sh: 0: getcwd() failed: No such file or directory
+The following packages will be REMOVED:
+  nodejs*
+sh: 0: getcwd() failed: No such file or directory
+0 upgraded, 0 newly installed, 1 to remove and 7 not upgraded.
+sh: 0: getcwd() failed: No such file or directory
+After this operation, 199 MB disk space will be freed.
+sh: 0: getcwd() failed: No such file or directory
+(Reading database ... 151592 files and directories currently installed.)
+Removing nodejs (20.19.1-1nodesource1) ...
+dpkg: warning: while removing nodejs, directory '/usr/lib/node_modules' not empty so not removed
+Processing triggers for man-db (2.12.0-4build2) ...
+sh: 0: getcwd() failed: No such file or directory
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+sh: 0: getcwd() failed: No such file or directory
+The following packages will be REMOVED:
+  linux-image-5.15.0-118-generic linux-modules-5.15.0-118-generic linux-modules-extra-5.15.0-118-generic
+  python3-attr python3-compose python3-docker python3-dockerpty python3-docopt python3-dotenv python3-json-pointer
+  python3-jsonschema python3-packaging python3-pyrsistent python3-texttable python3-websocket
+sh: 0: getcwd() failed: No such file or directory
+0 upgraded, 0 newly installed, 15 to remove and 7 not upgraded.
+sh: 0: getcwd() failed: No such file or directory
+After this operation, 483 MB disk space will be freed.
+sh: 0: getcwd() failed: No such file or directory
+(Reading database ... 146229 files and directories currently installed.)
+Removing linux-modules-extra-5.15.0-118-generic (5.15.0-118.128) ...
+Removing python3-compose (1.29.2-6ubuntu1) ...
+Removing python3-jsonschema (4.10.3-2ubuntu1) ...
+Removing python3-attr (23.2.0-2) ...
+Removing python3-docker (5.0.3-1ubuntu1.1) ...
+Removing python3-dockerpty (0.4.1-5) ...
+Removing python3-docopt (0.6.2-6) ...
+Removing python3-dotenv (1.0.1-1) ...
+Removing python3-json-pointer (2.0-0ubuntu1) ...
+Removing python3-packaging (24.0-1) ...
+Removing python3-pyrsistent:amd64 (0.20.0-1build2) ...
+Removing python3-texttable (1.6.7-1) ...
+Removing python3-websocket (1.7.0-1) ...
+Removing linux-image-5.15.0-118-generic (5.15.0-118.128) ...
+/etc/kernel/postrm.d/initramfs-tools:
+update-initramfs: Deleting /boot/initrd.img-5.15.0-118-generic
+/etc/kernel/postrm.d/zz-update-grub:
+Sourcing file `/etc/default/grub'
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-6.8.0-58-generic
+Found initrd image: /boot/initrd.img-6.8.0-58-generic
+Found linux image: /boot/vmlinuz-6.8.0-40-generic
+Found initrd image: /boot/initrd.img-6.8.0-40-generic
+Warning: os-prober will not be executed to detect other bootable partitions.
+Systems on them will not be added to the GRUB boot configuration.
+Check GRUB_DISABLE_OS_PROBER documentation entry.
+Adding boot menu entry for UEFI Firmware Settings ...
+done
+Removing linux-modules-5.15.0-118-generic (5.15.0-118.128) ...
+Processing triggers for man-db (2.12.0-4build2) ...
+sh: 0: getcwd() failed: No such file or directory
+[ВНИМАНИЕ] Удаление репозитория: /etc/apt/sources.list.d/nodesource.list
+[УСТАНОВКА] Установка необходимых зависимостей...
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+curl is already the newest version (8.5.0-2ubuntu10.6).
+gnupg is already the newest version (2.4.4-2ubuntu17.2).
+ca-certificates is already the newest version (20240203).
+apt-transport-https is already the newest version (2.7.14build2).
+git is already the newest version (1:2.43.0-1ubuntu7.2).
+sh: 0: getcwd() failed: No such file or directory
+sh: 0: getcwd() failed: No such file or directory
+0 upgraded, 0 newly installed, 0 to remove and 7 not upgraded.
+sh: 0: getcwd() failed: No such file or directory
+sh: 0: getcwd() failed: No such file or directory
+[УСТАНОВКА] Добавление репозитория NodeSource для Node.js 18.x...
+Hit:1 http://mirror.yandex.ru/ubuntu noble InRelease
+Hit:2 http://mirror.yandex.ru/ubuntu noble-updates InRelease
+Hit:3 http://mirror.yandex.ru/ubuntu noble-backports InRelease                                                      
+Hit:4 https://dl.google.com/linux/chrome/deb stable InRelease                                                       
+Hit:5 http://security.ubuntu.com/ubuntu noble-security InRelease                                                    
+Hit:6 https://deb.nodesource.com/node_18.x nodistro InRelease
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+7 packages can be upgraded. Run 'apt list --upgradable' to see them.
+N: Skipping acquire of configured file 'main/binary-i386/Packages' as repository 'https://deb.nodesource.com/node_18.x nodistro InRelease' doesn't support architecture 'i386'
+[УСТАНОВКА] Установка Node.js 18.x...
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+sh: 0: getcwd() failed: No such file or directory
+The following NEW packages will be installed:
+  nodejs
+sh: 0: getcwd() failed: No such file or directory
+0 upgraded, 1 newly installed, 0 to remove and 7 not upgraded.
+sh: 0: getcwd() failed: No such file or directory
+Need to get 0 B/29.7 MB of archives.
+After this operation, 187 MB of additional disk space will be used.
+sh: 0: getcwd() failed: No such file or directory
+sh: 0: getcwd() failed: No such file or directory
+sh: 0: getcwd() failed: No such file or directory
+sh: 0: getcwd() failed: No such file or directory
+cannot fetch initial working directory: No such file or directory at /usr/sbin/dpkg-preconfigure line 75.
+cannot fetch initial working directory: No such file or directory at /usr/sbin/dpkg-preconfigure line 182.
+Selecting previously unselected package nodejs.
+(Reading database ... 138608 files and directories currently installed.)
+Preparing to unpack .../nodejs_18.20.8-1nodesource1_amd64.deb ...
+Unpacking nodejs (18.20.8-1nodesource1) ...
+Setting up nodejs (18.20.8-1nodesource1) ...
+Processing triggers for man-db (2.12.0-4build2) ...
+sh: 0: getcwd() failed: No such file or directory
+/usr/lib/node_modules/npm/lib/cli/validate-engines.js:31
+    throw err
+    ^
+
+Error: ENOENT: no such file or directory, uv_cwd
+    at process.wrappedCwd (node:internal/bootstrap/switches/does_own_process_state:126:28)
+    at process.cwd (/usr/lib/node_modules/npm/node_modules/graceful-fs/polyfills.js:10:19)
+    at new Config (/usr/lib/node_modules/npm/node_modules/@npmcli/config/lib/index.js:71:19)
+    at new Npm (/usr/lib/node_modules/npm/lib/npm.js:67:19)
+    at module.exports (/usr/lib/node_modules/npm/lib/cli/entry.js:21:15)
+    at module.exports (/usr/lib/node_modules/npm/lib/cli/validate-engines.js:39:10)
+    at module.exports (/usr/lib/node_modules/npm/lib/cli.js:4:31)
+    at Object.<anonymous> (/usr/lib/node_modules/npm/bin/npm-cli.js:2:25)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'uv_cwd'
+}
+
+Node.js v18.20.8
+[УСТАНОВКА] Успешно установлен Node.js v18.20.8 с npm 
+[УСТАНОВКА] Установка PM2...
+/usr/lib/node_modules/npm/lib/cli/validate-engines.js:31
+    throw err
+    ^
+
+Error: ENOENT: no such file or directory, uv_cwd
+    at process.wrappedCwd (node:internal/bootstrap/switches/does_own_process_state:126:28)
+    at process.cwd (/usr/lib/node_modules/npm/node_modules/graceful-fs/polyfills.js:10:19)
+    at new Config (/usr/lib/node_modules/npm/node_modules/@npmcli/config/lib/index.js:71:19)
+    at new Npm (/usr/lib/node_modules/npm/lib/npm.js:67:19)
+    at module.exports (/usr/lib/node_modules/npm/lib/cli/entry.js:21:15)
+    at module.exports (/usr/lib/node_modules/npm/lib/cli/validate-engines.js:39:10)
+    at module.exports (/usr/lib/node_modules/npm/lib/cli.js:4:31)
+    at Object.<anonymous> (/usr/lib/node_modules/npm/bin/npm-cli.js:2:25)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'uv_cwd'
+}
+
+Node.js v18.20.8
+[УСТАНОВКА] Настройка базы данных PostgreSQL...
+Synchronizing state of postgresql.service with SysV service script with /usr/lib/systemd/systemd-sysv-install.
+Executing: /usr/lib/systemd/systemd-sysv-install enable postgresql
+sh: 0: getcwd() failed: No such file or directory
+[ВНИМАНИЕ] Пользователь atomgame уже существует. Удаляем...
+DROP OWNED
+ERROR:  role "atomgame" cannot be dropped because some objects depend on it
+DETAIL:  owner of database atomgame
+ERROR:  role "atomgame" already exists
+[УСТАНОВКА] Создан пользователь PostgreSQL: atomgame
+[ВНИМАНИЕ] База данных atomgame уже существует. Удаляем...
+DROP DATABASE
+CREATE DATABASE
+[УСТАНОВКА] Создана база данных: atomgame
+GRANT
+[УСТАНОВКА] Права на базу данных выданы пользователю atomgame
+[УСТАНОВКА] Клонирование приложения из GitHub...
+Cloning into '/var/www/atomgame'...
+fatal: Unable to read current working directory: No such file or directory
+[ОШИБКА] Не удалось клонировать репозиторий. Проверьте URL и доступ.
+root@vm3218560:/var/www/atomgame# 
