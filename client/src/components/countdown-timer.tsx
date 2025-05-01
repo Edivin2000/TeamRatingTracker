@@ -120,7 +120,7 @@ export default function CountdownTimer() {
   return (
     <div className={`rounded-lg p-6 mb-6 shadow-lg border border-gray-100`}>
       <div className="text-center mb-6">
-        <h3 className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500">
+        <h3 className={`text-xl md:text-2xl font-bold bg-clip-text text-transparent ${gradientClass}`}>
           {activeTimer.displayName || activeTimer.name}
         </h3>
         <p className="text-sm text-gray-500 mt-2">
@@ -133,28 +133,28 @@ export default function CountdownTimer() {
       {!isTimeExpired && (
         <div className="grid grid-cols-4 gap-3">
           <div className="flex flex-col items-center">
-            <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-2xl md:text-4xl font-bold rounded-md flex items-center justify-center w-full h-16 md:h-20 shadow-md">
+            <div className={`${gradientClass} text-white text-2xl md:text-4xl font-bold rounded-md flex items-center justify-center w-full h-16 md:h-20 shadow-md`}>
               {String(timeLeft.days).padStart(2, '0')}
             </div>
             <span className="text-xs mt-2 font-medium">ДНЕЙ</span>
           </div>
           
           <div className="flex flex-col items-center">
-            <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-2xl md:text-4xl font-bold rounded-md flex items-center justify-center w-full h-16 md:h-20 shadow-md">
+            <div className={`${gradientClass} text-white text-2xl md:text-4xl font-bold rounded-md flex items-center justify-center w-full h-16 md:h-20 shadow-md`}>
               {String(timeLeft.hours).padStart(2, '0')}
             </div>
             <span className="text-xs mt-2 font-medium">ЧАСОВ</span>
           </div>
           
           <div className="flex flex-col items-center">
-            <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-2xl md:text-4xl font-bold rounded-md flex items-center justify-center w-full h-16 md:h-20 shadow-md">
+            <div className={`${gradientClass} text-white text-2xl md:text-4xl font-bold rounded-md flex items-center justify-center w-full h-16 md:h-20 shadow-md`}>
               {String(timeLeft.minutes).padStart(2, '0')}
             </div>
             <span className="text-xs mt-2 font-medium">МИНУТ</span>
           </div>
           
           <div className="flex flex-col items-center">
-            <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-2xl md:text-4xl font-bold rounded-md flex items-center justify-center w-full h-16 md:h-20 shadow-md animate-pulse">
+            <div className={`${gradientClass} text-white text-2xl md:text-4xl font-bold rounded-md flex items-center justify-center w-full h-16 md:h-20 shadow-md animate-pulse`}>
               {String(timeLeft.seconds).padStart(2, '0')}
             </div>
             <span className="text-xs mt-2 font-medium">СЕКУНД</span>
@@ -164,7 +164,7 @@ export default function CountdownTimer() {
 
       {isTimeExpired && (
         <div className="text-center mt-4">
-          <button className="px-6 py-3 rounded-md shadow-md text-white font-bold bg-gradient-to-r from-green-400 to-blue-500 hover:opacity-90 transition-opacity">
+          <button className={`px-6 py-3 rounded-md shadow-md text-white font-bold ${gradientClass} hover:opacity-90 transition-opacity`}>
             Зарегистрировать команду
           </button>
         </div>

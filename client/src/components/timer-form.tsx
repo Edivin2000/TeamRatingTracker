@@ -158,12 +158,56 @@ export default function TimerForm({ timer, onClose }: TimerFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="color">Цвет (необязательно)</Label>
+            <Label htmlFor="color">Цвет таймера</Label>
             <Input
               id="color"
-              placeholder="CSS класс цвета, например 'from-blue-600 to-indigo-700'"
+              placeholder="CSS класс градиента, например 'from-blue-600 to-indigo-700'"
               {...register("color")}
             />
+            <div className="grid grid-cols-3 gap-2 mt-2">
+              <button
+                type="button"
+                className="px-2 py-1 text-xs bg-gradient-to-r from-green-400 to-blue-500 text-white rounded"
+                onClick={() => setValue("color", "from-green-400 to-blue-500")}
+              >
+                Зелёный-Синий
+              </button>
+              <button
+                type="button"
+                className="px-2 py-1 text-xs bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded"
+                onClick={() => setValue("color", "from-blue-600 to-indigo-700")}
+              >
+                Синий-Индиго
+              </button>
+              <button
+                type="button"
+                className="px-2 py-1 text-xs bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded"
+                onClick={() => setValue("color", "from-purple-600 to-pink-500")}
+              >
+                Фиолетовый-Розовый
+              </button>
+              <button
+                type="button"
+                className="px-2 py-1 text-xs bg-gradient-to-r from-orange-500 to-red-500 text-white rounded"
+                onClick={() => setValue("color", "from-orange-500 to-red-500")}
+              >
+                Оранжевый-Красный
+              </button>
+              <button
+                type="button"
+                className="px-2 py-1 text-xs bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded"
+                onClick={() => setValue("color", "from-yellow-400 to-orange-500")}
+              >
+                Жёлтый-Оранжевый
+              </button>
+              <button
+                type="button"
+                className="px-2 py-1 text-xs bg-gradient-to-r from-blue-400 to-emerald-400 text-white rounded"
+                onClick={() => setValue("color", "from-blue-400 to-emerald-400")}
+              >
+                Синий-Изумрудный
+              </button>
+            </div>
           </div>
 
           <div className="flex items-center space-x-2 pt-2">
