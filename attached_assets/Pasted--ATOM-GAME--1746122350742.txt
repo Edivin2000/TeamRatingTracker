@@ -1,0 +1,397 @@
+=========================================================
+       ATOM-GAME - Полная автоматическая установка       
+=========================================================
+Домен: atomgameblk.ru
+IP: 193.109.78.85
+Порт: 5001
+Путь установки: /var/www/atomgame
+
+
+Обнаружена существующая установка в /var/www/atomgame
+Очистка старой установки...
+Удаление старых файлов...
+
+Проверка существующей базы данных...
+Обнаружена существующая база данных atomgame
+Пересоздание базы данных...
+ pg_terminate_backend 
+----------------------
+(0 rows)
+
+DROP DATABASE
+DROP ROLE
+Пользователь atomgame удален
+
+[1/10] Обновление системы и установка пакетов...
+Hit:1 http://mirror.yandex.ru/ubuntu noble InRelease
+Hit:2 http://mirror.yandex.ru/ubuntu noble-updates InRelease
+Hit:3 http://mirror.yandex.ru/ubuntu noble-backports InRelease
+Hit:4 https://dl.google.com/linux/chrome/deb stable InRelease
+Hit:5 http://security.ubuntu.com/ubuntu noble-security InRelease
+Hit:6 https://deb.nodesource.com/node_20.x nodistro InRelease
+Reading package lists... Done                     
+Building dependency tree... Done
+Reading state information... Done
+7 packages can be upgraded. Run 'apt list --upgradable' to see them.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Calculating upgrade... Done
+The following packages were automatically installed and are no longer required:
+  linux-image-5.15.0-118-generic linux-modules-5.15.0-118-generic
+  linux-modules-extra-5.15.0-118-generic python3-attr python3-compose python3-docker
+  python3-dockerpty python3-docopt python3-dotenv python3-json-pointer
+  python3-jsonschema python3-packaging python3-pyrsistent python3-texttable
+  python3-websocket
+Use 'sudo apt autoremove' to remove them.
+Get another security update through Ubuntu Pro with 'esm-apps' enabled:
+  docker.io
+Learn more about Ubuntu Pro at https://ubuntu.com/pro
+The following upgrades have been deferred due to phasing:
+  grub-common grub-pc grub-pc-bin grub2-common ubuntu-advantage-tools
+  ubuntu-pro-client ubuntu-pro-client-l10n
+0 upgraded, 0 newly installed, 0 to remove and 7 not upgraded.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+curl is already the newest version (8.5.0-2ubuntu10.6).
+wget is already the newest version (1.21.4-1ubuntu4.1).
+git is already the newest version (1:2.43.0-1ubuntu7.2).
+unzip is already the newest version (6.0-28ubuntu4.1).
+nginx is already the newest version (1.24.0-2ubuntu7.3).
+certbot is already the newest version (2.9.0-1).
+python3-certbot-nginx is already the newest version (2.9.0-1).
+postgresql is already the newest version (16+257build1.1).
+The following packages were automatically installed and are no longer required:
+  linux-image-5.15.0-118-generic linux-modules-5.15.0-118-generic
+  linux-modules-extra-5.15.0-118-generic python3-attr python3-compose python3-docker
+  python3-dockerpty python3-docopt python3-dotenv python3-json-pointer
+  python3-jsonschema python3-packaging python3-pyrsistent python3-texttable
+  python3-websocket
+Use 'sudo apt autoremove' to remove them.
+0 upgraded, 0 newly installed, 0 to remove and 7 not upgraded.
+
+[2/10] Установка Node.js 20...
+2025-05-01 20:58:34 - Installing pre-requisites
+Hit:1 http://mirror.yandex.ru/ubuntu noble InRelease
+Hit:2 http://mirror.yandex.ru/ubuntu noble-updates InRelease
+Hit:3 http://mirror.yandex.ru/ubuntu noble-backports InRelease
+Hit:4 https://dl.google.com/linux/chrome/deb stable InRelease                        
+Hit:5 http://security.ubuntu.com/ubuntu noble-security InRelease                     
+Hit:6 https://deb.nodesource.com/node_20.x nodistro InRelease           
+Reading package lists... Done
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+apt-transport-https is already the newest version (2.7.14build2).
+ca-certificates is already the newest version (20240203).
+curl is already the newest version (8.5.0-2ubuntu10.6).
+gnupg is already the newest version (2.4.4-2ubuntu17.2).
+The following packages were automatically installed and are no longer required:
+  linux-image-5.15.0-118-generic linux-modules-5.15.0-118-generic
+  linux-modules-extra-5.15.0-118-generic python3-attr python3-compose python3-docker
+  python3-dockerpty python3-docopt python3-dotenv python3-json-pointer
+  python3-jsonschema python3-packaging python3-pyrsistent python3-texttable
+  python3-websocket
+Use 'sudo apt autoremove' to remove them.
+0 upgraded, 0 newly installed, 0 to remove and 7 not upgraded.
+Hit:1 http://mirror.yandex.ru/ubuntu noble InRelease
+Hit:2 http://mirror.yandex.ru/ubuntu noble-updates InRelease
+Hit:3 http://mirror.yandex.ru/ubuntu noble-backports InRelease
+Hit:4 http://security.ubuntu.com/ubuntu noble-security InRelease
+Hit:5 https://deb.nodesource.com/node_20.x nodistro InRelease
+Hit:6 https://dl.google.com/linux/chrome/deb stable InRelease
+Reading package lists... Done
+2025-05-01 20:58:47 - Repository configured successfully.
+2025-05-01 20:58:47 - To install Node.js, run: apt-get install nodejs -y
+2025-05-01 20:58:47 - You can use N|solid Runtime as a node.js alternative
+2025-05-01 20:58:47 - To install N|solid Runtime, run: apt-get install nsolid -y 
+
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+nodejs is already the newest version (20.19.1-1nodesource1).
+The following packages were automatically installed and are no longer required:
+  linux-image-5.15.0-118-generic linux-modules-5.15.0-118-generic
+  linux-modules-extra-5.15.0-118-generic python3-attr python3-compose python3-docker
+  python3-dockerpty python3-docopt python3-dotenv python3-json-pointer
+  python3-jsonschema python3-packaging python3-pyrsistent python3-texttable
+  python3-websocket
+Use 'sudo apt autoremove' to remove them.
+0 upgraded, 0 newly installed, 0 to remove and 7 not upgraded.
+
+changed 139 packages in 10s
+
+15 packages are looking for funding
+  run `npm fund` for details
+
+[3/10] Подготовка директории приложения...
+
+[4/10] Клонирование репозитория...
+Cloning into '/tmp/atom-temp-1746122338'...
+remote: Enumerating objects: 782, done.
+remote: Counting objects: 100% (782/782), done.
+remote: Compressing objects: 100% (390/390), done.
+remote: Total 782 (delta 442), reused 721 (delta 381), pack-reused 0 (from 0)
+Receiving objects: 100% (782/782), 943.61 KiB | 3.63 MiB/s, done.
+Resolving deltas: 100% (442/442), done.
+Репозиторий успешно клонирован в /var/www/atomgame
+
+[5/10] Настройка базы данных PostgreSQL...
+CREATE ROLE
+Пользователь базы данных atomgame создан
+CREATE DATABASE
+База данных atomgame создана
+GRANT
+
+[6/10] Создание конфигурационного файла .env...
+
+[7/10] Настройка Nginx...
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+[8/10] Настройка SSL-сертификата...
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Certificate not yet due for renewal
+Deploying certificate
+Successfully deployed certificate for atomgameblk.ru to /etc/nginx/sites-enabled/atomgameblk.ru
+--- Logging error ---
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/logging/__init__.py", line 1163, in emit
+    stream.write(msg + self.terminator)
+UnicodeEncodeError: 'latin-1' codec can't encode characters in position 608-618: ordinal not in range(256)
+Call stack:
+  File "/usr/bin/certbot", line 33, in <module>
+    sys.exit(load_entry_point('certbot==2.9.0', 'console_scripts', 'certbot')())
+  File "/usr/lib/python3/dist-packages/certbot/main.py", line 19, in main
+    return internal_main.main(cli_args)
+  File "/usr/lib/python3/dist-packages/certbot/_internal/main.py", line 1894, in main
+    return config.func(config, plugins)
+  File "/usr/lib/python3/dist-packages/certbot/_internal/main.py", line 1464, in run
+    _install_cert(config, le_client, domains, new_lineage)
+  File "/usr/lib/python3/dist-packages/certbot/_internal/main.py", line 1058, in _install_cert
+    le_client.deploy_certificate(domains, path_provider.key_path, path_provider.cert_path,
+  File "/usr/lib/python3/dist-packages/certbot/_internal/client.py", line 662, in deploy_certificate
+    self.installer.save()  # needed by the Apache plugin
+  File "/usr/lib/python3/dist-packages/certbot_nginx/_internal/configurator.py", line 1149, in save
+    self.parser.filedump(ext='')
+  File "/usr/lib/python3/dist-packages/certbot_nginx/_internal/parser.py", line 257, in filedump
+    logger.debug('Writing nginx conf tree to %s:\n%s', filename, out)
+Message: 'Writing nginx conf tree to %s:\n%s'
+Arguments: ('/etc/nginx/sites-enabled/atomgameblk.ru', 'server {\n    listen 80;\n    server_name atomgameblk.ru www.atomgameblk.ru;\n    \n    location / {\n        proxy_pass http://localhost:5001;\n        proxy_http_version 1.1;\n        proxy_set_header Upgrade $http_upgrade;\n        proxy_set_header Connection \'upgrade\';\n        proxy_set_header Host $host;\n        proxy_cache_bypass $http_upgrade;\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n        proxy_set_header X-Forwarded-Proto $scheme;\n    }\n\n    # \u041a\u044d\u0448\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 \u0441\u0442\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0445 \u0444\u0430\u0439\u043b\u043e\u0432\n    location ~* \\.(js|css|png|jpg|jpeg|gif|ico|svg)$ {\n        proxy_pass http://localhost:5001;\n        expires 30d;\n        add_header Cache-Control "public, no-transform";\n    }\n    \n    # \u0423\u0432\u0435\u043b\u0438\u0447\u0438\u0432\u0430\u0435\u043c \u043b\u0438\u043c\u0438\u0442 \u0440\u0430\u0437\u043c\u0435\u0440\u0430 \u0437\u0430\u0433\u0440\u0443\u0436\u0430\u0435\u043c\u044b\u0445 \u0444\u0430\u0439\u043b\u043e\u0432\n    client_max_body_size 10M;\n\n    listen 443 ssl; # managed by Certbot\n    ssl_certificate /etc/letsencrypt/live/atomgameblk.ru/fullchain.pem; # managed by Certbot\n    ssl_certificate_key /etc/letsencrypt/live/atomgameblk.ru/privkey.pem; # managed by Certbot\n    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot\n    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot\n\n}\n')
+Successfully deployed certificate for www.atomgameblk.ru to /etc/nginx/sites-enabled/atomgameblk.ru
+--- Logging error ---
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/logging/__init__.py", line 1163, in emit
+    stream.write(msg + self.terminator)
+UnicodeEncodeError: 'latin-1' codec can't encode characters in position 608-618: ordinal not in range(256)
+Call stack:
+  File "/usr/bin/certbot", line 33, in <module>
+    sys.exit(load_entry_point('certbot==2.9.0', 'console_scripts', 'certbot')())
+  File "/usr/lib/python3/dist-packages/certbot/main.py", line 19, in main
+    return internal_main.main(cli_args)
+  File "/usr/lib/python3/dist-packages/certbot/_internal/main.py", line 1894, in main
+    return config.func(config, plugins)
+  File "/usr/lib/python3/dist-packages/certbot/_internal/main.py", line 1464, in run
+    _install_cert(config, le_client, domains, new_lineage)
+  File "/usr/lib/python3/dist-packages/certbot/_internal/main.py", line 1058, in _install_cert
+    le_client.deploy_certificate(domains, path_provider.key_path, path_provider.cert_path,
+  File "/usr/lib/python3/dist-packages/certbot/_internal/client.py", line 662, in deploy_certificate
+    self.installer.save()  # needed by the Apache plugin
+  File "/usr/lib/python3/dist-packages/certbot_nginx/_internal/configurator.py", line 1149, in save
+    self.parser.filedump(ext='')
+  File "/usr/lib/python3/dist-packages/certbot_nginx/_internal/parser.py", line 257, in filedump
+    logger.debug('Writing nginx conf tree to %s:\n%s', filename, out)
+Message: 'Writing nginx conf tree to %s:\n%s'
+Arguments: ('/etc/nginx/sites-enabled/atomgameblk.ru', 'server {\n    listen 80;\n    server_name atomgameblk.ru www.atomgameblk.ru;\n    \n    location / {\n        proxy_pass http://localhost:5001;\n        proxy_http_version 1.1;\n        proxy_set_header Upgrade $http_upgrade;\n        proxy_set_header Connection \'upgrade\';\n        proxy_set_header Host $host;\n        proxy_cache_bypass $http_upgrade;\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n        proxy_set_header X-Forwarded-Proto $scheme;\n    }\n\n    # \u041a\u044d\u0448\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 \u0441\u0442\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0445 \u0444\u0430\u0439\u043b\u043e\u0432\n    location ~* \\.(js|css|png|jpg|jpeg|gif|ico|svg)$ {\n        proxy_pass http://localhost:5001;\n        expires 30d;\n        add_header Cache-Control "public, no-transform";\n    }\n    \n    # \u0423\u0432\u0435\u043b\u0438\u0447\u0438\u0432\u0430\u0435\u043c \u043b\u0438\u043c\u0438\u0442 \u0440\u0430\u0437\u043c\u0435\u0440\u0430 \u0437\u0430\u0433\u0440\u0443\u0436\u0430\u0435\u043c\u044b\u0445 \u0444\u0430\u0439\u043b\u043e\u0432\n    client_max_body_size 10M;\n\n    listen 443 ssl; # managed by Certbot\n    ssl_certificate /etc/letsencrypt/live/atomgameblk.ru/fullchain.pem; # managed by Certbot\n    ssl_certificate_key /etc/letsencrypt/live/atomgameblk.ru/privkey.pem; # managed by Certbot\n    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot\n    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot\n\n\n}\n')
+--- Logging error ---
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/logging/__init__.py", line 1163, in emit
+    stream.write(msg + self.terminator)
+UnicodeEncodeError: 'latin-1' codec can't encode characters in position 608-618: ordinal not in range(256)
+Call stack:
+  File "/usr/bin/certbot", line 33, in <module>
+    sys.exit(load_entry_point('certbot==2.9.0', 'console_scripts', 'certbot')())
+  File "/usr/lib/python3/dist-packages/certbot/main.py", line 19, in main
+    return internal_main.main(cli_args)
+  File "/usr/lib/python3/dist-packages/certbot/_internal/main.py", line 1894, in main
+    return config.func(config, plugins)
+  File "/usr/lib/python3/dist-packages/certbot/_internal/main.py", line 1464, in run
+    _install_cert(config, le_client, domains, new_lineage)
+  File "/usr/lib/python3/dist-packages/certbot/_internal/main.py", line 1058, in _install_cert
+    le_client.deploy_certificate(domains, path_provider.key_path, path_provider.cert_path,
+  File "/usr/lib/python3/dist-packages/certbot/_internal/client.py", line 664, in deploy_certificate
+    self.installer.save("Deployed ACME Certificate")
+  File "/usr/lib/python3/dist-packages/certbot_nginx/_internal/configurator.py", line 1149, in save
+    self.parser.filedump(ext='')
+  File "/usr/lib/python3/dist-packages/certbot_nginx/_internal/parser.py", line 257, in filedump
+    logger.debug('Writing nginx conf tree to %s:\n%s', filename, out)
+Message: 'Writing nginx conf tree to %s:\n%s'
+Arguments: ('/etc/nginx/sites-enabled/atomgameblk.ru', 'server {\n    listen 80;\n    server_name atomgameblk.ru www.atomgameblk.ru;\n    \n    location / {\n        proxy_pass http://localhost:5001;\n        proxy_http_version 1.1;\n        proxy_set_header Upgrade $http_upgrade;\n        proxy_set_header Connection \'upgrade\';\n        proxy_set_header Host $host;\n        proxy_cache_bypass $http_upgrade;\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n        proxy_set_header X-Forwarded-Proto $scheme;\n    }\n\n    # \u041a\u044d\u0448\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 \u0441\u0442\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0445 \u0444\u0430\u0439\u043b\u043e\u0432\n    location ~* \\.(js|css|png|jpg|jpeg|gif|ico|svg)$ {\n        proxy_pass http://localhost:5001;\n        expires 30d;\n        add_header Cache-Control "public, no-transform";\n    }\n    \n    # \u0423\u0432\u0435\u043b\u0438\u0447\u0438\u0432\u0430\u0435\u043c \u043b\u0438\u043c\u0438\u0442 \u0440\u0430\u0437\u043c\u0435\u0440\u0430 \u0437\u0430\u0433\u0440\u0443\u0436\u0430\u0435\u043c\u044b\u0445 \u0444\u0430\u0439\u043b\u043e\u0432\n    client_max_body_size 10M;\n\n    listen 443 ssl; # managed by Certbot\n    ssl_certificate /etc/letsencrypt/live/atomgameblk.ru/fullchain.pem; # managed by Certbot\n    ssl_certificate_key /etc/letsencrypt/live/atomgameblk.ru/privkey.pem; # managed by Certbot\n    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot\n    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot\n\n\n}\n')
+--- Logging error ---
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/logging/__init__.py", line 1163, in emit
+    stream.write(msg + self.terminator)
+UnicodeEncodeError: 'latin-1' codec can't encode characters in position 593-603: ordinal not in range(256)
+Call stack:
+  File "/usr/bin/certbot", line 33, in <module>
+    sys.exit(load_entry_point('certbot==2.9.0', 'console_scripts', 'certbot')())
+  File "/usr/lib/python3/dist-packages/certbot/main.py", line 19, in main
+    return internal_main.main(cli_args)
+  File "/usr/lib/python3/dist-packages/certbot/_internal/main.py", line 1894, in main
+    return config.func(config, plugins)
+  File "/usr/lib/python3/dist-packages/certbot/_internal/main.py", line 1464, in run
+    _install_cert(config, le_client, domains, new_lineage)
+  File "/usr/lib/python3/dist-packages/certbot/_internal/main.py", line 1060, in _install_cert
+    le_client.enhance_config(domains, path_provider.chain_path)
+  File "/usr/lib/python3/dist-packages/certbot/_internal/client.py", line 705, in enhance_config
+    self.apply_enhancement(domains, enhancement_name, option)
+  File "/usr/lib/python3/dist-packages/certbot/_internal/client.py", line 745, in apply_enhancement
+    self.installer.save(f"Add enhancement {enh_label}")
+  File "/usr/lib/python3/dist-packages/certbot_nginx/_internal/configurator.py", line 1149, in save
+    self.parser.filedump(ext='')
+  File "/usr/lib/python3/dist-packages/certbot_nginx/_internal/parser.py", line 257, in filedump
+    logger.debug('Writing nginx conf tree to %s:\n%s', filename, out)
+Message: 'Writing nginx conf tree to %s:\n%s'
+Arguments: ('/etc/nginx/sites-enabled/atomgameblk.ru', 'server {\n    server_name atomgameblk.ru www.atomgameblk.ru;\n    \n    location / {\n        proxy_pass http://localhost:5001;\n        proxy_http_version 1.1;\n        proxy_set_header Upgrade $http_upgrade;\n        proxy_set_header Connection \'upgrade\';\n        proxy_set_header Host $host;\n        proxy_cache_bypass $http_upgrade;\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n        proxy_set_header X-Forwarded-Proto $scheme;\n    }\n\n    # \u041a\u044d\u0448\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 \u0441\u0442\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0445 \u0444\u0430\u0439\u043b\u043e\u0432\n    location ~* \\.(js|css|png|jpg|jpeg|gif|ico|svg)$ {\n        proxy_pass http://localhost:5001;\n        expires 30d;\n        add_header Cache-Control "public, no-transform";\n    }\n    \n    # \u0423\u0432\u0435\u043b\u0438\u0447\u0438\u0432\u0430\u0435\u043c \u043b\u0438\u043c\u0438\u0442 \u0440\u0430\u0437\u043c\u0435\u0440\u0430 \u0437\u0430\u0433\u0440\u0443\u0436\u0430\u0435\u043c\u044b\u0445 \u0444\u0430\u0439\u043b\u043e\u0432\n    client_max_body_size 10M;\n\n    listen 443 ssl; # managed by Certbot\n    ssl_certificate /etc/letsencrypt/live/atomgameblk.ru/fullchain.pem; # managed by Certbot\n    ssl_certificate_key /etc/letsencrypt/live/atomgameblk.ru/privkey.pem; # managed by Certbot\n    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot\n    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot\n\n\n}\nserver {\n    if ($host = www.atomgameblk.ru) {\n        return 301 https://$host$request_uri;\n    } # managed by Certbot\n\n\n    if ($host = atomgameblk.ru) {\n        return 301 https://$host$request_uri;\n    } # managed by Certbot\n\n\n    listen 80;\n    server_name atomgameblk.ru www.atomgameblk.ru;\n    return 404; # managed by Certbot\n\n\n\n\n}')
+Congratulations! You have successfully enabled HTTPS on https://atomgameblk.ru and https://www.atomgameblk.ru
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If you like Certbot, please consider supporting our work by:
+ * Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+ * Donating to EFF:                    https://eff.org/donate-le
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+[9/10] Установка зависимостей и настройка проекта...
+Установка зависимостей npm...
+npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+
+added 488 packages, and audited 489 packages in 17s
+
+66 packages are looking for funding
+  run `npm fund` for details
+
+7 moderate severity vulnerabilities
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+Инициализация базы данных...
+
+> rest-express@1.0.0 db:push
+> drizzle-kit push
+
+No config path provided, using default 'drizzle.config.ts'
+Reading config file '/var/www/atomgame/drizzle.config.ts'
+Using 'pg' driver for database querying
+[✓] Pulling schema from database...
+error: character with byte sequence 0xd0 0x9f in encoding "UTF8" has no equivalent in encoding "LATIN1"
+    at /var/www/atomgame/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.query (/var/www/atomgame/node_modules/drizzle-kit/bin.cjs:78355:26)
+    at async pgPush (/var/www/atomgame/node_modules/drizzle-kit/bin.cjs:81944:13)
+    at async Object.handler (/var/www/atomgame/node_modules/drizzle-kit/bin.cjs:92168:9)
+    at async run (/var/www/atomgame/node_modules/drizzle-kit/bin.cjs:91408:7) {
+  length: 169,
+  severity: 'ERROR',
+  code: '22P05',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'mbutils.c',
+  line: '1756',
+  routine: 'report_untranslatable_char'
+}
+
+[10/10] Запуск приложения...
+[PM2][ERROR] File ecosystem.config.js malformated
+ReferenceError: module is not defined
+    at file:///var/www/atomgame/ecosystem.config.js:1:1
+    at ModuleJobSync.runSync (node:internal/modules/esm/module_job:387:35)
+    at ModuleLoader.importSyncForRequire (node:internal/modules/esm/loader:323:47)
+    at loadESMFromCJS (node:internal/modules/cjs/loader:1371:24)
+    at Module._compile (node:internal/modules/cjs/loader:1511:5)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1572:16)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Module.require (node:internal/modules/cjs/loader:1298:19)
+    at require (node:internal/modules/helpers:182:18)
+[PM2] Saving current process list...
+[PM2][WARN] PM2 is not managing any process, skipping save...
+[PM2][WARN] To force saving use: pm2 save --force
+[PM2] Init System found: systemd
+Platform systemd
+Template
+[Unit]
+Description=PM2 process manager
+Documentation=https://pm2.keymetrics.io/
+After=network.target
+
+[Service]
+Type=forking
+User=root
+LimitNOFILE=infinity
+LimitNPROC=infinity
+LimitCORE=infinity
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+Environment=PM2_HOME=/root/.pm2
+PIDFile=/root/.pm2/pm2.pid
+Restart=on-failure
+
+ExecStart=/usr/lib/node_modules/pm2/bin/pm2 resurrect
+ExecReload=/usr/lib/node_modules/pm2/bin/pm2 reload all
+ExecStop=/usr/lib/node_modules/pm2/bin/pm2 kill
+
+[Install]
+WantedBy=multi-user.target
+
+Target path
+/etc/systemd/system/pm2-root.service
+Command list
+[ 'systemctl enable pm2-root' ]
+[PM2] Writing init configuration in /etc/systemd/system/pm2-root.service
+[PM2] Making script booting at startup...
+[PM2] [-] Executing: systemctl enable pm2-root...
+Created symlink /etc/systemd/system/multi-user.target.wants/pm2-root.service -> /etc/systemd/system/pm2-root.service.
+[PM2] [v] Command successfully executed.
++---------------------------------------+
+[PM2] Freeze a process list on reboot via:
+$ pm2 save
+
+[PM2] Remove init script via:
+$ pm2 unstartup systemd
+
+Применение исправлений для загрузки изображений...
+Исправлен компонент формы партнеров
+Исправлен компонент формы команд
+Исправлен компонент формы баннеров
+Use --update-env to update environment variables
+[PM2][ERROR] Process or Namespace atom-game-server not found
+
+=========================================================
+       ATOM-GAME успешно установлен и запущен!           
+=========================================================
+Сайт доступен по адресу: https://atomgameblk.ru
+Данные для входа в админ-панель:
+Логин: admin
+Пароль: Atom&Game#2025!
+
+Полезные команды:
+* Перезапуск приложения: pm2 restart atom-game-server
+* Просмотр логов: pm2 logs atom-game-server
+* Статус приложения: pm2 status
+* Остановка приложения: pm2 stop atom-game-server
+root@vm3218560:~/TeamRatingTracker# 
