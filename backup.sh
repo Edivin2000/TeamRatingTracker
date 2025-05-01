@@ -1,105 +1,73 @@
 #!/bin/bash
 
-# Скрипт для создания резервной копии базы данных ATOM-GAME Балаково
-# Использование: ./backup.sh [backup|restore] [путь_к_файлу_для_восстановления]
+# Скрипт для создания резервных копий ATOM-GAME рейтинговой системы
+# Автор: Atom-Game Team
+# Дата: 01.05.2025
 
-DB_NAME=${PGDATABASE:-atomgame}
-BACKUP_DIR="./backups"
-DATE=$(date +"%Y%m%d_%H%M%S")
-BACKUP_FILE="$BACKUP_DIR/atomgame_backup_$DATE.sql"
+# Настройки
+BACKUP_DIR="/var/backups/atomgame"
+PROJECT_DIR="/var/www/atomgameblk"
+PGUSER="atomgame"
+PGPASSWORD="Atom&Game#2025!"
+PGDATABASE="atomgame"
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+LOG_FILE="$BACKUP_DIR/backup_$TIMESTAMP.log"
 
-# Создаем директорию для бэкапов, если она не существует
-mkdir -p "$BACKUP_DIR"
+# Создаем директорию для резервных копий, если она не существует
+mkdir -p $BACKUP_DIR
 
-# Функция для создания резервной копии
-create_backup() {
-  echo "Создание резервной копии базы данных $DB_NAME..."
-  
-  if [[ -z "$PGPASSWORD" ]]; then
-    # Если пароль не задан в переменных окружения, запрашиваем его
-    read -sp "Введите пароль для базы данных PostgreSQL: " PGPASSWORD
-    echo ""
-    export PGPASSWORD
-  fi
-  
-  pg_dump -U ${PGUSER:-postgres} -h ${PGHOST:-localhost} -p ${PGPORT:-5432} "$DB_NAME" > "$BACKUP_FILE"
-  
-  if [ $? -eq 0 ]; then
-    echo "Резервная копия успешно создана: $BACKUP_FILE"
-    echo "Размер файла: $(du -h "$BACKUP_FILE" | cut -f1)"
-  else
-    echo "Ошибка при создании резервной копии!"
-    exit 1
-  fi
+# Начинаем логирование
+echo "=== Начало резервного копирования: $(date) ===" | tee -a $LOG_FILE
+
+# Функция для логирования
+log() {
+  echo "$(date +"%Y-%m-%d %H:%M:%S") - $1" | tee -a $LOG_FILE
 }
 
-# Функция для восстановления из резервной копии
-restore_backup() {
-  if [ -z "$1" ]; then
-    echo "Ошибка: необходимо указать файл для восстановления!"
-    echo "Использование: $0 restore путь_к_файлу_резервной_копии"
-    exit 1
-  fi
-  
-  RESTORE_FILE="$1"
-  
-  if [ ! -f "$RESTORE_FILE" ]; then
-    echo "Ошибка: файл $RESTORE_FILE не существует!"
-    exit 1
-  fi
-  
-  echo "ВНИМАНИЕ: Это действие перезапишет текущую базу данных!"
-  echo "Вы собираетесь восстановить базу данных из файла: $RESTORE_FILE"
-  read -p "Продолжить? (y/n): " CONFIRM
-  
-  if [ "$CONFIRM" != "y" ]; then
-    echo "Восстановление отменено."
-    exit 0
-  fi
-  
-  if [[ -z "$PGPASSWORD" ]]; then
-    # Если пароль не задан в переменных окружения, запрашиваем его
-    read -sp "Введите пароль для базы данных PostgreSQL: " PGPASSWORD
-    echo ""
-    export PGPASSWORD
-  fi
-  
-  echo "Восстановление базы данных $DB_NAME из файла $RESTORE_FILE..."
-  
-  # Очищаем существующую базу данных
-  psql -U ${PGUSER:-postgres} -h ${PGHOST:-localhost} -p ${PGPORT:-5432} -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;" "$DB_NAME"
-  
-  # Восстанавливаем из файла резервной копии
-  psql -U ${PGUSER:-postgres} -h ${PGHOST:-localhost} -p ${PGPORT:-5432} "$DB_NAME" < "$RESTORE_FILE"
-  
+# Создаем резервную копию базы данных
+log "Создание резервной копии базы данных..."
+export PGPASSWORD=$PGPASSWORD
+pg_dump -U $PGUSER $PGDATABASE -F c -f "$BACKUP_DIR/db_$TIMESTAMP.dump"
+if [ $? -eq 0 ]; then
+  log "Резервная копия базы данных успешно создана: db_$TIMESTAMP.dump"
+else
+  log "ОШИБКА: Не удалось создать резервную копию базы данных!"
+  exit 1
+fi
+
+# Создаем резервную копию всего проекта
+log "Создание резервной копии файлов проекта..."
+if [ -d "$PROJECT_DIR" ]; then
+  tar -czf "$BACKUP_DIR/files_$TIMESTAMP.tar.gz" -C $(dirname $PROJECT_DIR) $(basename $PROJECT_DIR)
   if [ $? -eq 0 ]; then
-    echo "База данных успешно восстановлена из файла: $RESTORE_FILE"
+    log "Резервная копия файлов проекта успешно создана: files_$TIMESTAMP.tar.gz"
   else
-    echo "Ошибка при восстановлении базы данных!"
-    exit 1
+    log "ОШИБКА: Не удалось создать резервную копию файлов проекта!"
   fi
-}
+else
+  log "ОШИБКА: Директория проекта $PROJECT_DIR не существует!"
+fi
 
-# Основная логика скрипта
-case "$1" in
-  "backup")
-    create_backup
-    ;;
-  "restore")
-    restore_backup "$2"
-    ;;
-  *)
-    echo "ATOM-GAME Балаково - Управление резервными копиями"
-    echo "Использование:"
-    echo "  $0 backup    - Создать резервную копию базы данных"
-    echo "  $0 restore файл - Восстановить базу данных из файла"
-    
-    # По умолчанию создаем резервную копию
-    read -p "Создать резервную копию базы данных сейчас? (y/n): " CREATE_BACKUP
-    if [ "$CREATE_BACKUP" = "y" ]; then
-      create_backup
-    fi
-    ;;
-esac
+# Удаляем старые резервные копии (оставляем только последние 7 дней)
+log "Удаление устаревших резервных копий..."
+find $BACKUP_DIR -name "db_*.dump" -type f -mtime +7 -delete
+find $BACKUP_DIR -name "files_*.tar.gz" -type f -mtime +7 -delete
+log "Устаревшие резервные копии удалены."
 
-exit 0
+# Показываем информацию о созданных резервных копиях
+DB_SIZE=$(du -h "$BACKUP_DIR/db_$TIMESTAMP.dump" | cut -f1)
+FILES_SIZE=$(du -h "$BACKUP_DIR/files_$TIMESTAMP.tar.gz" | cut -f1)
+TOTAL_BACKUPS=$(find $BACKUP_DIR -name "db_*.dump" | wc -l)
+
+echo "=== Резервное копирование завершено: $(date) ===" | tee -a $LOG_FILE
+echo "" | tee -a $LOG_FILE
+echo "Сводка резервного копирования:" | tee -a $LOG_FILE
+echo "- Дата создания: $(date)" | tee -a $LOG_FILE
+echo "- Размер копии БД: $DB_SIZE" | tee -a $LOG_FILE
+echo "- Размер копии файлов: $FILES_SIZE" | tee -a $LOG_FILE
+echo "- Всего резервных копий: $TOTAL_BACKUPS" | tee -a $LOG_FILE
+echo "- Хранение: $BACKUP_DIR" | tee -a $LOG_FILE
+echo "" | tee -a $LOG_FILE
+echo "Для восстановления из резервной копии используйте команды:" | tee -a $LOG_FILE
+echo "- БД: pg_restore -U $PGUSER -d $PGDATABASE $BACKUP_DIR/db_$TIMESTAMP.dump" | tee -a $LOG_FILE
+echo "- Файлы: tar -xzf $BACKUP_DIR/files_$TIMESTAMP.tar.gz -C /" | tee -a $LOG_FILE
