@@ -23,10 +23,10 @@ async function hashPassword(password: string) {
 }
 
 // Проверяем пароль с фиксированным значением
-// Новый пароль: "Atom&Game#2025!"
-async function comparePasswords(supplied: string, stored: string) {
+// Пароль: "Atom&Game#2025!"
+async function comparePasswords(supplied: string) {
   // Сложный пароль для защиты от перебора
-  return supplied === "Atom&Game#2025!" && stored === "$2b$12$mQH5VJSvzV4Y8kyaVj9rS.HvCwFHU/DHUbyAwhqJ/B8O3NM3fFgLWnFP9vHT8tE76";
+  return supplied === "Atom&Game#2025!";
 }
 
 export function setupAuth(app: Express) {
@@ -51,11 +51,13 @@ export function setupAuth(app: Express) {
   passport.use(
     new LocalStrategy(async (username, password, done) => {
       try {
-        const user = await storage.getUserByUsername(username);
-        if (!user || !(await comparePasswords(password, user.password))) {
-          return done(null, false);
-        } else {
+        // Проверяем логин и пароль
+        // Только пользователь admin с паролем "Atom&Game#2025!" может войти
+        if (username === "admin" && (await comparePasswords(password))) {
+          const user = await storage.getUserByUsername(username);
           return done(null, user);
+        } else {
+          return done(null, false);
         }
       } catch (err) {
         return done(err);

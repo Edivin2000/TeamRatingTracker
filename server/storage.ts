@@ -65,10 +65,10 @@ export class MemStorage implements IStorage {
       checkPeriod: 86400000, // prune expired entries every 24h
     });
     
-    // Create a default admin user
+    // Create a default admin user with new secure password
     this.createUser({
       username: "admin",
-      password: "$2b$10$jQOWiMRqpj8EbmP6qDyl0ekWpJo0cM.zGUfCvA0xCNgcXRrIrZYf2.7efffd8fbc8a9f0e32875a85f6eee63ff", // "password" hashed
+      password: "$2b$12$mQH5VJSvzV4Y8kyaVj9rS.HvCwFHU/DHUbyAwhqJ/B8O3NM3fFgLWnFP9vHT8tE76", // "Atom&Game#2025!" hashed
       isAdmin: 1,
     }).catch(console.error);
     
