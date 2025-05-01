@@ -1,0 +1,36 @@
+root@vm3218560:/var/www/atomgame#  
+root@vm3218560:/var/www/atomgame# pm2 logs atom-game-server
+[TAILING] Tailing last 15 lines for [atom-game-server] process (change the value with --lines option)
+/root/.pm2/logs/atom-game-server-out.log last 15 lines:
+0|atom-gam | PORT: 5001
+0|atom-gam | HOST: 0.0.0.0
+0|atom-gam | NODE_ENV: production
+0|atom-gam | Connecting to database using URL: postgresql://atomgame:Atom%26Game%232025!@localhost:5432/atomgame
+0|atom-gam | Database connection pool created successfully
+0|atom-gam | Serving from fallback public directory: /var/www/atomgame/public
+0|atom-gam | [2025-05-01T18:20:57.600Z] Server running at http://atomgameblk.ru (port: 5001)
+0|atom-gam | Запуск ATOM-GAME сервера с настройками:
+0|atom-gam | PORT: 5001
+0|atom-gam | HOST: 0.0.0.0
+0|atom-gam | NODE_ENV: production
+0|atom-gam | Connecting to database using URL: postgresql://atomgame:Atom%26Game%232025!@localhost:5432/atomgame
+0|atom-gam | Database connection pool created successfully
+0|atom-gam | Serving from fallback public directory: /var/www/atomgame/public
+0|atom-gam | [2025-05-01T18:22:49.603Z] Server running at http://atomgameblk.ru (port: 5001)
+
+/root/.pm2/logs/atom-game-server-error.log last 15 lines:
+0|atom-gam |       asn1Curve: 'prime256v1',
+0|atom-gam |       nistCurve: 'P-256',
+0|atom-gam |       valid_from: 'May  1 16:42:29 2025 GMT',
+0|atom-gam |       valid_to: 'Jul 30 16:42:28 2025 GMT',
+0|atom-gam |       fingerprint: 'B5:5A:22:2A:A1:B6:13:EE:B1:B0:1F:A6:2D:58:F5:1B:65:F4:04:5E',
+0|atom-gam |       fingerprint256: '84:11:5E:02:E9:0B:4D:1E:1C:15:12:4D:A8:F3:32:32:12:B9:62:5A:A9:9D:B2:12:15:5F:33:14:27:72:CA:1D',
+0|atom-gam |       fingerprint512: '7E:23:7A:B7:26:A8:34:F6:5D:91:6F:70:58:D8:99:17:47:FD:46:3C:00:27:B5:9A:C6:AB:34:94:7C:41:E9:6C:C7:40:C3:7A:EF:3F:0B:28:6E:17:4E:80:1C:47:33:3A:77:0E:44:59:1B:5E:FA:A2:C4:AC:05:8F:F6:AD:17:CF',
+0|atom-gam |       ext_key_usage: [Array],
+0|atom-gam |       serialNumber: '05CD22A0FFAE53918D3CF360F4F42D472B07',
+0|atom-gam |       raw: <Buffer 30 82 03 bf 30 82 03 46 a0 03 02 01 02 02 12 05 cd 22 a0 ff ae 53 91 8d 3c f3 60 f4 f4 2d 47 2b 07 30 0a 06 08 2a 86 48 ce 3d 04 03 03 30 32 31 0b 30 ... 913 more bytes>,
+0|atom-gam |       issuerCertificate: [Object]
+0|atom-gam |     }
+0|atom-gam |   },
+0|atom-gam |   [Symbol(kMessage)]: "Hostname/IP does not match certificate's altnames: Host: localhost. is not in the cert's altnames: DNS:atomgameblk.ru, DNS:www.atomgameblk.ru"
+0|atom-gam | }
