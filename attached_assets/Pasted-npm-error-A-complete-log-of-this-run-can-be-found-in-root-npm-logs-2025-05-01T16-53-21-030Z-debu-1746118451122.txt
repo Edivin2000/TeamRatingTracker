@@ -1,0 +1,56 @@
+npm error A complete log of this run can be found in: /root/.npm/_logs/2025-05-01T16_53_21_030Z-debug-0.log
+Use --update-env to update environment variables
+[PM2] Applying action restartProcessId on app [all](ids: [ 0 ])
+[PM2] [atom-game-server](0) ✓
+┌────┬─────────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id │ name                │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├────┼─────────────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 0  │ atom-game-server    │ default     │ 1.0.0   │ fork    │ 1785701  │ 0s     │ 8    │ online    │ 0%       │ 23.6mb   │ root     │ disabled │
+└────┴─────────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+root@vm3218560:~# cd 
+root@vm3218560:~# cd cd /var/www/atomgameblk
+-bash: cd: too many arguments
+root@vm3218560:~# cd /var/www/atomgameblk
+root@vm3218560:/var/www/atomgameblk# git pull origin main
+npm install
+pm2 restart all
+From https://github.com/Edivin2000/TeamRatingTracker
+ * branch            main       -> FETCH_HEAD
+Updating c0bba0c..3a4e1c5
+error: Your local changes to the following files would be overwritten by merge:
+        fix-all.sh
+        package-lock.json
+        package.json
+        run-basic-server.sh
+        server/db.ts
+Please commit your changes or stash them before you merge.
+Aborting
+
+up to date, audited 544 packages in 5s
+
+69 packages are looking for funding
+  run `npm fund` for details
+
+7 moderate severity vulnerabilities
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+Use --update-env to update environment variables
+[PM2] Applying action restartProcessId on app [all](ids: [ 0 ])
+[PM2] [atom-game-server](0) ✓
+┌────┬─────────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id │ name                │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├────┼─────────────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 0  │ atom-game-server    │ default     │ 1.0.0   │ fork    │ 1785767  │ 0s     │ 9    │ online    │ 0%       │ 22.8mb   │ root     │ disabled │
+└────┴─────────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+root@vm3218560:/var/www/atomgameblk# sudo ./fix-all.sh
+sudo: ./fix-all.sh: command not found
+root@vm3218560:/var/www/atomgameblk# sudo ./fix-all.sh 
+sudo: ./fix-all.sрh: command not found
+root@vm3218560:/var/www/atomgameblk# ^C
+root@vm3218560:/var/www/atomgameblk# 
