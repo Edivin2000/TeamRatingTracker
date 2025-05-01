@@ -17,13 +17,13 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Переменные настройки - Замените значениями вашего сервера
+# Переменные настройки с реальными данными
 PROJECT_DIR="/var/www/atomgameblk"
-DOMAIN="atomgameblk.ru"  # Замените на ваш домен
+DOMAIN="atomgameblk.ru"
 DB_NAME="atomgame"
 DB_USER="atomgame"
-DB_PASSWORD="Atom&Game#2025!"  # Замените на желаемый пароль БД
-ADMIN_PASSWORD="Atom&Game#2025!"  # Замените на желаемый пароль админа
+DB_PASSWORD="Atom&Game#2025!"
+ADMIN_PASSWORD="Atom&Game#2025!"
 
 # Функции для вывода
 log() {
