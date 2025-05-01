@@ -12,7 +12,7 @@ export default function AdBanner() {
   
   const { data: ads, isLoading, error } = useQuery<Ad[]>({
     queryKey: ["/api/ads"],
-    staleTime: 1000 * 60 * 5, // 5 минут
+    staleTime: 0, // устанавливаем в 0, чтобы всегда проверять актуальность данных
   });
 
   // Эффект для ротации баннеров

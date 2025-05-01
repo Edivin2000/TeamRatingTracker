@@ -158,15 +158,27 @@ export default function AdBannerForm({ ad, onClose }: AdBannerFormProps) {
       };
       
       if (ad) {
+        console.log("Отправка запроса на обновление баннера:", adData);
         const res = await apiRequest("PUT", `/api/ads/${ad.id}`, adData);
-        return await res.json();
+        const result = await res.json();
+        console.log("Ответ сервера при обновлении баннера:", result);
+        return result;
       } else {
+        console.log("Отправка запроса на создание баннера:", adData);
         const res = await apiRequest("POST", "/api/ads", adData);
-        return await res.json();
+        const result = await res.json();
+        console.log("Ответ сервера при создании баннера:", result);
+        return result;
       }
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/ads"] });
+    onSuccess: (data) => {
+      console.log("Успешное выполнение мутации, данные:", data);
+      // Принудительно делаем API запрос для обновления кеша
+      queryClient.resetQueries({ queryKey: ["/api/ads"] });
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ["/api/ads"] });
+      }, 100);
+      
       toast({
         title: ad ? "Баннер обновлен" : "Баннер добавлен",
         description: ad 
