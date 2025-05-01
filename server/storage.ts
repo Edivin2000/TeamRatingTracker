@@ -40,6 +40,14 @@ export interface IStorage {
   updateAd(id: number, ad: InsertAd): Promise<Ad>;
   deleteAd(id: number): Promise<void>;
   
+  // Timer methods
+  getAllTimers(): Promise<Timer[]>;
+  getActiveTimers(): Promise<Timer[]>;
+  getTimer(id: number): Promise<Timer | undefined>;
+  createTimer(timer: InsertTimer): Promise<Timer>;
+  updateTimer(id: number, timer: InsertTimer): Promise<Timer>;
+  deleteTimer(id: number): Promise<void>;
+  
   // Session store
   sessionStore: any;
 }
@@ -520,6 +528,82 @@ export class DatabaseStorage implements IStorage {
 
   async deleteAd(id: number): Promise<void> {
     await db.delete(ads).where(eq(ads.id, id));
+  }
+  
+  // Timer methods
+  async getAllTimers(): Promise<Timer[]> {
+    try {
+      return await db.select()
+        .from(timers)
+        .orderBy(asc(timers.id));
+    } catch (error) {
+      console.error('Error getting all timers:', error);
+      throw new Error('Не удалось получить список таймеров');
+    }
+  }
+  
+  async getActiveTimers(): Promise<Timer[]> {
+    try {
+      return await db.select()
+        .from(timers)
+        .where(eq(timers.active, true))
+        .orderBy(asc(timers.id));
+    } catch (error) {
+      console.error('Error getting active timers:', error);
+      throw new Error('Не удалось получить список активных таймеров');
+    }
+  }
+  
+  async getTimer(id: number): Promise<Timer | undefined> {
+    try {
+      const results = await db.select()
+        .from(timers)
+        .where(eq(timers.id, id));
+      return results[0];
+    } catch (error) {
+      console.error('Error getting timer:', error);
+      throw new Error(`Не удалось получить таймер с ID ${id}`);
+    }
+  }
+  
+  async createTimer(timer: InsertTimer): Promise<Timer> {
+    try {
+      const [result] = await db.insert(timers)
+        .values(timer)
+        .returning();
+      return result;
+    } catch (error) {
+      console.error('Error creating timer:', error);
+      throw new Error('Не удалось создать таймер');
+    }
+  }
+  
+  async updateTimer(id: number, timer: InsertTimer): Promise<Timer> {
+    try {
+      const [result] = await db.update(timers)
+        .set(timer)
+        .where(eq(timers.id, id))
+        .returning();
+      
+      if (!result) {
+        throw new Error(`Таймер с ID ${id} не найден`);
+      }
+      
+      return result;
+    } catch (error) {
+      console.error('Error updating timer:', error);
+      throw new Error(`Не удалось обновить таймер с ID ${id}`);
+    }
+  }
+  
+  async deleteTimer(id: number): Promise<void> {
+    try {
+      await db.delete(timers)
+        .where(eq(timers.id, id));
+    } catch (error) {
+      console.error('Error deleting timer:', error);
+      throw new Error(`Не удалось удалить таймер с ID ${id}`);
+    }
   }
 }
 

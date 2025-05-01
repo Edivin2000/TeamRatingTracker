@@ -98,5 +98,26 @@ export const scoreUpdateSchema = z.object({
   value: z.number().int().min(0, "Значение должно быть положительным числом"),
 });
 
+// Таймер схема
+export const timers = pgTable("timers", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 100 }).notNull(),
+  endDate: varchar("end_date", { length: 30 }).notNull(), // ISO datetime string
+  active: boolean("active").default(true),
+  displayName: varchar("display_name", { length: 100 }).default(""),
+  color: varchar("color", { length: 30 }).default("from-blue-600 to-indigo-700"),
+});
+
+export const insertTimerSchema = createInsertSchema(timers).pick({
+  name: true,
+  endDate: true,
+  active: true,
+  displayName: true,
+  color: true,
+});
+
+export type InsertTimer = z.infer<typeof insertTimerSchema>;
+export type Timer = typeof timers.$inferSelect;
+
 export type ScoreUpdate = z.infer<typeof scoreUpdateSchema>;
 export type LoginData = z.infer<typeof loginSchema>;
